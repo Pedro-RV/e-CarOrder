@@ -30,4 +30,9 @@
         android:name="com.example.e_carorder.SignOutFragment"
         android:label="Sign Out"
         tools:layout="@layout/fragment_sign_out" />
+    <fragment
+        android:id="@+id/menuAdd"
+        android:name="com.example.e_carorder.AddFragment"
+        android:label="Add Charge Point"
+        tools:layout="@layout/fragment_add" />
 </navigation>

@@ -4,7 +4,7 @@
     <string name="google_button">Sign in with Google</string>
     <string name="profile">Profile</string>
     <string name="notifications">Notifications</string>
-    <string name="collection">Collection</string>
+    <string name="add">Add Charge Point</string>
     <string name="inbox">Inbox</string>
     <string name="others">Others</string>
     <string name="settings">Settings</string>
@@ -13,5 +13,5 @@
     <string name="verified">Verified</string>
     <string name="home">Home</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Holaa</string>
 </resources>
