@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView toRegister, forgotTextLink;
     private ProgressBar progressBar;
 
-
     // If user was logged in before, he is sent to Navigation_temporal
     @Override
     protected void onStart() {

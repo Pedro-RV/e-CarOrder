@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddChargePointFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvAddChargePoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Charge Point Registration"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="20dp"
+            android:text="Address Info"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddChargePoint" />
+
+        <EditText
+            android:id="@+id/registerAddress"
+            android:layout_width="321dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="Charge Point Address"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+
+        <EditText
+            android:id="@+id/registerPostCode"
+            android:layout_width="321dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="Post Code"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerAddress" />
+
+        <EditText
+            android:id="@+id/registerStateOrProvince"
+            android:layout_width="321dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="State Or Province"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerPostCode" />
+
+        <EditText
+            android:id="@+id/registerTown"
+            android:layout_width="321dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="Town"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerStateOrProvince" />
+
+        <TextView
+            android:id="@+id/tvConnections"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="20dp"
+            android:text="Connections"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerTown" />
+
+        <EditText
+            android:id="@+id/registerPowerKW"
+            android:layout_width="321dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="Power KW"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvConnections" />
+
+        <TextView
+            android:id="@+id/tvAdditionalInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="20dp"
+            android:text="Additional Info"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerPowerKW" />
+
+        <EditText
+            android:id="@+id/registerGeneralComments"
+            android:layout_width="321dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="General Comments"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAdditionalInfo" />
+
+        <EditText
+            android:id="@+id/registerPrice"
+            android:layout_width="321dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:ems="10"
+            android:hint="Price"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerGeneralComments" />
+
+        <Button
+            android:id="@+id/registerChargePointBtn"
+            android:layout_width="146dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="22dp"
+            android:text="Register Charge Point"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerPrice" />
+
+        <ProgressBar
+            android:id="@+id/registerChargePointProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="44dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/registerChargePointBtn" />
+
+        <Button
+            android:id="@+id/prueba_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="32dp"
+            android:text="Location"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
