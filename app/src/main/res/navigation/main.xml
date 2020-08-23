@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_sign_out" />
     <fragment
         android:id="@+id/menuAdd"
-        android:name="com.example.e_carorder.AddChargePointFragment"
+        android:name="com.example.e_carorder.AddChargePoint1Fragment"
         android:label="Add Charge Point"
-        tools:layout="@layout/fragment_add_charge_point" />
+        tools:layout="@layout/fragment_add_charge_point1" />
 </navigation>

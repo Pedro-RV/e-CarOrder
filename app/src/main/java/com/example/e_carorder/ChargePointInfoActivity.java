@@ -2,17 +2,10 @@ package com.example.e_carorder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.Display;
-import android.widget.Adapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,15 +13,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 public class ChargePointInfoActivity extends AppCompatActivity {
-
-    private TextView chargePointTittle;
 
     private DatabaseReference mDatabase;
 
-    private TextView address, postCode, stateOrProvince, town, power1, power2, generalComments, price;
+    private TextView titleInfo, address, postCode, stateOrProvince, town, type1, type2, power1, power2, status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,25 +26,21 @@ public class ChargePointInfoActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("ChargePoints");
 
-        chargePointTittle = findViewById(R.id.chargePointInfoTittle);
-
-        String title = getIntent().getStringExtra("title");
-        chargePointTittle.setText(title);
+        String id = getIntent().getStringExtra("id");
 
 
+        titleInfo = findViewById(R.id.titleInfo);
         address = findViewById(R.id.address);
         postCode = findViewById(R.id.postCode);
         stateOrProvince = findViewById(R.id.stateOrProvince);
         town = findViewById(R.id.town);
+        type1 = findViewById(R.id.type1);
         power1 = findViewById(R.id.power1);
+        type2 = findViewById(R.id.type2);
         power2 = findViewById(R.id.power2);
-        generalComments = findViewById(R.id.generalComments);
-        price = findViewById(R.id.price);
+        status = findViewById(R.id.status);
 
-
-        String titleLookFor = chargePointTittle.getText().toString();
-
-        Query checkChargePoint = mDatabase.orderByChild("AddressInfo/Title").equalTo(titleLookFor);
+        Query checkChargePoint = mDatabase.orderByChild("id").equalTo(id);
 
         checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -63,17 +48,16 @@ public class ChargePointInfoActivity extends AppCompatActivity {
 
                 if(dataSnapshot.exists()){
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        address.setText("Address: " + ds.child("AddressInfo").child("AddressLine1").getValue().toString());
-                        postCode.setText("PostCode: " + ds.child("AddressInfo").child("Postcode").getValue().toString());
-                        stateOrProvince.setText("StateOrProvince: " + ds.child("AddressInfo").child("StateOrProvince").getValue().toString());
-                        town.setText("Town: " + ds.child("AddressInfo").child("Town").getValue().toString());
+                        titleInfo.setText("Title: " + ds.child("addressInfo").child("title").getValue().toString());
+                        address.setText("Address: " + ds.child("addressInfo").child("address").getValue().toString());
+                        postCode.setText("PostCode: " + ds.child("addressInfo").child("postCode").getValue().toString());
+                        stateOrProvince.setText("StateOrProvince: " + ds.child("addressInfo").child("stateOrProvince").getValue().toString());
+                        town.setText("Town: " + ds.child("addressInfo").child("town").getValue().toString());
 
-                        power1.setText("PowerKW: " + ds.child("Connections").child("0").child("PowerKW").getValue().toString());
+                        type1.setText("Connector type: " + ds.child("connectors").child("0").child("connectorType").getValue().toString());
+                        power1.setText("PowerKW: " + ds.child("connectors").child("0").child("powerKW").getValue().toString());
 
-                        generalComments.setText("GeneralComments: " + ds.child("GeneralComments").getValue().toString());
-                        price.setText("Price: " + ds.child("Price").getValue().toString());
-
-                        //Toast.makeText(ChargePointInfoActivity.this, "Ha entrado", Toast.LENGTH_SHORT).show();
+                        status.setText("Status: " + ds.child("statusType").getValue().toString());
                     }
 
                 }

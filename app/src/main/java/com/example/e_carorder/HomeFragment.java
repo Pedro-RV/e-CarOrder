@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -36,7 +38,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.internal.$Gson$Preconditions;
 
 import java.io.IOException;
 import java.util.List;
@@ -127,9 +128,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             zoomToUserLocation();
         }else{
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)){
-                ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, ACCES_LOCATION_REQUEST_CODE);
+                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, ACCES_LOCATION_REQUEST_CODE);
             } else{
-                ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, ACCES_LOCATION_REQUEST_CODE);
+                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, ACCES_LOCATION_REQUEST_CODE);
             }
         }
 
@@ -140,13 +141,28 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    String lat = ds.child("AddressInfo").child("Latitude").getValue().toString();
-                    String lon = ds.child("AddressInfo").child("Longitude").getValue().toString();
-                    String title = ds.child("AddressInfo").child("Title").getValue().toString();
+                    String lat = ds.child("addressInfo").child("latitude").getValue().toString();
+                    String lon = ds.child("addressInfo").child("longitude").getValue().toString();
+                    String title = ds.child("addressInfo").child("title").getValue().toString();
+                    String status = ds.child("statusType").getValue().toString();
+                    String id = ds.child("id").getValue().toString();
+
+                    Float color = BitmapDescriptorFactory.HUE_YELLOW;
+
+                    if(status.equals("Available")){
+                        color = BitmapDescriptorFactory.HUE_CYAN;
+                    }else if(status.equals("Damaged")){
+                        color = BitmapDescriptorFactory.HUE_RED;
+                    }else if(status.equals("Unkown")){
+                        color = BitmapDescriptorFactory.HUE_ORANGE;
+                    }
+
 
                     map.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)))
                             .title(title)
+                            .icon(BitmapDescriptorFactory.defaultMarker(color))
+                            .snippet(id)
                     );
                 }
             }
@@ -157,14 +173,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                String markerTitle = marker.getTitle();
+                String id = marker.getSnippet();
 
                 Intent i = new Intent(getContext(), ChargePointInfoActivity.class);
-                i.putExtra("title", markerTitle);
+                i.putExtra("id", id);
                 startActivity(i);
             }
         });

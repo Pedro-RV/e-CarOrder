@@ -14,4 +14,17 @@
     <string name="home">Home</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Holaa</string>
+
+    <string-array name="connectorsType">
+        <item>Schuko</item>
+        <item>SAE_J1772</item>
+        <item>Mennekes</item>
+        <item>CHAdeMo</item>
+    </string-array>
+
+    <string-array name="statusType">
+        <item>Available</item>
+        <item>Damaged</item>
+        <item>Unkown</item>
+    </string-array>
 </resources>

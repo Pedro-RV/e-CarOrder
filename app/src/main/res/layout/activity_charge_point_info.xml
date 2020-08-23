@@ -21,6 +21,7 @@
 
         <TextView
             android:id="@+id/chargePointInfoTittle"
+            android:text="Charge Point Info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -55,6 +56,13 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimaryText"/>
+
+            <TextView
+                android:id="@+id/titleInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_margin="10dp"/>
 
             <TextView
                 android:id="@+id/address"
@@ -123,6 +131,14 @@
                 android:layout_margin="10dp" />
 
             <TextView
+                android:id="@+id/type1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
                 android:id="@+id/power1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,6 +152,14 @@
                 android:layout_height="wrap_content"
                 android:text="Connector 2: "
                 android:layout_margin="10dp" />
+
+            <TextView
+                android:id="@+id/type2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/power2"
@@ -166,28 +190,21 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/additionalInfoTitle"
+                android:id="@+id/statusTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Additional Info"
+                android:text="Status Info"
                 android:layout_margin="10dp"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimaryText"/>
 
             <TextView
-                android:id="@+id/generalComments"
+                android:id="@+id/status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:layout_margin="10dp"/>
-
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:layout_margin="10dp" />
 
         </LinearLayout>
 
