@@ -29,7 +29,7 @@ public class SignOutFragment extends Fragment {
                 getContext(),
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
         ).signOut();
-        Intent intent = new Intent(getContext(), LoginActivity.class);
+        Intent intent = new Intent(getContext(), SignInSignUpActivity.class);
         startActivity(intent);
 
     }
