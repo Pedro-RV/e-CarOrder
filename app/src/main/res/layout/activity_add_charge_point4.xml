@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".addChargePoint.AddConnectorActivity">
+    tools:context=".addChargePoint.AddChargePoint4Activity">
 
     <LinearLayout
         android:id='@+id/layoutToolBar'
@@ -30,60 +30,48 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvAddAConnector"
+        android:id="@+id/tvChargePointStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="20dp"
-        android:text="Adding a Connector"
+        android:text="Charge Point Status"
         android:textColor="@color/colorPrimaryText"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutToolBar" />
 
     <TextView
-        android:id="@+id/tvConnectorType"
+        android:id="@+id/tvStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="56dp"
-        android:text="Connector type:"
+        android:text="Status:"
         android:textColor="@color/colorPrimaryText"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddAConnector" />
+        app:layout_constraintTop_toBottomOf="@+id/tvChargePointStatus" />
 
     <Spinner
-        android:id="@+id/spinnerConnectorType"
+        android:id="@+id/spinnerStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="112dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/tvStatus"
         app:layout_constraintTop_toBottomOf="@+id/layoutToolBar" />
 
-    <EditText
-        android:id="@+id/powerKW_et"
+    <Button
+        android:id="@+id/registerChargePointFinishBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="Power KW"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerConnectorType" />
-
-    <Button
-        android:id="@+id/addConnectorBtn"
-        android:layout_width="146dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="50dp"
-        android:text="Add connector"
+        android:layout_marginBottom="84dp"
+        android:text="Finish"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

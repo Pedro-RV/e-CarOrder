@@ -1,36 +1,44 @@
-package com.example.e_carorder;
+package com.example.e_carorder.addChargePoint;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.e_carorder.R;
+import com.example.e_carorder.addChargePoint.connectorsRecyclerView.ConnectorModel;
+import com.example.e_carorder.addChargePoint.connectorsRecyclerView.ConnectorAdapter;
 import com.example.e_carorder.helpers.AddressInfoHelperClass;
 import com.example.e_carorder.helpers.ConnectorHelperClass;
-import com.example.e_carorder.recyclerViewConnectors.Model;
-import com.example.e_carorder.recyclerViewConnectors.MyAdapter;
+import com.sucho.placepicker.AddressData;
+import com.sucho.placepicker.Constants;
 
 import java.util.ArrayList;
 
-public class AddChargePoint2Activity extends AppCompatActivity  {
+public class AddChargePoint3Activity extends AppCompatActivity  {
 
     private Button addBtn, registerChargePointNextBtn2;
 
     private ArrayList<ConnectorHelperClass> connectors;
 
     private RecyclerView recyclerView;
-    private MyAdapter myAdapter;
+    private ConnectorAdapter connectorAdapter;
+
+
+    private final int PLACE_PICKER_REQUEST = 9999;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_charge_point2);
+        setContentView(R.layout.activity_add_charge_point3);
 
         final AddressInfoHelperClass addressInfoHelperClass = (AddressInfoHelperClass) getIntent().getSerializableExtra("addressInfoHelperClass");
         connectors = (ArrayList<ConnectorHelperClass>) getIntent().getSerializableExtra("connectors");
@@ -45,8 +53,8 @@ public class AddChargePoint2Activity extends AppCompatActivity  {
         recyclerView = findViewById(R.id.recyclerViewConnectors);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        myAdapter = new MyAdapter(this, getConnectorsList(connectors));
-        recyclerView.setAdapter(myAdapter);
+        connectorAdapter = new ConnectorAdapter(this, createConnectorsList());
+        recyclerView.setAdapter(connectorAdapter);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +70,9 @@ public class AddChargePoint2Activity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 if(connectors.size() == 0){
-                    Toast.makeText(AddChargePoint2Activity.this, "You have to add minimum 1 connector before continuing.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddChargePoint3Activity.this, "You have to add minimum 1 connector before continuing.", Toast.LENGTH_SHORT).show();
                 }else{
-                    Intent i = new Intent(v.getContext(), AddChargePoint3Activity.class);
+                    Intent i = new Intent(v.getContext(), AddChargePoint4Activity.class);
                     i.putExtra("addressInfoHelperClass", addressInfoHelperClass);
                     i.putExtra("connectors", connectors);
                     startActivity(i);
@@ -74,16 +82,27 @@ public class AddChargePoint2Activity extends AppCompatActivity  {
 
     }
 
-    private ArrayList<Model> getConnectorsList(ArrayList<ConnectorHelperClass> connectors){
+    private ArrayList<ConnectorModel> createConnectorsList(){
 
-        ArrayList<Model> models = new ArrayList<>();
+        ArrayList<ConnectorModel> connectorModels = new ArrayList<>();
 
         for(int i=0; i < connectors.size(); i++){
-            Model m = new Model(connectors.get(i).getConnectorType(), connectors.get(i).getPowerKW(), R.drawable.electrical);
-            models.add(m);
+            ConnectorModel m = new ConnectorModel(connectors.get(i).getConnectorType(), connectors.get(i).getPowerKW(), R.drawable.electrical);
+            connectorModels.add(m);
         }
 
-        return models;
+        return connectorModels;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                AddressData addressData = data.getParcelableExtra(Constants.ADDRESS_INTENT);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 }

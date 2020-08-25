@@ -1,4 +1,4 @@
-package com.example.e_carorder;
+package com.example.e_carorder.signInSignUp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,6 +24,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.e_carorder.Navigation_temporal;
+import com.example.e_carorder.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -350,8 +352,11 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 // ...
+                login_progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
+
+
         }
     }
 

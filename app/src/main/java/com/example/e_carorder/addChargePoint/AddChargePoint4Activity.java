@@ -1,8 +1,6 @@
-package com.example.e_carorder;
+package com.example.e_carorder.addChargePoint;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +11,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.e_carorder.Navigation_temporal;
+import com.example.e_carorder.R;
 import com.example.e_carorder.helpers.AddressInfoHelperClass;
 import com.example.e_carorder.helpers.ChargePointHelperClass;
 import com.example.e_carorder.helpers.ConnectorHelperClass;
@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class AddChargePoint3Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddChargePoint4Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner spinnerStatus;
     private String spinnerSelection;
@@ -32,7 +32,7 @@ public class AddChargePoint3Activity extends AppCompatActivity implements Adapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_charge_point3);
+        setContentView(R.layout.activity_add_charge_point4);
 
         final AddressInfoHelperClass addressInfoHelperClass = (AddressInfoHelperClass) getIntent().getSerializableExtra("addressInfoHelperClass");
         final ArrayList<ConnectorHelperClass> connectors = (ArrayList<ConnectorHelperClass>) getIntent().getSerializableExtra("connectors");
@@ -69,13 +69,11 @@ public class AddChargePoint3Activity extends AppCompatActivity implements Adapte
 
                 String id = latitude.substring(0,5) + longitude.substring(0,5);
 
-                Toast.makeText(AddChargePoint3Activity.this, "id: " + id, Toast.LENGTH_SHORT).show();
-
                 ChargePointHelperClass chargePointHelperClass = new ChargePointHelperClass(id, spinnerSelection, addressInfoHelperClass, connectors);
 
                 mDatabase.child(id).setValue(chargePointHelperClass);
 
-                Toast.makeText(AddChargePoint3Activity.this, "Charge point created correctly.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddChargePoint4Activity.this, "Charge point created correctly.", Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(v.getContext(), Navigation_temporal.class);
                 startActivity(i);

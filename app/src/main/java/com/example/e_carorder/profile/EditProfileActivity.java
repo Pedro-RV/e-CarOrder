@@ -1,9 +1,8 @@
-package com.example.e_carorder;
+package com.example.e_carorder.profile;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.e_carorder.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditProfile extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
     public static final String TAG = "TAG";
     EditText changeName, changeEmail;
@@ -82,7 +82,7 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(changeName.getText().toString().isEmpty() || changeEmail.getText().toString().isEmpty()){
-                    Toast.makeText(EditProfile.this, "One or many fields are empty.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity.this, "One or many fields are empty.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -97,19 +97,19 @@ public class EditProfile extends AppCompatActivity {
                         docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(EditProfile.this, "Profile updated.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditProfileActivity.this, "Profile updated.", Toast.LENGTH_SHORT).show();
 
-                                EditProfile.super.onBackPressed();
+                                EditProfileActivity.super.onBackPressed();
 
                                 finish();
                             }
                         });
-                        Toast.makeText(EditProfile.this, "Email is changed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, "Email is changed.", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(EditProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

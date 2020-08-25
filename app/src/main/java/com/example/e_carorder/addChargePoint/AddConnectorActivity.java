@@ -1,4 +1,4 @@
-package com.example.e_carorder;
+package com.example.e_carorder.addChargePoint;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.example.e_carorder.R;
 import com.example.e_carorder.helpers.AddressInfoHelperClass;
 import com.example.e_carorder.helpers.ConnectorHelperClass;
 
@@ -47,7 +47,7 @@ public class AddConnectorActivity extends AppCompatActivity implements AdapterVi
             public void onClick(View v) {
                 String powerKW = powerKW_et.getText().toString();
                 connectors.add(new ConnectorHelperClass(spinnerSelection, powerKW));
-                Intent i = new Intent(v.getContext(), AddChargePoint2Activity.class);
+                Intent i = new Intent(v.getContext(), AddChargePoint3Activity.class);
                 i.putExtra("addressInfoHelperClass", addressInfoHelperClass);
                 i.putExtra("connectors", connectors);
                 startActivity(i);

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddChargePoint3Activity">
+    tools:context=".addChargePoint.AddChargePoint3Activity">
 
     <LinearLayout
         android:id='@+id/layoutToolBar'
@@ -30,48 +30,52 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvChargePointStatus"
+        android:id="@+id/tvConnectors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="20dp"
-        android:text="Charge Point Status"
+        android:text="Connectors Info"
         android:textColor="@color/colorPrimaryText"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutToolBar" />
 
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="56dp"
-        android:text="Status:"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvChargePointStatus" />
-
-    <Spinner
-        android:id="@+id/spinnerStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/registerChargePointNextBtn2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toEndOf="@+id/tvStatus"
-        app:layout_constraintTop_toBottomOf="@+id/layoutToolBar" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutToolBar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewConnectors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/registerChargePointFinishBtn"
+        android:id="@+id/addBtn"
+        android:layout_width="146dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="68dp"
+        android:text="Add connector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.939"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/registerChargePointNextBtn2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="84dp"
-        android:text="Finish"
+        android:layout_marginBottom="52dp"
+        android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

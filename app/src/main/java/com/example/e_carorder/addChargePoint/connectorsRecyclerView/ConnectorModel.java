@@ -1,11 +1,11 @@
-package com.example.e_carorder.recyclerViewConnectors;
+package com.example.e_carorder.addChargePoint.connectorsRecyclerView;
 
-public class Model {
+public class ConnectorModel {
 
     private String connectorType, connectorPowerKW;
     private int imageConnector;
 
-    public Model(String connectorType, String connectorPowerKW, int imageConnector) {
+    public ConnectorModel(String connectorType, String connectorPowerKW, int imageConnector) {
         this.connectorType = connectorType;
         this.connectorPowerKW = connectorPowerKW;
         this.imageConnector = imageConnector;

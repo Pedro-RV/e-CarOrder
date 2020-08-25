@@ -12,9 +12,22 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/menuProfile"
-        android:name="com.example.e_carorder.ProfileFragment"
+        android:name="com.example.e_carorder.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/menuAdd"
+        android:name="com.example.e_carorder.addChargePoint.AddChargePoint1Fragment"
+        android:label="Add Charge Point"
+        tools:layout="@layout/fragment_add_charge_point1" />
+
+    <fragment
+        android:id="@+id/menuChats"
+        android:name="com.example.e_carorder.chats.ChatsFragment"
+        android:label="Chats"
+        tools:layout="@layout/fragment_chats" />
+
     <fragment
         android:id="@+id/menuNotifications"
         android:name="com.example.e_carorder.NotificationsFragment"
@@ -30,9 +43,5 @@
         android:name="com.example.e_carorder.SignOutFragment"
         android:label="Sign Out"
         tools:layout="@layout/fragment_sign_out" />
-    <fragment
-        android:id="@+id/menuAdd"
-        android:name="com.example.e_carorder.AddChargePoint1Fragment"
-        android:label="Add Charge Point"
-        tools:layout="@layout/fragment_add_charge_point1" />
+
 </navigation>

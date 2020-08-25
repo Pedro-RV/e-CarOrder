@@ -18,18 +18,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignInSignUpActivity">
+        <activity android:name=".chats.MessageActivity"></activity>
+        <activity android:name=".chats.AllUsersChatsActivity" />
+        <activity android:name=".addChargePoint.AddChargePoint2Activity" />
+        <activity android:name=".addChargePoint.AddChargePoint3Activity" />
+        <activity android:name=".signInSignUp.SignInSignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddChargePoint3Activity" />
-        <activity android:name=".AddConnectorActivity" />
-        <activity android:name=".AddChargePoint2Activity" />
+        <activity android:name=".addChargePoint.AddChargePoint4Activity" />
+        <activity android:name=".addChargePoint.AddConnectorActivity" />
         <activity android:name=".ChargePointInfoActivity" />
-        <activity android:name=".EditProfile" />
+        <activity android:name=".profile.EditProfileActivity" />
         <activity android:name=".Navigation_temporal" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -42,7 +45,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
     </application>
 
 </manifest>

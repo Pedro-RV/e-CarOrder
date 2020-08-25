@@ -1,6 +1,5 @@
-package com.example.e_carorder.recyclerViewConnectors;
+package com.example.e_carorder.addChargePoint.connectorsRecyclerView;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.e_carorder.R;
 
-public class MyHolder extends RecyclerView.ViewHolder {
+public class ConnectorHolder extends RecyclerView.ViewHolder {
 
     ImageView imageConnector;
     TextView connectorType, connectorPowerKW;
 
-    public MyHolder(@NonNull View itemView) {
+    public ConnectorHolder(@NonNull View itemView) {
         super(itemView);
 
         this.imageConnector = itemView.findViewById(R.id.imageConnector);
