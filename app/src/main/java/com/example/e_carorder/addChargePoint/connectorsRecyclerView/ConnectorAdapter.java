@@ -204,27 +204,58 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
             @Override
             public void onClick(View v) {
                 if(holder.checkInBtn.getVisibility() == View.VISIBLE){
-                    Calendar rightNow = Calendar.getInstance();
-                    int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
-                    int currentMinute = rightNow.get(Calendar.MINUTE);
 
-                    if(currentMinute < 10){
-                        holder.alertTV.setText("Alert, invaded parking! Registered at: " + currentHour + ":0" + currentMinute);
+                    FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(c);
+
+                    if(ContextCompat.checkSelfPermission(c, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                        Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
+                        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                if(location != null){
+                                    double userLatitude = location.getLatitude();
+                                    double userLongitude = location.getLongitude();
+
+                                    double chargePointLatitude = connectorModels.get(position).getChargePointLatitude();
+                                    double chargePointLongitude = connectorModels.get(position).getChargePointLongitude();
+
+                                    double distance = CalculationByDistance(userLatitude, userLongitude, chargePointLatitude, chargePointLongitude);
+
+                                    if(distance <= 1){
+                                        Calendar rightNow = Calendar.getInstance();
+                                        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
+                                        int currentMinute = rightNow.get(Calendar.MINUTE);
+
+                                        if(currentMinute < 10){
+                                            holder.alertTV.setText("Alert, invaded parking! Registered at: " + currentHour + ":0" + currentMinute);
+                                        } else{
+                                            holder.alertTV.setText("Alert, invaded parking! Registered at: " + currentHour + ":" + currentMinute);
+                                        }
+
+                                        holder.alertTV.setVisibility(View.VISIBLE);
+
+                                        Long currentDate = Calendar.getInstance().getTimeInMillis();
+
+                                        Map<String, Object> map = new HashMap<>();
+                                        map.put("alert", true);
+                                        map.put("alertDate", currentDate);
+
+                                        databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
+
+                                    }else{
+                                        Toast.makeText(c, "You have to be closer to the point.", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }else{
+                                    Toast.makeText(c, "You can't give an alert without location activated.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     } else{
-                        holder.alertTV.setText("Alert, invaded parking! Registered at: " + currentHour + ":" + currentMinute);
+                        Toast.makeText(c, "You must give location permits before trying to give an alert.", Toast.LENGTH_SHORT).show();
                     }
-
-                    holder.alertTV.setVisibility(View.VISIBLE);
-
-                    Long currentDate = Calendar.getInstance().getTimeInMillis();
-
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("alert", true);
-                    map.put("alertDate", currentDate);
-
-                    databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
-
                 }
+
             }
         });
 
