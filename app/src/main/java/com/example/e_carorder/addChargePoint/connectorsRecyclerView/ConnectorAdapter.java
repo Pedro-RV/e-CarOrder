@@ -33,8 +33,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
 
@@ -78,12 +81,52 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
 
         } else if(connectorModels.get(position).getCheckInUserId().isEmpty()){
             holder.checkInBtn.setVisibility(View.VISIBLE);
+            holder.alertBtn.setVisibility(View.VISIBLE);
+
+            if(connectorModels.get(position).getAlert()){
+                Long currentDate = Calendar.getInstance().getTimeInMillis();
+
+                Long alertDate = connectorModels.get(position).getAlertDate();
+
+                Long difference = currentDate - alertDate;
+
+                long minutesDiff = TimeUnit.MILLISECONDS.toMinutes(difference);
+
+                if(minutesDiff >= 180){
+                    holder.alertTV.setVisibility(View.GONE);
+
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("alert", false);
+                    map.put("alertDate", -1);
+
+                    databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
+
+                } else{
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(alertDate);
+
+                    int hourAlert = calendar.get(Calendar.HOUR);
+                    int minuteAlert = calendar.get(Calendar.MINUTE);
+
+                    if(minuteAlert < 10){
+                        holder.alertTV.setText("Alert, invaded parking! Registered at: " + hourAlert + ":0" + minuteAlert);
+                    } else{
+                        holder.alertTV.setText("Alert, invaded parking! Registered at: " + hourAlert + ":" + minuteAlert);
+                    }
+
+                    holder.alertTV.setVisibility(View.VISIBLE);
+
+                }
+
+            }
 
         } else if(!connectorModels.get(position).getCheckInUserId().equals(userId)) {
             holder.inUseBtn.setVisibility(View.VISIBLE);
+            holder.alertBtn.setVisibility(View.VISIBLE);
 
         } else{
             holder.checkOutBtn.setVisibility(View.VISIBLE);
+            holder.alertBtn.setVisibility(View.VISIBLE);
 
         }
 
@@ -116,6 +159,16 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
                                     holder.checkInBtn.setVisibility(View.GONE);
                                     holder.checkOutBtn.setVisibility(View.VISIBLE);
 
+                                    if(holder.alertTV.getVisibility() == View.VISIBLE){
+                                        holder.alertTV.setVisibility(View.GONE);
+
+                                        Map<String, Object> mapAlert = new HashMap<>();
+                                        mapAlert.put("alert", false);
+                                        mapAlert.put("alertDate", -1);
+
+                                        databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(mapAlert);
+                                    }
+
                                 }else{
                                     Toast.makeText(c, "You have to be closer to the point.", Toast.LENGTH_SHORT).show();
                                 }
@@ -143,6 +196,35 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
 
                 holder.checkOutBtn.setVisibility(View.GONE);
                 holder.checkInBtn.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        holder.alertBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.checkInBtn.getVisibility() == View.VISIBLE){
+                    Calendar rightNow = Calendar.getInstance();
+                    int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
+                    int currentMinute = rightNow.get(Calendar.MINUTE);
+
+                    if(currentMinute < 10){
+                        holder.alertTV.setText("Alert, invaded parking! Registered at: " + currentHour + ":0" + currentMinute);
+                    } else{
+                        holder.alertTV.setText("Alert, invaded parking! Registered at: " + currentHour + ":" + currentMinute);
+                    }
+
+                    holder.alertTV.setVisibility(View.VISIBLE);
+
+                    Long currentDate = Calendar.getInstance().getTimeInMillis();
+
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("alert", true);
+                    map.put("alertDate", currentDate);
+
+                    databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
+
+                }
             }
         });
 

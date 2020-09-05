@@ -13,8 +13,8 @@ import com.example.e_carorder.R;
 public class ConnectorHolder extends RecyclerView.ViewHolder {
 
     ImageView imageConnector;
-    TextView connectorType, connectorPowerKW;
-    Button checkInBtn, checkOutBtn, inUseBtn;
+    TextView connectorType, connectorPowerKW, alertTV;
+    Button checkInBtn, checkOutBtn, inUseBtn, alertBtn;
 
     public ConnectorHolder(@NonNull View itemView) {
         super(itemView);
@@ -25,6 +25,8 @@ public class ConnectorHolder extends RecyclerView.ViewHolder {
         this.checkInBtn = itemView.findViewById(R.id.checkInBtn);
         this.checkOutBtn = itemView.findViewById(R.id.checkOutBtn);
         this.inUseBtn = itemView.findViewById(R.id.inUseBtn);
+        this.alertBtn = itemView.findViewById(R.id.alertBtn);
+        this.alertTV = itemView.findViewById(R.id.alertTV);
 
     }
 }

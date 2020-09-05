@@ -5,8 +5,10 @@ public class ConnectorModel {
     private String chargePointId, connectorId, checkInUserId, connectorType, connectorPowerKW;
     private int imageConnector;
     private double chargePointLatitude, chargePointLongitude;
+    private Boolean alert;
+    private long alertDate;
 
-    public ConnectorModel(String chargePointId, String connectorId, String checkInUserId, String connectorType, String connectorPowerKW, int imageConnector, double chargePointLatitude, double chargePointLongitude) {
+    public ConnectorModel(String chargePointId, String connectorId, String checkInUserId, String connectorType, String connectorPowerKW, int imageConnector, double chargePointLatitude, double chargePointLongitude, Boolean alert, long alertDate) {
         this.chargePointId = chargePointId;
         this.connectorId = connectorId;
         this.checkInUserId = checkInUserId;
@@ -15,6 +17,8 @@ public class ConnectorModel {
         this.imageConnector = imageConnector;
         this.chargePointLatitude = chargePointLatitude;
         this.chargePointLongitude = chargePointLongitude;
+        this.alert = alert;
+        this.alertDate = alertDate;
     }
 
     public String getChargePointId() {
@@ -79,5 +83,21 @@ public class ConnectorModel {
 
     public void setChargePointLongitude(double chargePointLongitude) {
         this.chargePointLongitude = chargePointLongitude;
+    }
+
+    public Boolean getAlert() {
+        return alert;
+    }
+
+    public void setAlert(Boolean alert) {
+        this.alert = alert;
+    }
+
+    public long getAlertDate() {
+        return alertDate;
+    }
+
+    public void setAlertDate(long alertDate) {
+        this.alertDate = alertDate;
     }
 }

@@ -80,7 +80,9 @@ public class ChargePointInfoActivity extends AppCompatActivity {
                                     dsConnector.child("powerKW").getValue().toString(),
                                     R.drawable.electrical,
                                     latitude,
-                                    longitude);
+                                    longitude,
+                                    (Boolean) dsConnector.child("alert").getValue(),
+                                    (long) dsConnector.child("alertDate").getValue());
 
                             connectors.add(m);
                         }
