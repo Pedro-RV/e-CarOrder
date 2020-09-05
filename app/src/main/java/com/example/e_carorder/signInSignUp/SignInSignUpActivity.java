@@ -1,6 +1,7 @@
 package com.example.e_carorder.signInSignUp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,8 +41,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -177,11 +183,12 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
                 final EditText resetMail = new EditText(v.getContext());
                 resetMail.setHint("Email");
                 resetMail.setBackgroundColor(Color.rgb(247,242,255));
-                resetMail.setTextSize(21);
+                resetMail.setTextSize(18);
                 FrameLayout container = new FrameLayout(SignInSignUpActivity.this);
                 FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
                 params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params.height = 112;
                 resetMail.setLayoutParams(params);
                 container.addView(resetMail);
 
@@ -190,7 +197,7 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
                 passwordResetDialog.setMessage("Enter your email to receive reset link.");
                 passwordResetDialog.setView(container);
 
-                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                passwordResetDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // extract the email and send reset link
@@ -210,7 +217,7 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
                     }
                 });
 
-                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                passwordResetDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // close the dialog
@@ -244,9 +251,14 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String name = register_name.getText().toString();
+                final String username = register_name.getText().toString();
                 final String email = register_email.getText().toString().trim();
-                String password = register_password.getText().toString().trim();
+                final String password = register_password.getText().toString().trim();
+
+                if(TextUtils.isEmpty(username)){
+                    register_name.setError("Username is required.");
+                    return;
+                }
 
                 if(TextUtils.isEmpty(email)){
                     register_email.setError("Email is required.");
@@ -263,55 +275,77 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
                     return;
                 }
 
-                register_progressBar.setVisibility(View.VISIBLE);
+                CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("users");
 
-                // register the user in firebase
-
-                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-
-                            // send verification link
-
-                            FirebaseUser fuser = mAuth.getCurrentUser();
-                            fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(SignInSignUpActivity.this, "Verification email has been sent.", Toast.LENGTH_SHORT).show();
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e == null){
+                            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                if (documentSnapshot.exists()) {
+                                    if(documentSnapshot.getString("username").equals(username)){
+                                        register_name.setError("This username is already in use. Choose another.");
+                                        return;
+                                    }
                                 }
-                            }).addOnFailureListener(new OnFailureListener() {
+                            }
+
+                            register_progressBar.setVisibility(View.VISIBLE);
+
+                            // register the user in firebase
+
+                            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: Email not sent " + e.getMessage());
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()){
+
+                                        // send verification link
+
+                                        FirebaseUser fuser = mAuth.getCurrentUser();
+                                        fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(SignInSignUpActivity.this, "Verification email has been sent.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d(TAG, "onFailure: Email not sent " + e.getMessage());
+                                            }
+                                        });
+
+
+                                        Toast.makeText(SignInSignUpActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
+
+                                        final String userID = mAuth.getCurrentUser().getUid();
+                                        DocumentReference documentReference = fStore.collection("users").document(userID);
+                                        Map<String, Object> user = new HashMap<>();
+                                        user.put("username", username);
+                                        user.put("email", email);
+                                        user.put("status", "offline");
+                                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "onSuccess: user profile is created for " + userID);
+                                            }
+                                        });
+
+                                        showSigninForm();
+                                        register_progressBar.setVisibility(View.INVISIBLE);
+
+                                    }else {
+                                        Toast.makeText(SignInSignUpActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        register_progressBar.setVisibility(View.INVISIBLE);
+
+                                    }
                                 }
                             });
-
-
-                            Toast.makeText(SignInSignUpActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
-
-                            final String userID = mAuth.getCurrentUser().getUid();
-                            DocumentReference documentReference = fStore.collection("users").document(userID);
-                            Map<String, Object> user = new HashMap<>();
-                            user.put("fName", name);
-                            user.put("email", email);
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "onSuccess: user profile is created for " + userID);
-                                }
-                            });
-
-                            showSigninForm();
-                            register_progressBar.setVisibility(View.INVISIBLE);
-
-                        }else {
-                            Toast.makeText(SignInSignUpActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            register_progressBar.setVisibility(View.INVISIBLE);
 
                         }
                     }
                 });
+
+
             }
         });
 

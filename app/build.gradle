@@ -46,13 +46,15 @@ dependencies {
 
     // Rounded Image View
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    // Added also for showing rounded image views (temporal, not sure it works well)
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // Navigation Component
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc03'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc03'
 
-    // Picasso Library (to show firebase stored images)
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    // Glide Library (to show firebase stored images)
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
 
     // Fetch data from internet URL
     implementation 'com.android.volley:volley:1.1.1'

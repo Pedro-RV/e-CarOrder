@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.e_carorder.profile.EditProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +30,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 public class Navigation_temporal extends AppCompatActivity {
 
@@ -81,8 +82,8 @@ public class Navigation_temporal extends AppCompatActivity {
                 if(task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
-                        String name = document.getString("fName");
-                        nameProfile.setText(name);
+                        String username = document.getString("username");
+                        nameProfile.setText(username);
                     }
                 }
             }
@@ -95,7 +96,7 @@ public class Navigation_temporal extends AppCompatActivity {
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(imageProfile);
+                Glide.with(getApplicationContext()).load(uri).into(imageProfile);
             }
         });
 

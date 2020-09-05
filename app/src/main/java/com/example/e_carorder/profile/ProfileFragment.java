@@ -2,6 +2,7 @@ package com.example.e_carorder.profile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,18 +11,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.e_carorder.R;
 import com.example.e_carorder.profile.EditProfileActivity;
+import com.example.e_carorder.signInSignUp.SignInSignUpActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,12 +40,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
-
 
 public class ProfileFragment extends Fragment {
     public static final String TAG = "TAG";
-    private TextView name, email;
+    private TextView username, email;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
     private String userID;
@@ -74,7 +79,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        name = view.findViewById(R.id.profile_name);
+        username = view.findViewById(R.id.profile_name);
         email = view.findViewById(R.id.profile_email);
         resetPasswordLocal = view.findViewById(R.id.resetPasswordLocal);
 
@@ -89,7 +94,7 @@ public class ProfileFragment extends Fragment {
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(profileImage);
+                Glide.with(getContext()).load(uri).into(profileImage);
             }
         });
 
@@ -134,7 +139,7 @@ public class ProfileFragment extends Fragment {
             public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                 if(e == null){
                     if(documentSnapshot.exists()){
-                        name.setText(documentSnapshot.getString("fName"));
+                        username.setText(documentSnapshot.getString("username"));
                         email.setText(documentSnapshot.getString("email"));
                     }else {
                         Log.d(TAG, "onEvent: Document do not exists");
@@ -147,40 +152,102 @@ public class ProfileFragment extends Fragment {
         resetPasswordLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final EditText resetPassword = new EditText(v.getContext());
-                AlertDialog.Builder passwordChangeDialog = new AlertDialog.Builder(v.getContext());
-                passwordChangeDialog.setTitle("Change Password ?");
-                passwordChangeDialog.setMessage("Enter new password.");
-                passwordChangeDialog.setView(resetPassword);
+                resetPassword.setHint("Password");
+                resetPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                resetPassword.setBackgroundColor(Color.rgb(247,242,255));
+                resetPassword.setTextSize(18);
 
-                passwordChangeDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                final EditText repeatResetPassword = new EditText(v.getContext());
+                repeatResetPassword.setHint("Repeat password");
+                repeatResetPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                repeatResetPassword.setBackgroundColor(Color.rgb(247,242,255));
+                repeatResetPassword.setTextSize(18);
+
+                LinearLayout.LayoutParams params_resetPassword = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params_resetPassword.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params_resetPassword.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params_resetPassword.height = 112;
+
+                resetPassword.setLayoutParams(params_resetPassword);
+
+                LinearLayout.LayoutParams params_repeatResetPassword = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params_repeatResetPassword.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params_repeatResetPassword.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params_repeatResetPassword.height = 112;
+                params_repeatResetPassword.topMargin = 50;
+
+                repeatResetPassword.setLayoutParams(params_repeatResetPassword);
+
+                LinearLayout layout = new LinearLayout(v.getContext());
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.addView(resetPassword);
+                layout.addView(repeatResetPassword);
+
+                final AlertDialog passwordChangeDialog = new AlertDialog.Builder(v.getContext())
+                        .setTitle("Change Password ?")
+                        .setMessage("Enter new password.")
+                        .setView(layout)
+                        .setNegativeButton("Cancel", null)
+                        .setPositiveButton("Accept", null)
+                        .create();
+
+
+                passwordChangeDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // change password
-                        String newPassword = resetPassword.getText().toString();
-                        user.updatePassword(newPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    public void onShow(final DialogInterface dialog) {
+
+                        Button positive = passwordChangeDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        Button negative = passwordChangeDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+                        positive.setOnClickListener(new View.OnClickListener() {
+
                             @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(getContext(), "Password reset successfully.", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getContext(), "Password reset failed.", Toast.LENGTH_SHORT).show();
+                            public void onClick(View view) {
+                                // change password
+                                String newPassword = resetPassword.getText().toString();
+                                String newPasswordRepeated = repeatResetPassword.getText().toString();
+
+                                if(newPassword.isEmpty() || newPasswordRepeated.isEmpty()){
+                                    resetPassword.setError("Both fields must be filled.");
+
+                                } else if(newPassword.equals(newPasswordRepeated)) {
+                                    user.updatePassword(newPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getContext(), "Password reset successfully.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getContext(), "Password reset failed.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                    dialog.dismiss();
+
+                                } else{
+                                        resetPassword.setError("Passwords do not match.");
+
+                                }
+
                             }
                         });
+
+                        negative.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+
                     }
                 });
 
-                passwordChangeDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // close the dialog
-                    }
-                });
-
-                passwordChangeDialog.create().show();
+                passwordChangeDialog.show();
 
             }
         });
@@ -190,7 +257,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 // open gallery
                 Intent i = new Intent(v.getContext(), EditProfileActivity.class);
-                i.putExtra("fullName", name.getText().toString());
+                i.putExtra("username", username.getText().toString());
                 i.putExtra("email", email.getText().toString());
                 startActivity(i);
 

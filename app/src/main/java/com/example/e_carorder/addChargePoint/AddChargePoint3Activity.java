@@ -50,7 +50,7 @@ public class AddChargePoint3Activity extends AppCompatActivity  {
         addBtn = findViewById(R.id.addBtn);
         registerChargePointNextBtn2 = findViewById(R.id.registerChargePointNextBtn2);
 
-        recyclerView = findViewById(R.id.recyclerViewConnectors);
+        recyclerView = findViewById(R.id.recyclerViewConnectorsCPRegistration);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         connectorAdapter = new ConnectorAdapter(this, createConnectorsList());
@@ -87,7 +87,7 @@ public class AddChargePoint3Activity extends AppCompatActivity  {
         ArrayList<ConnectorModel> connectorModels = new ArrayList<>();
 
         for(int i=0; i < connectors.size(); i++){
-            ConnectorModel m = new ConnectorModel(connectors.get(i).getConnectorType(), connectors.get(i).getPowerKW(), R.drawable.electrical);
+            ConnectorModel m = new ConnectorModel(connectors.get(i).getConnectorType(), connectors.get(i).getPowerKW(), R.drawable.electrical, false);
             connectorModels.add(m);
         }
 

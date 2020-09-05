@@ -96,13 +96,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     Geocoder geocoder = new Geocoder(getContext());
                     try {
                         addressList = geocoder.getFromLocationName(location, 1);
+                        if(addressList.size() != 0){
+                            Address address = addressList.get(0);
+                            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                        }
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    Address address = addressList.get(0);
-                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
                 }
 
                 return false;
@@ -190,18 +192,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        /*map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                String markerTitle = marker.getTitle();
-
-                Intent i = new Intent(getContext(), ChargePointInfoActivity.class);
-                i.putExtra("title", markerTitle);
-                startActivity(i);
-
-                return false;
-            }
-        });*/
     }
 
     private void enableUserLocation() {

@@ -57,7 +57,9 @@ public class AddChargePoint4Activity extends AppCompatActivity implements Adapte
                 String longitude = Double.toString(addressInfoHelperClass.getLongitude());
 
                 latitude = latitude.replace(".", "");
+                latitude = latitude.replace("-", "");
                 longitude = longitude.replace(".", "");
+                longitude = longitude.replace("-", "");
 
                 if(latitude.length() < 5){
                     latitude = latitude + "0000";

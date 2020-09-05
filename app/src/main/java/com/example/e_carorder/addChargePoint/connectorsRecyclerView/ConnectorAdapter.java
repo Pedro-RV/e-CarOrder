@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +27,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
     @Override
     public ConnectorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.connector_item, null);
 
         return new ConnectorHolder(view);
     }
@@ -37,6 +38,20 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
         holder.connectorType.setText(connectorModels.get(position).getConnectorType());
         holder.connectorPowerKW.setText(connectorModels.get(position).getConnectorPowerKW());
         holder.imageConnector.setImageResource(connectorModels.get(position).getImageConnector());
+
+        if(connectorModels.get(position).getActivateBtn()){
+            holder.checkInBtn.setVisibility(View.VISIBLE);
+
+        } else{
+            android.view.ViewGroup.LayoutParams connectorTypeParams = holder.connectorType.getLayoutParams();
+            connectorTypeParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            holder.connectorType.setLayoutParams(connectorTypeParams);
+
+            android.view.ViewGroup.LayoutParams connectorPowerKWParams = holder.connectorPowerKW.getLayoutParams();
+            connectorPowerKWParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            holder.connectorPowerKW.setLayoutParams(connectorPowerKWParams);
+
+        }
 
     }
 

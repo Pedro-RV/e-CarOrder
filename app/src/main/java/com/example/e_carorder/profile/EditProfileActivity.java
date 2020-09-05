@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.e_carorder.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,7 +27,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +48,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         Intent data = getIntent();
-        String fullName = data.getStringExtra("fullName");
+        String username = data.getStringExtra("username");
         String email = data.getStringExtra("email");
 
         fAuth = FirebaseAuth.getInstance();
@@ -65,7 +65,7 @@ public class EditProfileActivity extends AppCompatActivity {
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(changeImage);
+                Glide.with(getApplicationContext()).load(uri).into(changeImage);
             }
         });
 
@@ -117,10 +117,10 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        changeName.setText(fullName);
+        changeName.setText(username);
         changeEmail.setText(email);
 
-        Log.d(TAG, "onCreate: " + fullName + " " + email);
+        Log.d(TAG, "onCreate: " + username + " " + email);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(changeImage);
+                        Glide.with(getApplicationContext()).load(uri).into(changeImage);
                     }
                 });
 

@@ -1,6 +1,7 @@
 package com.example.e_carorder.addChargePoint.connectorsRecyclerView;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ public class ConnectorHolder extends RecyclerView.ViewHolder {
 
     ImageView imageConnector;
     TextView connectorType, connectorPowerKW;
+    Button checkInBtn;
 
     public ConnectorHolder(@NonNull View itemView) {
         super(itemView);
@@ -20,6 +22,7 @@ public class ConnectorHolder extends RecyclerView.ViewHolder {
         this.imageConnector = itemView.findViewById(R.id.imageConnector);
         this.connectorType = itemView.findViewById(R.id.connectorType);
         this.connectorPowerKW = itemView.findViewById(R.id.connectorPowerKW);
+        this.checkInBtn = itemView.findViewById(R.id.checkInBtn);
 
     }
 }
