@@ -58,7 +58,7 @@ public class AllUsersChatsActivity extends AppCompatActivity {
                 if(e == null){
                     for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
                         if(documentSnapshot.exists()){
-                            String name = documentSnapshot.getString("fName");
+                            String name = documentSnapshot.getString("username");
 
                             if(!documentSnapshot.getId().equals(firebaseUser.getUid())){
                                 mUsers.add(new UserModel(documentSnapshot.getId(), name, R.mipmap.ic_launcher));

@@ -4,14 +4,23 @@ import java.io.Serializable;
 
 public class ConnectorHelperClass implements Serializable {
 
-    private String connectorType, powerKW;
+    private String checkInUserId, connectorType, powerKW;
 
     public ConnectorHelperClass(){
     }
 
-    public ConnectorHelperClass(String connectorType, String powerKW) {
+    public ConnectorHelperClass(String checkInUserId, String connectorType, String powerKW) {
+        this.checkInUserId = checkInUserId;
         this.connectorType = connectorType;
         this.powerKW = powerKW;
+    }
+
+    public String getCheckInUserId() {
+        return checkInUserId;
+    }
+
+    public void setCheckInUserId(String checkInUserId) {
+        this.checkInUserId = checkInUserId;
     }
 
     public String getConnectorType() {

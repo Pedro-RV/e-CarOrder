@@ -6,6 +6,7 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGreen">#32CD32</color>
+    <color name="colorLightPurple">#BA55D3</color>
     <color name="colorRed">#FF3333</color>
 
     <color name="colorPrimaryTrans">#a0673AB7</color>

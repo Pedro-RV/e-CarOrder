@@ -2,15 +2,43 @@ package com.example.e_carorder.addChargePoint.connectorsRecyclerView;
 
 public class ConnectorModel {
 
-    private String connectorType, connectorPowerKW;
+    private String chargePointId, connectorId, checkInUserId, connectorType, connectorPowerKW;
     private int imageConnector;
-    private Boolean activateBtn;
+    private double chargePointLatitude, chargePointLongitude;
 
-    public ConnectorModel(String connectorType, String connectorPowerKW, int imageConnector, Boolean activateBtn) {
+    public ConnectorModel(String chargePointId, String connectorId, String checkInUserId, String connectorType, String connectorPowerKW, int imageConnector, double chargePointLatitude, double chargePointLongitude) {
+        this.chargePointId = chargePointId;
+        this.connectorId = connectorId;
+        this.checkInUserId = checkInUserId;
         this.connectorType = connectorType;
         this.connectorPowerKW = connectorPowerKW;
         this.imageConnector = imageConnector;
-        this.activateBtn = activateBtn;
+        this.chargePointLatitude = chargePointLatitude;
+        this.chargePointLongitude = chargePointLongitude;
+    }
+
+    public String getChargePointId() {
+        return chargePointId;
+    }
+
+    public void setChargePointId(String chargePointId) {
+        this.chargePointId = chargePointId;
+    }
+
+    public String getConnectorId() {
+        return connectorId;
+    }
+
+    public void setConnectorId(String connectorId) {
+        this.connectorId = connectorId;
+    }
+
+    public String getCheckInUserId() {
+        return checkInUserId;
+    }
+
+    public void setCheckInUserId(String checkInUserId) {
+        this.checkInUserId = checkInUserId;
     }
 
     public String getConnectorType() {
@@ -37,11 +65,19 @@ public class ConnectorModel {
         this.imageConnector = imageConnector;
     }
 
-    public Boolean getActivateBtn() {
-        return activateBtn;
+    public double getChargePointLatitude() {
+        return chargePointLatitude;
     }
 
-    public void setActivateBtn(Boolean activateBtn) {
-        this.activateBtn = activateBtn;
+    public void setChargePointLatitude(double chargePointLatitude) {
+        this.chargePointLatitude = chargePointLatitude;
+    }
+
+    public double getChargePointLongitude() {
+        return chargePointLongitude;
+    }
+
+    public void setChargePointLongitude(double chargePointLongitude) {
+        this.chargePointLongitude = chargePointLongitude;
     }
 }

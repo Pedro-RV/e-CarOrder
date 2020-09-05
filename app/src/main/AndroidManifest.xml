@@ -31,7 +31,7 @@
         </activity>
         <activity android:name=".addChargePoint.AddChargePoint4Activity" />
         <activity android:name=".addChargePoint.AddConnectorActivity" />
-        <activity android:name=".ChargePointInfoActivity" />
+        <activity android:name=".chargePointInfo.ChargePointInfoActivity" />
         <activity android:name=".profile.EditProfileActivity" />
         <activity android:name=".Navigation_temporal" />
         <!--

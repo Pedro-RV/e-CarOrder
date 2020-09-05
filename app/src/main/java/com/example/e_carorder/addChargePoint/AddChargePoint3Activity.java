@@ -87,7 +87,7 @@ public class AddChargePoint3Activity extends AppCompatActivity  {
         ArrayList<ConnectorModel> connectorModels = new ArrayList<>();
 
         for(int i=0; i < connectors.size(); i++){
-            ConnectorModel m = new ConnectorModel(connectors.get(i).getConnectorType(), connectors.get(i).getPowerKW(), R.drawable.electrical, false);
+            ConnectorModel m = new ConnectorModel("", "", "", connectors.get(i).getConnectorType(), connectors.get(i).getPowerKW(), R.drawable.electrical, 0, 0);
             connectorModels.add(m);
         }
 

@@ -1,4 +1,4 @@
-package com.example.e_carorder;
+package com.example.e_carorder.chargePointInfo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.e_carorder.R;
 import com.example.e_carorder.addChargePoint.connectorsRecyclerView.ConnectorAdapter;
 import com.example.e_carorder.addChargePoint.connectorsRecyclerView.ConnectorModel;
-import com.example.e_carorder.helpers.ConnectorHelperClass;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +34,6 @@ public class ChargePointInfoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ConnectorAdapter connectorAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class ChargePointInfoActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("ChargePoints");
 
-        String id = getIntent().getStringExtra("id");
+        final String chargePointId = getIntent().getStringExtra("chargePointId").substring(4);;
 
         recyclerView = findViewById(R.id.recyclerViewConnectorsCPInfo);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -51,7 +53,7 @@ public class ChargePointInfoActivity extends AppCompatActivity {
         town = findViewById(R.id.town);
         status = findViewById(R.id.status);
 
-        Query checkChargePoint = mDatabase.orderByChild("id").equalTo(id);
+        Query checkChargePoint = mDatabase.orderByChild("id").equalTo(chargePointId);
 
         checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -64,14 +66,21 @@ public class ChargePointInfoActivity extends AppCompatActivity {
                         stateOrProvince.setText("StateOrProvince: " + ds.child("addressInfo").child("stateOrProvince").getValue().toString());
                         town.setText("Town: " + ds.child("addressInfo").child("town").getValue().toString());
 
+                        Double latitude = (Double) ds.child("addressInfo").child("latitude").getValue();
+                        Double longitude = (Double) ds.child("addressInfo").child("longitude").getValue();
+
                         DataSnapshot dataSnapshotConnectors = ds.child("connectors");
 
                         for(DataSnapshot dsConnector : dataSnapshotConnectors.getChildren()){
                             ConnectorModel m = new ConnectorModel(
+                                    chargePointId,
+                                    dsConnector.getKey(),
+                                    dsConnector.child("checkInUserId").getValue().toString(),
                                     dsConnector.child("connectorType").getValue().toString(),
                                     dsConnector.child("powerKW").getValue().toString(),
                                     R.drawable.electrical,
-                                    true);
+                                    latitude,
+                                    longitude);
 
                             connectors.add(m);
                         }

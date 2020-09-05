@@ -131,7 +131,7 @@ public class ChatsFragment extends Fragment {
                         if(documentSnapshot.exists()){
                             String userId = documentSnapshot.getId();
 
-                            UserModel user = new UserModel(documentSnapshot.getId(), documentSnapshot.getString("fName"), R.mipmap.ic_launcher);
+                            UserModel user = new UserModel(documentSnapshot.getId(), documentSnapshot.getString("username"), R.mipmap.ic_launcher);
 
                             for(String id: usersIdList){
                                 if(userId.equals(id)){

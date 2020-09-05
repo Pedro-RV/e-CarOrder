@@ -46,7 +46,7 @@ public class AddConnectorActivity extends AppCompatActivity implements AdapterVi
             @Override
             public void onClick(View v) {
                 String powerKW = powerKW_et.getText().toString();
-                connectors.add(new ConnectorHelperClass(spinnerSelection, powerKW));
+                connectors.add(new ConnectorHelperClass("", spinnerSelection, powerKW));
                 Intent i = new Intent(v.getContext(), AddChargePoint3Activity.class);
                 i.putExtra("addressInfoHelperClass", addressInfoHelperClass);
                 i.putExtra("connectors", connectors);

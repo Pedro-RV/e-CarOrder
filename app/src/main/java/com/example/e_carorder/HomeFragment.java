@@ -18,8 +18,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.e_carorder.chargePointInfo.ChargePointInfoActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,20 +33,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
@@ -170,7 +164,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             .position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)))
                             .title(title)
                             .icon(BitmapDescriptorFactory.defaultMarker(color))
-                            .snippet(id)
+                            .snippet("Id: " + id)
                     );
                 }
             }
@@ -184,10 +178,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                String id = marker.getSnippet();
+                String chargePointId = marker.getSnippet();
 
                 Intent i = new Intent(getContext(), ChargePointInfoActivity.class);
-                i.putExtra("id", id);
+                i.putExtra("chargePointId", chargePointId);
                 startActivity(i);
             }
         });

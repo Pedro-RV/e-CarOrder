@@ -7,4 +7,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ButtonCheckInTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorLightPurple</item>
+
+    </style>
+
+    <style name="ButtonCheckOutTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorGreen</item>
+
+    </style>
+
+    <style name="ButtonInUseTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorRed</item>
+
+    </style>
+
 </resources>

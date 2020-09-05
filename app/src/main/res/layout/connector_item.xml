@@ -50,6 +50,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Check-in"
+            android:theme="@style/ButtonCheckInTheme"
+            android:layout_toRightOf="@+id/connectorType"
+            android:layout_toEndOf="@+id/connectorType"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/checkOutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Check-out"
+            android:theme="@style/ButtonCheckOutTheme"
+            android:layout_toRightOf="@+id/connectorType"
+            android:layout_toEndOf="@+id/connectorType"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/inUseBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In use"
+            android:theme="@style/ButtonInUseTheme"
             android:layout_toRightOf="@+id/connectorType"
             android:layout_toEndOf="@+id/connectorType"
             android:layout_marginLeft="35dp"
