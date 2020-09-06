@@ -12,8 +12,8 @@ import com.example.e_carorder.R;
 
 public class ConnectorHolder extends RecyclerView.ViewHolder {
 
-    ImageView imageConnector;
-    TextView connectorType, connectorPowerKW, alertTV;
+    ImageView imageConnector, imageUserUsingConnector;
+    TextView connectorType, connectorPowerKW, alertTV, usernameUserUsingConnector;
     Button checkInBtn, checkOutBtn, inUseBtn, alertBtn;
 
     public ConnectorHolder(@NonNull View itemView) {
@@ -27,6 +27,8 @@ public class ConnectorHolder extends RecyclerView.ViewHolder {
         this.inUseBtn = itemView.findViewById(R.id.inUseBtn);
         this.alertBtn = itemView.findViewById(R.id.alertBtn);
         this.alertTV = itemView.findViewById(R.id.alertTV);
+        this.imageUserUsingConnector = itemView.findViewById(R.id.imageUserUsingConnector);
+        this.usernameUserUsingConnector = itemView.findViewById(R.id.usernameUserUsingConnector);
 
     }
 }

@@ -2,8 +2,10 @@ package com.example.e_carorder.addChargePoint.connectorsRecyclerView;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +13,18 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.e_carorder.R;
 import com.example.e_carorder.chargePointInfo.ChargePointInfoActivity;
+import com.example.e_carorder.chargePointInfo.userInfoActivity;
+import com.example.e_carorder.chats.AllUsersChatsActivity;
+import com.example.e_carorder.chats.usersRecyclerView.UserAdapter;
+import com.example.e_carorder.chats.usersRecyclerView.UserModel;
+import com.example.e_carorder.profile.EditProfileActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,8 +38,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -123,6 +139,52 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
         } else if(!connectorModels.get(position).getCheckInUserId().equals(userId)) {
             holder.inUseBtn.setVisibility(View.VISIBLE);
             holder.alertBtn.setVisibility(View.VISIBLE);
+
+            DocumentReference documentReference = FirebaseFirestore.getInstance()
+                    .collection("users").document(connectorModels.get(position).getCheckInUserId());
+
+            documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                    if(e == null){
+                        if(documentSnapshot.exists()){
+                            final String usernameUsingConnector = documentSnapshot.getString("username");
+
+                            holder.usernameUserUsingConnector.setText(usernameUsingConnector);
+                            holder.usernameUserUsingConnector.setVisibility(View.VISIBLE);
+
+                            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+                            StorageReference profileRef = storageReference.child("users/"+connectorModels.get(position).getCheckInUserId()+"/profile.jpg");
+                            profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Glide.with(c).load(uri).into(holder.imageUserUsingConnector);
+                                }
+                            });
+
+                            holder.imageUserUsingConnector.setVisibility(View.VISIBLE);
+
+                            holder.usernameUserUsingConnector.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent i = new Intent(v.getContext(), userInfoActivity.class);
+                                    i.putExtra("userUsingConnectorId", connectorModels.get(position).getCheckInUserId());
+                                    i.putExtra("usernameUsingConnector", usernameUsingConnector);
+                                    c.startActivity(i);
+                                }
+                            });
+
+
+                        }
+                    }
+                }
+            });
+
+
+
+
+
 
         } else{
             holder.checkOutBtn.setVisibility(View.VISIBLE);
