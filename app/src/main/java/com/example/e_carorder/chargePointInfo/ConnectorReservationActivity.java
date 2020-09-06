@@ -77,8 +77,6 @@ public class ConnectorReservationActivity extends AppCompatActivity {
 
         recyclerViewAllReservations.setLayoutManager(new LinearLayoutManager(this));
 
-
-
         Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
 
         checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -97,11 +95,11 @@ public class ConnectorReservationActivity extends AppCompatActivity {
                                  String reservationUserId = reservations.get(i).getReservationUserId();
                                  String reservationDate = reservations.get(i).getReservationDate();
 
-                                 ReservationModel add = new ReservationModel(
+                                 ReservationModel addReservationModel = new ReservationModel(
                                         reservationUserId,
                                         reservationDate);
 
-                                  mReservations.add(add);
+                                  mReservations.add(addReservationModel);
 
                             }
 

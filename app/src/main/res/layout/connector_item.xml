@@ -126,6 +126,15 @@
             android:layout_alignParentEnd="true"
             />
 
+        <Button
+            android:id="@+id/queueBtn"
+            android:text="Join queue"
+            android:theme="@style/ButtonQueueTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageConnector"
+            android:visibility="gone" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import com.example.e_carorder.R;
 import com.example.e_carorder.helpers.AddressInfoHelperClass;
 import com.example.e_carorder.helpers.ConnectorHelperClass;
+import com.example.e_carorder.helpers.QueueHelperClass;
 import com.example.e_carorder.helpers.ReservationUserHelperClass;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class AddConnectorActivity extends AppCompatActivity implements AdapterVi
             @Override
             public void onClick(View v) {
                 String powerKW = powerKW_et.getText().toString();
-                connectors.add(new ConnectorHelperClass("", spinnerSelection, powerKW, false, -1, new ArrayList<ReservationUserHelperClass>()));
+                connectors.add(new ConnectorHelperClass("", spinnerSelection, powerKW, false, -1, new ArrayList<ReservationUserHelperClass>(), new ArrayList<QueueHelperClass>()));
                 Intent i = new Intent(v.getContext(), AddChargePoint3Activity.class);
                 i.putExtra("addressInfoHelperClass", addressInfoHelperClass);
                 i.putExtra("connectors", connectors);

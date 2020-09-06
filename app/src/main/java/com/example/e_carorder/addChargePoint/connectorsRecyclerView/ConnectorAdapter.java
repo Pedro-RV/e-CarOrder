@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.e_carorder.R;
+import com.example.e_carorder.chargePointInfo.ConnectorQueueActivity;
 import com.example.e_carorder.chargePointInfo.ConnectorReservationActivity;
 import com.example.e_carorder.chargePointInfo.UserInfoActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -124,7 +125,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
 
         } else if(!connectorModels.get(position).getCheckInUserId().equals(userId)) {
             holder.inUseBtn.setVisibility(View.VISIBLE);
-            holder.alertBtn.setVisibility(View.VISIBLE);
+            holder.queueBtn.setVisibility(View.VISIBLE);
 
             DocumentReference documentReference = FirebaseFirestore.getInstance()
                     .collection("users").document(connectorModels.get(position).getCheckInUserId());
@@ -167,14 +168,19 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
                 }
             });
 
+            holder.queueBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(v.getContext(), ConnectorQueueActivity.class);
+                    i.putExtra("chargePointId", connectorModels.get(position).getChargePointId());
+                    i.putExtra("connectorId", connectorModels.get(position).getConnectorId());
+                    c.startActivity(i);
 
-
-
-
+                }
+            });
 
         } else{
             holder.checkOutBtn.setVisibility(View.VISIBLE);
-            holder.alertBtn.setVisibility(View.VISIBLE);
 
         }
 
@@ -206,6 +212,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
 
                                     holder.checkInBtn.setVisibility(View.GONE);
                                     holder.checkOutBtn.setVisibility(View.VISIBLE);
+                                    holder.alertBtn.setVisibility(View.GONE);
 
                                     if(holder.alertTV.getVisibility() == View.VISIBLE){
                                         holder.alertTV.setVisibility(View.GONE);
@@ -244,6 +251,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
 
                 holder.checkOutBtn.setVisibility(View.GONE);
                 holder.checkInBtn.setVisibility(View.VISIBLE);
+                holder.alertBtn.setVisibility(View.VISIBLE);
 
             }
         });

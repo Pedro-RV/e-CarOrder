@@ -14,7 +14,7 @@ public class ConnectorHolder extends RecyclerView.ViewHolder {
 
     ImageView imageConnector, imageUserUsingConnector;
     TextView connectorType, connectorPowerKW, alertTV, usernameUserUsingConnector;
-    Button checkInBtn, checkOutBtn, inUseBtn, alertBtn, reserveBtn;
+    Button checkInBtn, checkOutBtn, inUseBtn, alertBtn, reserveBtn, queueBtn;
 
     public ConnectorHolder(@NonNull View itemView) {
         super(itemView);
@@ -30,6 +30,7 @@ public class ConnectorHolder extends RecyclerView.ViewHolder {
         this.imageUserUsingConnector = itemView.findViewById(R.id.imageUserUsingConnector);
         this.usernameUserUsingConnector = itemView.findViewById(R.id.usernameUserUsingConnector);
         this.reserveBtn = itemView.findViewById(R.id.reserveBtn);
+        this.queueBtn = itemView.findViewById(R.id.queueBtn);
 
     }
 }

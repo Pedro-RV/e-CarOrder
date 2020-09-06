@@ -22,4 +22,9 @@
 
     </style>
 
+    <style name="ButtonQueueTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorBlue</item>
+
+    </style>
+
 </resources>
