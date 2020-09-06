@@ -49,7 +49,7 @@ public class AllUsersChatsActivity extends AppCompatActivity {
     }
 
     private void readUsers(){
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         CollectionReference reference = FirebaseFirestore.getInstance().collection("users");
 
         reference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -59,9 +59,12 @@ public class AllUsersChatsActivity extends AppCompatActivity {
                     for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
                         if(documentSnapshot.exists()){
                             String name = documentSnapshot.getString("username");
+                            String userId = documentSnapshot.getId();
 
-                            if(!documentSnapshot.getId().equals(firebaseUser.getUid())){
-                                mUsers.add(new UserModel(documentSnapshot.getId(), name, R.drawable.default_profile));
+                            if(!userId.equals(currentUser)){
+
+
+                                mUsers.add(new UserModel(userId, name));
                             }
 
                             userAdapter = new UserAdapter(AllUsersChatsActivity.this, mUsers);

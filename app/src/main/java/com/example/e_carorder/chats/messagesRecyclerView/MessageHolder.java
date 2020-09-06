@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.e_carorder.R;
 
 public class MessageHolder extends RecyclerView.ViewHolder {
-    public TextView showMessage;
-    public ImageView profileImage, statusImg;
 
+    TextView showMessage;
+    ImageView profileImage, statusImg;
 
     public MessageHolder(@NonNull View itemView) {
         super(itemView);

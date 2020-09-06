@@ -131,7 +131,7 @@ public class ChatsFragment extends Fragment {
                         if(documentSnapshot.exists()){
                             String userId = documentSnapshot.getId();
 
-                            UserModel user = new UserModel(documentSnapshot.getId(), documentSnapshot.getString("username"), R.drawable.default_profile);
+                            UserModel user = new UserModel(documentSnapshot.getId(), documentSnapshot.getString("username"));
 
                             for(String id: usersIdList){
                                 if(userId.equals(id)){

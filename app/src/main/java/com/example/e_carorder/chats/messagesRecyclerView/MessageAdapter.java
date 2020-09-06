@@ -2,6 +2,7 @@ package com.example.e_carorder.chats.messagesRecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.e_carorder.R;
 import com.example.e_carorder.chats.MessageActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -53,13 +58,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MessageHolder holder, int position) {
 
         ChatModel chat = mChats.get(position);
 
         holder.showMessage.setText(chat.getMessage());
 
-        holder.profileImage.setImageResource(R.mipmap.ic_launcher);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+        StorageReference profileRef = storageReference.child("users/"+chat.getSender()+"/profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context).load(uri).into(holder.profileImage);
+            }
+        });
 
         if(chat.getStatus() == true){
             holder.statusImg.setImageResource(R.drawable.double_tick);
