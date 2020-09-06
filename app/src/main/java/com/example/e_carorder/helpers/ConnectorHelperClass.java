@@ -1,6 +1,7 @@
 package com.example.e_carorder.helpers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ConnectorHelperClass implements Serializable {
 
@@ -8,16 +9,18 @@ public class ConnectorHelperClass implements Serializable {
     private Boolean alert;
     private long alertDate;
 
+    private ArrayList<ReservationUserHelperClass> reservations;
+
     public ConnectorHelperClass(){
     }
 
-    public ConnectorHelperClass(String connectorType, String powerKW) {
+    public ConnectorHelperClass(String checkInUserId, String connectorType, String powerKW, Boolean alert, long alertDate, ArrayList<ReservationUserHelperClass> reservations) {
+        this.checkInUserId = checkInUserId;
         this.connectorType = connectorType;
         this.powerKW = powerKW;
-
-        this.checkInUserId = "";
-        this.alert = false;
-        this.alertDate = -1;
+        this.alert = alert;
+        this.alertDate = alertDate;
+        this.reservations = reservations;
     }
 
     public String getCheckInUserId() {
@@ -58,5 +61,13 @@ public class ConnectorHelperClass implements Serializable {
 
     public void setAlertDate(long alertDate) {
         this.alertDate = alertDate;
+    }
+
+    public ArrayList<ReservationUserHelperClass> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(ArrayList<ReservationUserHelperClass> reservations) {
+        this.reservations = reservations;
     }
 }

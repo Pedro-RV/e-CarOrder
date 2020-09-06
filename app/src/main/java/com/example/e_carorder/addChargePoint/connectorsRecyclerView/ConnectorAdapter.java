@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,38 +18,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.e_carorder.R;
-import com.example.e_carorder.chargePointInfo.ChargePointInfoActivity;
-import com.example.e_carorder.chargePointInfo.userInfoActivity;
-import com.example.e_carorder.chats.AllUsersChatsActivity;
-import com.example.e_carorder.chats.usersRecyclerView.UserAdapter;
-import com.example.e_carorder.chats.usersRecyclerView.UserModel;
-import com.example.e_carorder.profile.EditProfileActivity;
+import com.example.e_carorder.chargePointInfo.ConnectorReservationActivity;
+import com.example.e_carorder.chargePointInfo.UserInfoActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -165,10 +151,10 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
 
                             holder.imageUserUsingConnector.setVisibility(View.VISIBLE);
 
-                            holder.usernameUserUsingConnector.setOnClickListener(new View.OnClickListener() {
+                            holder.imageUserUsingConnector.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent i = new Intent(v.getContext(), userInfoActivity.class);
+                                    Intent i = new Intent(v.getContext(), UserInfoActivity.class);
                                     i.putExtra("userUsingConnectorId", connectorModels.get(position).getCheckInUserId());
                                     i.putExtra("usernameUsingConnector", usernameUsingConnector);
                                     c.startActivity(i);
@@ -318,6 +304,16 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
                     }
                 }
 
+            }
+        });
+
+        holder.reserveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), ConnectorReservationActivity.class);
+                i.putExtra("chargePointId", connectorModels.get(position).getChargePointId());
+                i.putExtra("connectorId", connectorModels.get(position).getConnectorId());
+                c.startActivity(i);
             }
         });
 

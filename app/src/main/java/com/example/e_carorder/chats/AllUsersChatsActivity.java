@@ -61,7 +61,7 @@ public class AllUsersChatsActivity extends AppCompatActivity {
                             String name = documentSnapshot.getString("username");
 
                             if(!documentSnapshot.getId().equals(firebaseUser.getUid())){
-                                mUsers.add(new UserModel(documentSnapshot.getId(), name, R.mipmap.ic_launcher));
+                                mUsers.add(new UserModel(documentSnapshot.getId(), name, R.drawable.default_profile));
                             }
 
                             userAdapter = new UserAdapter(AllUsersChatsActivity.this, mUsers);

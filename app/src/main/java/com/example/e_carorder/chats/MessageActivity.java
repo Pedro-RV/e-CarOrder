@@ -91,7 +91,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if(e == null){
                     if(documentSnapshot.exists()){
-                        UserModel user = new UserModel(userToSend, documentSnapshot.getString("username"), R.mipmap.ic_launcher);
+                        UserModel user = new UserModel(userToSend, documentSnapshot.getString("username"), R.drawable.default_profile);
                         nameUserMessage.setText(user.getName());
 
                         // Update user image to see in layout
@@ -222,7 +222,7 @@ public class MessageActivity extends AppCompatActivity {
 
                             }
 
-                            messageAdapter = new MessageAdapter(MessageActivity.this, mChats, Integer.toString(R.mipmap.ic_launcher));
+                            messageAdapter = new MessageAdapter(MessageActivity.this, mChats, Integer.toString(R.drawable.default_profile));
                             recyclerViewMessage.setAdapter(messageAdapter);
                         }
                     }

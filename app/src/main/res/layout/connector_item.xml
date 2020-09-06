@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="180dp"
         android:padding="16dp" >
 
         <ImageView
@@ -96,11 +96,9 @@
             android:id="@+id/alertTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/alertBtn"
+            android:layout_marginTop="7dp"
             android:textColor="@color/colorRed"
-            android:layout_below="@+id/imageConnector"
-            android:layout_toEndOf="@+id/alertBtn"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
             android:visibility="gone" />
 
         <TextView
@@ -118,6 +116,15 @@
             android:src="@drawable/default_profile"
             android:layout_alignEnd="@+id/inUseBtn"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/reserveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reserve"
+            android:layout_below="@id/imageConnector"
+            android:layout_alignParentEnd="true"
+            />
 
     </RelativeLayout>
 

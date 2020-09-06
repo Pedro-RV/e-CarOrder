@@ -7,24 +7,34 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/tvUser"
+        android:id="@+id/usernameReservation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="TextView"
         android:textSize="17dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@+id/ivUser"
+        app:layout_constraintStart_toEndOf="@+id/imageReservation"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ivUser"
+        android:id="@+id/imageReservation"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/default_profile" />
+
+    <TextView
+        android:id="@+id/dateReservation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
