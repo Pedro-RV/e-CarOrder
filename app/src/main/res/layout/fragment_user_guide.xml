@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserGuideFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="16dp"
+            android:text="e-CarOrder"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="360dp"
+            android:layout_height="280dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="This application arises to solve one of the problems that all electric car drivers face. There is no way you can organize yourself to use the connectors of the different charging points. This is where this app works. The idea is that any electric car driver never has to go from one charging point to another because they are busy.  "
+            android:textSize="21dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="360dp"
+            android:layout_height="240dp"
+            android:layout_marginStart="24dp"
+            android:text="To achieve this, e-CarOrder provides a series of features, which make it a unique application. Among them, the power to reserve a charging point, check-in and check-out, be able to queue up if the connector is being used and also be able to alert about the unregistered occupation of the connector of a charging point."
+            android:textSize="21dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <TextView
+            android:layout_width="360dp"
+            android:layout_height="240dp"
+            android:layout_marginStart="24dp"
+            android:text="
+But there are some peculiarities that must be seen first. For example, the state in which the charging points can be and the color in which it is displayed on the map."
+            android:textSize="21dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

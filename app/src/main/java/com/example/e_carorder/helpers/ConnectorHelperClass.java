@@ -11,12 +11,12 @@ public class ConnectorHelperClass implements Serializable {
 
     private ArrayList<ReservationUserHelperClass> reservations;
 
-    private ArrayList<QueueHelperClass> queue;
+    private ArrayList<QueueItemHelperClass> queue;
 
     public ConnectorHelperClass(){
     }
 
-    public ConnectorHelperClass(String checkInUserId, String connectorType, String powerKW, Boolean alert, long alertDate, ArrayList<ReservationUserHelperClass> reservations, ArrayList<QueueHelperClass> queue) {
+    public ConnectorHelperClass(String checkInUserId, String connectorType, String powerKW, Boolean alert, long alertDate, ArrayList<ReservationUserHelperClass> reservations, ArrayList<QueueItemHelperClass> queue) {
         this.checkInUserId = checkInUserId;
         this.connectorType = connectorType;
         this.powerKW = powerKW;
@@ -74,11 +74,11 @@ public class ConnectorHelperClass implements Serializable {
         this.reservations = reservations;
     }
 
-    public ArrayList<QueueHelperClass> getQueue() {
+    public ArrayList<QueueItemHelperClass> getQueue() {
         return queue;
     }
 
-    public void setQueue(ArrayList<QueueHelperClass> queue) {
+    public void setQueue(ArrayList<QueueItemHelperClass> queue) {
         this.queue = queue;
     }
 }

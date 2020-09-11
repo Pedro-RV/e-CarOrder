@@ -1,28 +1,22 @@
 package com.example.e_carorder.chargePointInfo;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.e_carorder.R;
+import com.example.e_carorder.chargePointInfo.queueItemsRecyclerView.QueueItemAdapter;
+import com.example.e_carorder.chargePointInfo.queueItemsRecyclerView.QueueItemModel;
 import com.example.e_carorder.chargePointInfo.reservationsRecyclerView.ReservationAdapter;
 import com.example.e_carorder.chargePointInfo.reservationsRecyclerView.ReservationModel;
 import com.example.e_carorder.helpers.ConnectorHelperClass;
-import com.example.e_carorder.helpers.QueueHelperClass;
-import com.example.e_carorder.helpers.ReservationUserHelperClass;
+import com.example.e_carorder.helpers.QueueItemHelperClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,14 +29,13 @@ import java.util.ArrayList;
 
 public class ConnectorQueueActivity extends AppCompatActivity {
 
-    private Button joinQueueBtn;
+    private Button joinQueueBtn, leaveQueueBtn;
     private DatabaseReference databaseReference;
 
-    private ReservationAdapter reservationAdapter;
+    private QueueItemAdapter queueItemAdapter;
     private RecyclerView recyclerViewQueue;
-    private ArrayList<ReservationModel> mReservations = new ArrayList<>();
 
-    private ConnectorHelperClass connector;
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +48,12 @@ public class ConnectorQueueActivity extends AppCompatActivity {
         final String connectorId = getIntent().getStringExtra("connectorId");
 
         joinQueueBtn = findViewById(R.id.joinQueueBtn);
+        leaveQueueBtn = findViewById(R.id.leaveQueueBtn);
         recyclerViewQueue = findViewById(R.id.rvQueue);
 
         recyclerViewQueue.setLayoutManager(new LinearLayoutManager(this));
+
+        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
 
@@ -67,26 +63,33 @@ public class ConnectorQueueActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot ds : dataSnapshot.getChildren()){
 
-                        connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
+                        ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
 
-                        final ArrayList<QueueHelperClass> queue = connector.getQueue();
+                        ArrayList<QueueItemHelperClass> queueItems = connector.getQueue();
 
-                        if(queue != null){
-                            for(int i = 0; i < queue.size(); i++){
+                        if(queueItems != null){
+                            ArrayList<QueueItemModel> mQueueItems = new ArrayList<>();
 
-                                String queueUserId = queue.get(i).getQueueUserId();
-                                String queueUserPosition = Integer.toString(queue.size());
+                            for(int i = 0; i < queueItems.size(); i++){
 
-                                ReservationModel addReservationModel = new ReservationModel(
-                                        queueUserId,
-                                        queueUserPosition);
+                                String queueItemUserId = queueItems.get(i).getQueueUserId();
 
-                                mReservations.add(addReservationModel);
+                                if(queueItemUserId.equals(currentUserId)){
+                                    leaveQueueBtn.setVisibility(View.VISIBLE);
+                                }
+
+                                QueueItemModel addQueueItemModel = new QueueItemModel(queueItemUserId);
+
+                                mQueueItems.add(addQueueItemModel);
 
                             }
 
-                            reservationAdapter = new ReservationAdapter(ConnectorQueueActivity.this, mReservations);
-                            recyclerViewQueue.setAdapter(reservationAdapter);
+                            if(leaveQueueBtn.getVisibility() == View.GONE){
+                                joinQueueBtn.setVisibility(View.VISIBLE);
+                            }
+
+                            queueItemAdapter = new QueueItemAdapter(ConnectorQueueActivity.this, mQueueItems);
+                            recyclerViewQueue.setAdapter(queueItemAdapter);
 
                         }
 
@@ -100,46 +103,121 @@ public class ConnectorQueueActivity extends AppCompatActivity {
             }
         });
 
-
         joinQueueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
 
-                String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
 
-                ArrayList<QueueHelperClass> queue = connector.getQueue();
+                checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                if(queue == null){
-                    queue = new ArrayList<>();
+                                ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
 
-                } else{
-                    for(int i = 0; i < queue.size(); i++){
-                        if(queue.get(i).getQueueUserId().equals(currentUserId)){
-                            Toast.makeText(ConnectorQueueActivity.this, "Error! You are already in queue.", Toast.LENGTH_SHORT).show();
-                            return;
+                                ArrayList<QueueItemHelperClass> queueItems = connector.getQueue();
+
+                                if(queueItems == null) {
+                                    queueItems = new ArrayList<>();
+                                }
+
+                                QueueItemHelperClass newItemQueue = new QueueItemHelperClass(currentUserId);
+
+                                queueItems.add(newItemQueue);
+
+                                connector.setQueue(queueItems);
+
+                                databaseReference.child(chargePointId).child("connectors").child(connectorId).setValue(connector);
+
+                                ArrayList<QueueItemModel> mQueueItems = new ArrayList<>();
+
+                                for(int i = 0; i < queueItems.size(); i++){
+
+                                    String queueItemUserId = queueItems.get(i).getQueueUserId();
+
+                                    QueueItemModel addQueueItemModel = new QueueItemModel(queueItemUserId);
+
+                                    mQueueItems.add(addQueueItemModel);
+
+                                }
+
+                                joinQueueBtn.setVisibility(View.GONE);
+                                leaveQueueBtn.setVisibility(View.VISIBLE);
+
+                                queueItemAdapter = new QueueItemAdapter(ConnectorQueueActivity.this, mQueueItems);
+                                recyclerViewQueue.setAdapter(queueItemAdapter);
+
+                            }
                         }
                     }
-                }
 
-                QueueHelperClass newQueue = new QueueHelperClass(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                queue.add(newQueue);
+                    }
+                });
 
-                connector.setQueue(queue);
+            }
+        });
 
-                databaseReference.child(chargePointId).child("connectors").child(connectorId).setValue(connector);
+        leaveQueueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                String queueUserPosition = Integer.toString(queue.size());
+                Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
 
-                ReservationModel addReservationModel = new ReservationModel(
-                        currentUserId,
-                        queueUserPosition
-                );
+                checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                mReservations.add(addReservationModel);
+                                ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
 
-                reservationAdapter = new ReservationAdapter(ConnectorQueueActivity.this, mReservations);
-                recyclerViewQueue.setAdapter(reservationAdapter);
+                                ArrayList<QueueItemHelperClass> queueItems = connector.getQueue();
+
+                                boolean stop = false;
+
+                                for(int i = 0; i < queueItems.size() && !stop; i++){
+                                    if(queueItems.get(i).getQueueUserId().equals(currentUserId)){
+                                        queueItems.remove(queueItems.get(i));
+                                        stop = true;
+                                    }
+                                }
+
+                                connector.setQueue(queueItems);
+
+                                databaseReference.child(chargePointId).child("connectors").child(connectorId).setValue(connector);
+
+                                ArrayList<QueueItemModel> mQueueItems = new ArrayList<>();
+
+                                for(int i = 0; i < queueItems.size(); i++){
+
+                                    String queueItemUserId = queueItems.get(i).getQueueUserId();
+
+                                    QueueItemModel addQueueItemModel = new QueueItemModel(queueItemUserId);
+
+                                    mQueueItems.add(addQueueItemModel);
+
+                                }
+
+                                joinQueueBtn.setVisibility(View.VISIBLE);
+                                leaveQueueBtn.setVisibility(View.GONE);
+
+                                queueItemAdapter = new QueueItemAdapter(ConnectorQueueActivity.this, mQueueItems);
+                                recyclerViewQueue.setAdapter(queueItemAdapter);
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
             }
         });

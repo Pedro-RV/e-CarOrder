@@ -1,23 +1,37 @@
 package com.example.e_carorder.chargePointInfo.reservationsRecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.e_carorder.R;
+import com.example.e_carorder.chargePointInfo.ConnectorReservationActivity;
 import com.example.e_carorder.chargePointInfo.UserInfoActivity;
 import com.example.e_carorder.chats.usersRecyclerView.UserHolder;
 import com.example.e_carorder.chats.usersRecyclerView.UserModel;
+import com.example.e_carorder.helpers.ConnectorHelperClass;
+import com.example.e_carorder.helpers.ReservationUserHelperClass;
+import com.example.e_carorder.signInSignUp.SignInSignUpActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -27,6 +41,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ReservationAdapter extends RecyclerView.Adapter<ReservationHolder> {
 
@@ -42,7 +57,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationHolder> 
     @Override
     public ReservationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reservation_item, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reservation_item, parent, false);
 
         return new ReservationHolder(view);
     }
@@ -51,21 +66,32 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationHolder> 
     public void onBindViewHolder(@NonNull final ReservationHolder holder, final int position) {
 
         final String reservationUserId = mReservations.get(position).getReservationUserId();
+        final String chargePointId = mReservations.get(position).getChargePointId();
+        final String connectorId = mReservations.get(position).getConnectorId();
+        final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         final DocumentReference documentReference = FirebaseFirestore.getInstance()
                 .collection("users").document(reservationUserId);
-
 
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if(e == null){
                     if(documentSnapshot.exists()){
-                        final String usernameUsingConnector = documentSnapshot.getString("username");
+                        final String usernameReservation = documentSnapshot.getString("username");
 
-                        holder.usernameReservation.setText(usernameUsingConnector);
+                        holder.usernameReservation.setText(usernameReservation);
 
-                        holder.dateReservation.setText("Reservation date: " + mReservations.get(position).getDate());
+                        long date = mReservations.get(position).getDate();
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(date);
+
+                        int day = calendar.get(Calendar.DAY_OF_MONTH);
+                        int month = calendar.get(Calendar.MONTH);
+                        int year = calendar.get(Calendar.YEAR);
+
+                        holder.dateReservation.setText("Reservation date: " + day + "/" + month + "/" + year);
 
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -82,13 +108,85 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationHolder> 
                             public void onClick(View v) {
                                 Intent i = new Intent(v.getContext(), UserInfoActivity.class);
                                 i.putExtra("userUsingConnectorId", reservationUserId);
-                                i.putExtra("usernameUsingConnector", usernameUsingConnector);
+                                i.putExtra("usernameUsingConnector", usernameReservation);
                                 context.startActivity(i);
                             }
                         });
 
+                        if(reservationUserId.equals(currentUserId)){
+                            holder.deleteReservationBtn.setVisibility(View.VISIBLE);
+
+                        }
+
                     }
                 }
+            }
+        });
+
+        holder.deleteReservationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+                passwordResetDialog.setTitle("Are you sure you want to delete the reservation?");
+
+                passwordResetDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ChargePoints");
+                        Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
+
+                        checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists()){
+                                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                                        ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
+
+                                        final ArrayList<ReservationUserHelperClass> reservations = connector.getReservations();
+
+
+                                        for (int i = 0; i < reservations.size(); i++) {
+                                            if (reservations.get(i).getReservationUserId().equals(currentUserId)
+                                                    && reservations.get(i).getReservationDate() == mReservations.get(position).getDate()) {
+
+                                                reservations.remove(reservations.get(i));
+                                            }
+
+                                        }
+
+                                        connector.setReservations(reservations);
+
+                                        databaseReference.child(chargePointId).child("connectors").child(connectorId).setValue(connector);
+
+                                        mReservations.remove(position);
+                                        notifyItemRemoved(position);
+                                        notifyItemRangeChanged(position, mReservations.size());
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+                });
+
+                passwordResetDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // close the dialog
+                    }
+                });
+
+                passwordResetDialog.create().show();
+
             }
         });
 

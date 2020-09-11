@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -46,6 +48,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,9 +63,6 @@ public class ConnectorReservationActivity extends AppCompatActivity {
 
     private ReservationAdapter reservationAdapter;
     private RecyclerView recyclerViewAllReservations;
-    private ArrayList<ReservationModel> mReservations = new ArrayList<>();
-
-    private ConnectorHelperClass connector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,21 +87,25 @@ public class ConnectorReservationActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     for(DataSnapshot ds : dataSnapshot.getChildren()){
 
-                        connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
+                        ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
 
                         final ArrayList<ReservationUserHelperClass> reservations = connector.getReservations();
 
                         if(reservations != null){
+                            ArrayList<ReservationModel> mReservations = new ArrayList<>();
+
                             for(int i = 0; i < reservations.size(); i++){
 
                                  String reservationUserId = reservations.get(i).getReservationUserId();
-                                 String reservationDate = reservations.get(i).getReservationDate();
+                                 long reservationDate = reservations.get(i).getReservationDate();
 
                                  ReservationModel addReservationModel = new ReservationModel(
-                                        reservationUserId,
-                                        reservationDate);
+                                         reservationUserId,
+                                         reservationDate,
+                                         chargePointId,
+                                         connectorId);
 
-                                  mReservations.add(addReservationModel);
+                                 mReservations.add(addReservationModel);
 
                             }
 
@@ -122,96 +128,92 @@ public class ConnectorReservationActivity extends AppCompatActivity {
         reservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                Calendar calendar;
+                DatePickerDialog datePickerDialog;
 
-                final EditText introducedDate = new EditText(v.getContext());
-                introducedDate.setInputType(InputType.TYPE_CLASS_DATETIME);
-                introducedDate.setHint("Date");
-                introducedDate.setBackgroundColor(Color.rgb(247,242,255));
-                introducedDate.setTextSize(18);
-                FrameLayout container = new FrameLayout(ConnectorReservationActivity.this);
-                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-                params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-                params.height = 112;
-                introducedDate.setLayoutParams(params);
-                container.addView(introducedDate);
+                calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
 
-                final AlertDialog addReservationDialog = new AlertDialog.Builder(v.getContext())
-                        .setTitle("Reservation date.")
-                        .setMessage("Enter the date you want to reserve.")
-                        .setView(container)
-                        .setNegativeButton("Cancel", null)
-                        .setPositiveButton("Accept", null)
-                        .create();
-
-                addReservationDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
+                datePickerDialog = new DatePickerDialog(ConnectorReservationActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onShow(final DialogInterface dialog) {
+                    public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
 
-                        Button positive = addReservationDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                        Button negative = addReservationDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                        Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
 
-                        positive.setOnClickListener(new View.OnClickListener() {
-
+                        checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onClick(View view) {
-                                final String date = introducedDate.getText().toString();
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists()){
+                                    for(DataSnapshot ds : dataSnapshot.getChildren()){
+                                        ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
 
-                                if(date.isEmpty()){
-                                    introducedDate.setError("You have to write a date.");
+                                        ArrayList<ReservationUserHelperClass> reservations = connector.getReservations();
 
-                                } else {
+                                        if (reservations == null) {
+                                            reservations = new ArrayList<>();
+                                        }
 
-                                    ArrayList<ReservationUserHelperClass> reservations = connector.getReservations();
+                                        Calendar date = Calendar.getInstance();
+                                        date.set(year, month, dayOfMonth, 0, 0);
 
-                                    if(reservations == null){
-                                        reservations = new ArrayList<>();
+                                        ReservationUserHelperClass newReservation = new ReservationUserHelperClass(
+                                                FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                                                date.getTimeInMillis());
+
+                                        reservations.add(newReservation);
+
+                                        Collections.sort(reservations, new Comparator<ReservationUserHelperClass>(){
+                                            public int compare(ReservationUserHelperClass obj1, ReservationUserHelperClass obj2) {
+
+                                                return Long.valueOf(obj1.getReservationDate()).compareTo(Long.valueOf(obj2.getReservationDate()));
+
+                                            }
+                                        });
+
+                                        connector.setReservations(reservations);
+
+                                        databaseReference.child(chargePointId).child("connectors").child(connectorId).setValue(connector);
+
+                                        ArrayList<ReservationModel> mReservations = new ArrayList<>();
+
+                                        for(int i = 0; i < reservations.size(); i++){
+
+                                            String reservationUserId = reservations.get(i).getReservationUserId();
+                                            long reservationDate = reservations.get(i).getReservationDate();
+
+                                            ReservationModel addReservationModel = new ReservationModel(
+                                                    reservationUserId,
+                                                    reservationDate,
+                                                    chargePointId,
+                                                    connectorId);
+
+                                            mReservations.add(addReservationModel);
+
+                                        }
+
+                                        reservationAdapter = new ReservationAdapter(ConnectorReservationActivity.this, mReservations);
+                                        recyclerViewAllReservations.setAdapter(reservationAdapter);
+
                                     }
-
-                                    ReservationUserHelperClass newReservation = new ReservationUserHelperClass(
-                                            FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                                            date);
-
-                                    reservations.add(newReservation);
-
-                                    connector.setReservations(reservations);
-
-                                    databaseReference.child(chargePointId).child("connectors").child(connectorId).setValue(connector);
-
-                                    ReservationModel addReservationModel = new ReservationModel(
-                                            FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                                            date
-                                    );
-
-                                    mReservations.add(addReservationModel);
-
-                                    reservationAdapter = new ReservationAdapter(ConnectorReservationActivity.this, mReservations);
-                                    recyclerViewAllReservations.setAdapter(reservationAdapter);
-
-                                    dialog.dismiss();
-
                                 }
-
                             }
-                        });
 
-                        negative.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
                             }
                         });
 
                     }
-                });
+                }, year, month, day);
 
-                addReservationDialog.show();
+                datePickerDialog.show();
 
             }
         });
 
-
-
     }
+
 }

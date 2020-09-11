@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.e_carorder.Navigation_temporal;
 import com.example.e_carorder.R;
@@ -28,6 +29,7 @@ import com.sucho.placepicker.PlacePicker;
 
 public class AddChargePoint2Activity extends AppCompatActivity {
 
+    private TextView tvAddressInfoCP;
     private EditText registerTitle, registerAddress, registerPostCode, registerStateOrProvince, registerTown;
     private Button registerChargePointNextBtn1, adjustLocationBtn;
     private final int PLACE_PICKER_REQUEST = 9999;
@@ -42,6 +44,7 @@ public class AddChargePoint2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_charge_point2);
 
+        tvAddressInfoCP = findViewById(R.id.tvAddressInfoCP);
         registerTitle = findViewById(R.id.registerTitle);
         registerAddress = findViewById(R.id.registerAddress);
         registerPostCode = findViewById(R.id.registerPostCode);
@@ -82,11 +85,48 @@ public class AddChargePoint2Activity extends AppCompatActivity {
         registerChargePointNextBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = registerTitle.getText().toString();
-                String address = registerAddress.getText().toString();
-                String postCode = registerPostCode.getText().toString();
-                String stateOrProvince = registerStateOrProvince.getText().toString();
-                String town = registerTown.getText().toString();
+
+                String title, address, postCode, stateOrProvince, town;
+
+                if(registerTitle.getText().toString().isEmpty()){
+                    registerTitle.setError("Compulsory field.");
+                    return;
+
+                } else{
+                    title = registerTitle.getText().toString();
+                }
+
+                if(registerAddress.getText().toString().isEmpty()){
+                    registerAddress.setError("Compulsory field.");
+                    return;
+
+                } else{
+                    address = registerAddress.getText().toString();
+                }
+
+                if(registerPostCode.getText().toString().isEmpty()){
+                    registerPostCode.setError("Compulsory field.");
+                    return;
+
+                } else{
+                    postCode = registerPostCode.getText().toString();
+                }
+
+                if(registerStateOrProvince.getText().toString().isEmpty()){
+                    registerStateOrProvince.setError("Compulsory field.");
+                    return;
+
+                } else{
+                    stateOrProvince = registerStateOrProvince.getText().toString();
+                }
+
+                if(registerTown.getText().toString().isEmpty()){
+                    registerTown.setError("Compulsory field.");
+                    return;
+
+                } else{
+                    town = registerTown.getText().toString();
+                }
 
                 AddressInfoHelperClass addressInfoHelperClass = new AddressInfoHelperClass(title, address, stateOrProvince, town, postCode, latitude, longitude);
 
@@ -132,6 +172,14 @@ public class AddChargePoint2Activity extends AppCompatActivity {
                 registerTown.setText(addressData.getAddressList().get(0).getLocality());
                 latitude = addressData.getLatitude();
                 longitude = addressData.getLongitude();
+
+                registerTitle.setVisibility(View.VISIBLE);
+                registerAddress.setVisibility(View.VISIBLE);
+                registerPostCode.setVisibility(View.VISIBLE);
+                registerStateOrProvince.setVisibility(View.VISIBLE);
+                registerTown.setVisibility(View.VISIBLE);
+
+                tvAddressInfoCP.setText("Address Info");
 
                 adjustLocationBtn.setVisibility(View.INVISIBLE);
                 registerChargePointNextBtn1.setVisibility(View.VISIBLE);

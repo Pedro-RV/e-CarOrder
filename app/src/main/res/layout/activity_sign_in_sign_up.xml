@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_people" />
+        android:src="@drawable/sustainable_city"
+        android:alpha="0.75" />
 
     <LinearLayout
         android:layout_width="match_parent"

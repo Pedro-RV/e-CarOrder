@@ -3,12 +3,12 @@ package com.example.e_carorder.helpers;
 public class ReservationUserHelperClass {
 
     private String reservationUserId;
-    private String reservationDate;
+    private long reservationDate;
 
     public ReservationUserHelperClass() {
     }
 
-    public ReservationUserHelperClass(String reservationUserId, String reservationDate) {
+    public ReservationUserHelperClass(String reservationUserId, long reservationDate) {
         this.reservationUserId = reservationUserId;
         this.reservationDate = reservationDate;
     }
@@ -21,11 +21,11 @@ public class ReservationUserHelperClass {
         this.reservationUserId = reservationUserId;
     }
 
-    public String getReservationDate() {
+    public long getReservationDate() {
         return reservationDate;
     }
 
-    public void setReservationDate(String reservationDate) {
+    public void setReservationDate(long reservationDate) {
         this.reservationDate = reservationDate;
     }
 }

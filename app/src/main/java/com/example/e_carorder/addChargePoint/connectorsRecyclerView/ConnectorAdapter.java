@@ -21,13 +21,20 @@ import com.example.e_carorder.R;
 import com.example.e_carorder.chargePointInfo.ConnectorQueueActivity;
 import com.example.e_carorder.chargePointInfo.ConnectorReservationActivity;
 import com.example.e_carorder.chargePointInfo.UserInfoActivity;
+import com.example.e_carorder.helpers.ConnectorHelperClass;
+import com.example.e_carorder.helpers.QueueItemHelperClass;
+import com.example.e_carorder.helpers.ReservationUserHelperClass;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -56,7 +63,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
     @Override
     public ConnectorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.connector_item, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.connector_item, parent, false);
 
         return new ConnectorHolder(view);
     }
@@ -73,14 +80,52 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
         final String connectorId = connectorModels.get(position).getConnectorId();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ChargePoints");
 
-        if(connectorModels.get(position).getChargePointId().isEmpty()){
-            android.view.ViewGroup.LayoutParams connectorTypeParams = holder.connectorType.getLayoutParams();
-            connectorTypeParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            holder.connectorType.setLayoutParams(connectorTypeParams);
+        if(!connectorModels.get(position).getChargePointId().isEmpty()){
+            holder.reserveBtn.setVisibility(View.VISIBLE);
+            holder.reserveNumber.setVisibility(View.VISIBLE);
 
-            android.view.ViewGroup.LayoutParams connectorPowerKWParams = holder.connectorPowerKW.getLayoutParams();
-            connectorPowerKWParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            holder.connectorPowerKW.setLayoutParams(connectorPowerKWParams);
+            Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
+
+            checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        for(DataSnapshot ds : dataSnapshot.getChildren()){
+
+                            ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
+
+                            ArrayList<QueueItemHelperClass> queue = connector.getQueue();
+
+                            if(queue != null){
+                                holder.queueNumber.setText(Integer.toString(queue.size()));
+                            } else{
+                                holder.queueNumber.setText("0");
+                            }
+
+                            ArrayList<ReservationUserHelperClass> reserves = connector.getReservations();
+
+                            if(reserves != null){
+                                holder.reserveNumber.setText(Integer.toString(reserves.size()));
+
+                            } else{
+                                holder.reserveNumber.setText("0");
+
+                            }
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        if(connectorModels.get(position).getChargePointId().isEmpty()){
+
 
         } else if(connectorModels.get(position).getCheckInUserId().isEmpty()){
             holder.checkInBtn.setVisibility(View.VISIBLE);
@@ -126,6 +171,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
         } else if(!connectorModels.get(position).getCheckInUserId().equals(userId)) {
             holder.inUseBtn.setVisibility(View.VISIBLE);
             holder.queueBtn.setVisibility(View.VISIBLE);
+            holder.queueNumber.setVisibility(View.VISIBLE);
 
             DocumentReference documentReference = FirebaseFirestore.getInstance()
                     .collection("users").document(connectorModels.get(position).getCheckInUserId());
@@ -202,7 +248,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
                                 double chargePointLatitude = connectorModels.get(position).getChargePointLatitude();
                                 double chargePointLongitude = connectorModels.get(position).getChargePointLongitude();
 
-                                double distance = CalculationByDistance(userLatitude, userLongitude, chargePointLatitude, chargePointLongitude);
+                                double distance = calculationByDistance(userLatitude, userLongitude, chargePointLatitude, chargePointLongitude);
 
                                 if(distance <= 1){
                                     Map<String, Object> map = new HashMap<>();
@@ -275,7 +321,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
                                     double chargePointLatitude = connectorModels.get(position).getChargePointLatitude();
                                     double chargePointLongitude = connectorModels.get(position).getChargePointLongitude();
 
-                                    double distance = CalculationByDistance(userLatitude, userLongitude, chargePointLatitude, chargePointLongitude);
+                                    double distance = calculationByDistance(userLatitude, userLongitude, chargePointLatitude, chargePointLongitude);
 
                                     if(distance <= 1){
                                         Calendar rightNow = Calendar.getInstance();
@@ -290,7 +336,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
 
                                         holder.alertTV.setVisibility(View.VISIBLE);
 
-                                        Long currentDate = Calendar.getInstance().getTimeInMillis();
+                                        Long currentDate = rightNow.getInstance().getTimeInMillis();
 
                                         Map<String, Object> map = new HashMap<>();
                                         map.put("alert", true);
@@ -332,7 +378,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
         return connectorModels.size();
     }
 
-    public double CalculationByDistance(double initialLat, double initialLong,
+    public double calculationByDistance(double initialLat, double initialLong,
                                         double finalLat, double finalLong){
         int R = 6371; // km (Earth radius)
         double dLat = toRadians(finalLat-initialLat);

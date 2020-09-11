@@ -9,7 +9,7 @@
     <string name="inbox">Inbox</string>
     <string name="others">Others</string>
     <string name="settings">Settings</string>
-    <string name="about_us">About Us</string>
+    <string name="user_guide">User Guide</string>
     <string name="john_doe">John Doe</string>
     <string name="verified">Verified</string>
     <string name="home">Home</string>
@@ -26,4 +26,7 @@
         <item>Damaged</item>
         <item>Unkown</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

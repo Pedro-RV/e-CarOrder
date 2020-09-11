@@ -15,7 +15,7 @@
             android:id="@+id/profileImage"
             android:layout_width="171dp"
             android:layout_height="164dp"
-            android:layout_marginTop="132dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/default_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
             android:id="@+id/usernameTv"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="28dp"
             android:gravity="left"
             android:text="Username:"
             android:textColor="@color/colorPrimaryText"
@@ -40,13 +40,14 @@
             android:id="@+id/emailTv"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:gravity="left"
             android:text="Email:"
             android:textColor="@color/colorPrimaryText"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
@@ -73,6 +74,72 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailTv" />
+
+
+        <TextView
+            android:id="@+id/temporal1"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="left"
+            android:text="Car model:"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_email" />
+
+        <TextView
+            android:id="@+id/temporal11"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="left"
+            android:text="Audi e-tron"
+            android:textSize="23sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temporal1" />
+
+        <TextView
+            android:id="@+id/temporal2"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="left"
+            android:text="Personal description:"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temporal11" />
+
+        <TextView
+            android:id="@+id/temporal22"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="left"
+            android:text="Hello! My name is Pedro and I love electric cars."
+            android:textSize="23sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temporal2" />
+
+
+
+
+
+
+
+
+
+
+
 
         <TextView
             android:id="@+id/verifyMsg"
@@ -104,7 +171,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginBottom="56dp"
+            android:layout_marginBottom="32dp"
             android:text="Change Profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -114,11 +181,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginBottom="56dp"
+            android:layout_marginBottom="32dp"
             android:text="Reset Password"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.103"
             app:layout_constraintStart_toEndOf="@+id/changeProfile_btn" />
 
 
