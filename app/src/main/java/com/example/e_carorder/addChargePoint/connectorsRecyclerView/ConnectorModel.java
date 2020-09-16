@@ -1,5 +1,10 @@
 package com.example.e_carorder.addChargePoint.connectorsRecyclerView;
 
+import com.example.e_carorder.helpers.AddressInfoHelperClass;
+import com.example.e_carorder.helpers.ConnectorHelperClass;
+
+import java.util.ArrayList;
+
 public class ConnectorModel {
 
     private String chargePointId, connectorId, checkInUserId, connectorType, connectorPowerKW;
@@ -7,8 +12,15 @@ public class ConnectorModel {
     private double chargePointLatitude, chargePointLongitude;
     private Boolean alert;
     private long alertDate;
+    private boolean chargePointUpdateConnector;
+    private AddressInfoHelperClass addressInfoHelperClass;
+    private ArrayList<ConnectorHelperClass> connectors;
+    private String chargePointStatus;
 
-    public ConnectorModel(String chargePointId, String connectorId, String checkInUserId, String connectorType, String connectorPowerKW, int imageConnector, double chargePointLatitude, double chargePointLongitude, Boolean alert, long alertDate) {
+
+    public ConnectorModel(String chargePointId, String connectorId, String checkInUserId, String connectorType, String connectorPowerKW, int imageConnector,
+                          double chargePointLatitude, double chargePointLongitude, Boolean alert, long alertDate, boolean chargePointUpdateConnector,
+                          AddressInfoHelperClass addressInfoHelperClass, ArrayList<ConnectorHelperClass> connectors, String chargePointStatus) {
         this.chargePointId = chargePointId;
         this.connectorId = connectorId;
         this.checkInUserId = checkInUserId;
@@ -19,6 +31,10 @@ public class ConnectorModel {
         this.chargePointLongitude = chargePointLongitude;
         this.alert = alert;
         this.alertDate = alertDate;
+        this.chargePointUpdateConnector = chargePointUpdateConnector;
+        this.addressInfoHelperClass = addressInfoHelperClass;
+        this.connectors = connectors;
+        this.chargePointStatus = chargePointStatus;
     }
 
     public String getChargePointId() {
@@ -99,5 +115,37 @@ public class ConnectorModel {
 
     public void setAlertDate(long alertDate) {
         this.alertDate = alertDate;
+    }
+
+    public boolean getChargePointUpdateConnector() {
+        return chargePointUpdateConnector;
+    }
+
+    public void setChargePointUpdateConnector(boolean chargePointUpdateConnector) {
+        this.chargePointUpdateConnector = chargePointUpdateConnector;
+    }
+
+    public AddressInfoHelperClass getAddressInfoHelperClass() {
+        return addressInfoHelperClass;
+    }
+
+    public void setAddressInfoHelperClass(AddressInfoHelperClass addressInfoHelperClass) {
+        this.addressInfoHelperClass = addressInfoHelperClass;
+    }
+
+    public ArrayList<ConnectorHelperClass> getConnectors() {
+        return connectors;
+    }
+
+    public void setConnectors(ArrayList<ConnectorHelperClass> connectors) {
+        this.connectors = connectors;
+    }
+
+    public String getChargePointStatus() {
+        return chargePointStatus;
+    }
+
+    public void setChargePointStatus(String chargePointStatus) {
+        this.chargePointStatus = chargePointStatus;
     }
 }

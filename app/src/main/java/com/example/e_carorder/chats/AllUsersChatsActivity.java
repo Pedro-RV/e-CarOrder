@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.e_carorder.R;
 import com.example.e_carorder.addChargePoint.connectorsRecyclerView.ConnectorAdapter;
 import com.example.e_carorder.chats.usersRecyclerView.UserAdapter;
 import com.example.e_carorder.chats.usersRecyclerView.UserModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -35,17 +37,27 @@ public class AllUsersChatsActivity extends AppCompatActivity {
 
     private ArrayList<UserModel> mUsers;
 
+    private FloatingActionButton backAllUsersChatBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_users_chats);
 
         recyclerView = findViewById(R.id.rvAllUsers);
+        backAllUsersChatBtn = findViewById(R.id.backAllUsersChatBtn);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mUsers = new ArrayList<>();
 
         readUsers();
+
+        backAllUsersChatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AllUsersChatsActivity.super.onBackPressed();
+            }
+        });
     }
 
     private void readUsers(){

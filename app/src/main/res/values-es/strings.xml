@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">e-CarOrder</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="google_button">Iniciar sesión con Google</string>
+    <string name="profile">Perfil</string>
+    <string name="chats">Chats</string>
+    <string name="add">Añadir Punto de Recarga</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="others">Otros</string>
+    <string name="settings">Opciones</string>
+    <string name="user_guide">Guía de Usuario</string>
+    <string name="john_doe">John Doe</string>
+    <string name="verified">Verificado</string>
+    <string name="home">Inicio</string>
+</resources>

@@ -20,12 +20,12 @@
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\fragment_home.xml"
     },
     {
-        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_sign_out.png.flat",
-        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\sign_out.png"
-    },
-    {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_user_item.xml.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\user_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_sign_out.png.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\sign_out.png"
     },
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\mipmap-mdpi_ic_launcher_foreground.png.flat",
@@ -44,8 +44,16 @@
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     },
     {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_delete.png.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\delete.png"
+    },
+    {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_layout_navigation_header.xml.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\layout_navigation_header.xml"
+    },
+    {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_activity_update_charge_point_info1.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_update_charge_point_info1.xml"
     },
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_receive_layout.xml.flat",
@@ -100,6 +108,10 @@
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_all_users_chats.xml"
     },
     {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_really_small_circle.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\really_small_circle.xml"
+    },
+    {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_fragment_chats.xml.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\fragment_chats.xml"
     },
@@ -152,6 +164,10 @@
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\home.png"
     },
     {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_activity_update_charge_point_info2.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_update_charge_point_info2.xml"
+    },
+    {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_fragment_sign_out.xml.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\fragment_sign_out.xml"
     },
@@ -168,6 +184,10 @@
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_connector_reservation.xml"
     },
     {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_activity_update_charge_point_info3.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_update_charge_point_info3.xml"
+    },
+    {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_about.png.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\about.png"
     },
@@ -176,12 +196,20 @@
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
     },
     {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_edit.png.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\edit.png"
+    },
+    {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\navigation_main.xml.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\navigation\\main.xml"
     },
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_activity_connector_queue.xml.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_connector_queue.xml"
+    },
+    {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_fragment_user_guide.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\fragment_user_guide.xml"
     },
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi_ic_launcher_round.png.flat",
@@ -210,6 +238,10 @@
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_electrical.png.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\electrical.png"
+    },
+    {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_queue_item.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\queue_item.xml"
     },
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi_ic_launcher_foreground.png.flat",
@@ -276,6 +308,10 @@
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\layout_signin.xml"
     },
     {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_search.png.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\search.png"
+    },
+    {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_foreground.png"
     },
@@ -300,11 +336,11 @@
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_charge_point_info.xml"
     },
     {
-        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_ic_menu.xml.flat",
-        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\ic_menu.xml"
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_sustainable_city.jpg.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\sustainable_city.jpg"
     },
     {
-        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\layout_fragment_settings.xml.flat",
-        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\fragment_settings.xml"
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\release\\drawable_ic_menu.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\ic_menu.xml"
     }
 ]

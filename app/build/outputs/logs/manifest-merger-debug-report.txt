@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-53:12
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-63:12
+INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-63:12
+INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-63:12
+INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-63:12
 MERGED from [androidx.navigation:navigation-ui-ktx:2.2.0-rc03] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\f16114236b1b85370d57c0d2540549a1\navigation-ui-ktx-2.2.0-rc03\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.navigation:navigation-ui:2.2.0-rc03] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\e48df406e617e67b996d795028d53821\navigation-ui-2.2.0-rc03\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.material:material:1.2.0-alpha02] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\385dba047ed433a2d2361240be72a7e1\material-1.2.0-alpha02\AndroidManifest.xml:17:1-24:12
@@ -102,20 +102,20 @@ MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0-rc03] C:\Users\pedri\.gr
 MERGED from [com.google.firebase:protolite-well-known-types:17.0.0] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\dfa6e47a12f8d89f5b74073d97870744\jetified-protolite-well-known-types-17.0.0\AndroidManifest.xml:2:1-11:12
 MERGED from [io.grpc:grpc-android:1.21.0] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\6b65bcd5b224ba6a196b164e2f3c8f84\jetified-grpc-android-1.21.0\AndroidManifest.xml:2:1-13:12
 MERGED from [com.google.android.datatransport:transport-api:2.1.0] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\0fb4bddf7893b55c4a0b887ba4e80cd2\jetified-transport-api-2.1.0\AndroidManifest.xml:15:1-22:12
-INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-53:12
+INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-63:12
+INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-63:12
+INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-63:12
 	package
 		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:3:5-37
 		INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-53:12
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-63:12
 		INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-53:12
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:1-63:12
 		INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:2:11-69
@@ -164,7 +164,7 @@ MERGED from [com.google.android.libraries.places:places:2.2.0] C:\Users\pedri\.g
 	android:name
 		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:12:22-73
 application
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:14:5-51:19
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:14:5-61:19
 MERGED from [com.google.android.material:material:1.2.0-alpha02] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\385dba047ed433a2d2361240be72a7e1\material-1.2.0-alpha02\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.2.0-alpha02] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\385dba047ed433a2d2361240be72a7e1\material-1.2.0-alpha02\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.libraries.places:places:2.2.0] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\fff83acf5a8d79b2696f29f9be76dda4\jetified-places-2.2.0\AndroidManifest.xml:13:5-21:19
@@ -257,74 +257,90 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\pedri\.gradle\
 		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:15:9-35
 	android:theme
 		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:20:9-40
-activity#com.example.e_carorder.chargePointInfo.ConnectorQueueActivity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:21:9-85
+activity#com.example.e_carorder.JSONChargePoints.JSONChargePointsActivity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:21:9-31:20
 	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:21:19-73
-activity#com.example.e_carorder.chargePointInfo.ConnectorReservationActivity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:22:9-82
-	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:22:19-79
-activity#com.example.e_carorder.chargePointInfo.UserInfoActivity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:23:9-70
-	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:23:19-67
-activity#com.example.e_carorder.chats.MessageActivity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:24:9-59
-	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:24:19-56
-activity#com.example.e_carorder.chats.AllUsersChatsActivity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:25:9-65
-	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:25:19-62
-activity#com.example.e_carorder.addChargePoint.AddChargePoint2Activity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:26:9-76
-	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:26:19-73
-activity#com.example.e_carorder.addChargePoint.AddChargePoint3Activity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:27:9-76
-	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:27:19-73
-activity#com.example.e_carorder.signInSignUp.SignInSignUpActivity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:28:9-34:20
-	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:28:19-68
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:21:19-76
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:29:13-33:29
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:24:13-28:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:30:17-69
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:25:17-69
 	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:30:25-66
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:25:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:32:17-77
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:27:17-77
 	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:32:27-74
-activity#com.example.e_carorder.addChargePoint.AddChargePoint4Activity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:35:9-76
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:27:27-74
+activity#com.example.e_carorder.addChargePoint.EditConnectorActivity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:32:9-74
 	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:35:19-73
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:32:19-71
+activity#com.example.e_carorder.chargePointInfo.UpdateChargePointInfo3Activity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:33:9-84
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:33:19-81
+activity#com.example.e_carorder.chargePointInfo.UpdateChargePointInfo2Activity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:34:9-84
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:34:19-81
+activity#com.example.e_carorder.chargePointInfo.UpdateChargePointInfo1Activity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:35:9-84
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:35:19-81
+activity#com.example.e_carorder.chargePointInfo.ConnectorQueueActivity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:36:9-76
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:36:19-73
+activity#com.example.e_carorder.chargePointInfo.ConnectorReservationActivity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:37:9-82
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:37:19-79
+activity#com.example.e_carorder.chargePointInfo.UserInfoActivity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:38:9-70
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:38:19-67
+activity#com.example.e_carorder.chats.MessageActivity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:39:9-59
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:39:19-56
+activity#com.example.e_carorder.chats.AllUsersChatsActivity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:40:9-65
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:40:19-62
+activity#com.example.e_carorder.addChargePoint.AddChargePoint2Activity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:41:9-76
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:41:19-73
+activity#com.example.e_carorder.signInSignUp.SignInSignUpActivity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:42:9-44:20
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:42:19-68
+activity#com.example.e_carorder.addChargePoint.AddChargePoint3Activity
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:45:9-76
+	android:name
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:45:19-73
 activity#com.example.e_carorder.addChargePoint.AddConnectorActivity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:36:9-73
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:46:9-73
 	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:36:19-70
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:46:19-70
 activity#com.example.e_carorder.chargePointInfo.ChargePointInfoActivity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:37:9-77
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:47:9-77
 	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:37:19-74
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:47:19-74
 activity#com.example.e_carorder.profile.EditProfileActivity
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:38:9-65
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:48:9-65
 	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:38:19-62
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:48:19-62
 activity#com.example.e_carorder.Navigation_temporal
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:39:9-57
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:49:9-57
 	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:39:19-54
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:49:19-54
 meta-data#com.google.android.geo.API_KEY
-ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:48:9-50:55
+ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:58:9-60:55
 	android:value
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:50:13-52
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:60:13-52
 	android:name
-		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:49:13-58
+		ADDED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:59:13-58
 uses-sdk
 INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml

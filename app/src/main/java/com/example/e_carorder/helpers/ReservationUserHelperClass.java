@@ -1,6 +1,8 @@
 package com.example.e_carorder.helpers;
 
-public class ReservationUserHelperClass {
+import java.io.Serializable;
+
+public class ReservationUserHelperClass implements Serializable {
 
     private String reservationUserId;
     private long reservationDate;

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
@@ -43,7 +44,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class ProfileFragment extends Fragment {
     public static final String TAG = "TAG";
-    private TextView username, email;
+    private TextView profile_username, profile_email, profile_carModel, profile_description;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
     private String userID;
@@ -53,6 +54,7 @@ public class ProfileFragment extends Fragment {
     private StorageReference storageReference;
 
     // Estos atributos para detectar la no verificacion del email
+    private CardView cardViewVerify;
     private Button resendCode;
     private TextView verifyMsg;
     //
@@ -79,8 +81,10 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        username = view.findViewById(R.id.profile_name);
-        email = view.findViewById(R.id.profile_email);
+        profile_username = view.findViewById(R.id.profile_username);
+        profile_email = view.findViewById(R.id.profile_email);
+        profile_carModel = view.findViewById(R.id.profile_carModel);
+        profile_description = view.findViewById(R.id.profile_description);
         resetPasswordLocal = view.findViewById(R.id.resetPasswordLocal);
 
         profileImage = view.findViewById(R.id.profileImage);
@@ -99,6 +103,7 @@ public class ProfileFragment extends Fragment {
         });
 
         // Esto para detectar la no verificacion del email
+        cardViewVerify = view.findViewById(R.id.cardViewVerify);
         resendCode = view.findViewById(R.id.resendCode_btn);
         verifyMsg = view.findViewById(R.id.verifyMsg);
         //
@@ -109,6 +114,7 @@ public class ProfileFragment extends Fragment {
         user = fAuth.getCurrentUser();
 
         if(!user.isEmailVerified()){
+            cardViewVerify.setVisibility(view.VISIBLE);
             resendCode.setVisibility(view.VISIBLE);
             verifyMsg.setVisibility(view.VISIBLE);
 
@@ -131,16 +137,16 @@ public class ProfileFragment extends Fragment {
         }
         //
 
-
-
         DocumentReference documentReference = fStore.collection("users").document(userID);
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                 if(e == null){
                     if(documentSnapshot.exists()){
-                        username.setText(documentSnapshot.getString("username"));
-                        email.setText(documentSnapshot.getString("email"));
+                        profile_username.setText(documentSnapshot.getString("username"));
+                        profile_email.setText(documentSnapshot.getString("email"));
+                        profile_carModel.setText(documentSnapshot.getString("carModel"));
+                        profile_description.setText(documentSnapshot.getString("description"));
                     }else {
                         Log.d(TAG, "onEvent: Document do not exists");
                     }
@@ -257,8 +263,10 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 // open gallery
                 Intent i = new Intent(v.getContext(), EditProfileActivity.class);
-                i.putExtra("username", username.getText().toString());
-                i.putExtra("email", email.getText().toString());
+                i.putExtra("username", profile_username.getText().toString());
+                i.putExtra("email", profile_email.getText().toString());
+                i.putExtra("carModel", profile_carModel.getText().toString());
+                i.putExtra("description", profile_description.getText().toString());
                 startActivity(i);
 
                 // Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

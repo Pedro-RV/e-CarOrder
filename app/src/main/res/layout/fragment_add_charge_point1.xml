@@ -6,4 +6,174 @@
     android:layout_height="match_parent"
     tools:context=".addChargePoint.AddChargePoint1Fragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/tvAddressInfoCPReadjustLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="30dp"
+            android:text="Readjust location:"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/registerReAdjustLocationBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:text="Readjust location"
+            android:maxWidth="120dp"
+            app:layout_constraintStart_toEndOf="@+id/tvAddressInfoCPReadjustLocation"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvAddressInfoCP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="40dp"
+            android:text="Pick charge point location in map:"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddressInfoCPReadjustLocation" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerTitleTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddressInfoCP"
+            android:textColorHint="@color/colorPrimaryText" >
+
+            <EditText
+                android:id="@+id/registerTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="22dp"
+                android:hint="Title"
+                android:background="@color/white"
+                android:textColor="#787878"
+                android:inputType="text"
+                android:visibility="gone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerAddressTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerTitleTextInputLayout"
+            android:textColorHint="@color/colorPrimaryText" >
+
+            <EditText
+                android:id="@+id/registerAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="22dp"
+                android:hint="Charge Point Address"
+                android:background="@color/white"
+                android:textColor="#787878"
+                android:inputType="text"
+                android:visibility="gone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerPostCodeTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerAddressTextInputLayout"
+            android:textColorHint="@color/colorPrimaryText" >
+
+            <EditText
+                android:id="@+id/registerPostCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="22dp"
+                android:hint="Post Code"
+                android:background="@color/white"
+                android:textColor="#787878"
+                android:inputType="text"
+                android:visibility="gone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerStateOrProvinceTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerPostCodeTextInputLayout"
+            android:textColorHint="@color/colorPrimaryText" >
+
+            <EditText
+                android:id="@+id/registerStateOrProvince"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="22dp"
+                android:hint="State Or Province"
+                android:background="@color/white"
+                android:textColor="#787878"
+                android:inputType="text"
+                android:visibility="gone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerTownTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerStateOrProvinceTextInputLayout"
+            android:textColorHint="@color/colorPrimaryText" >
+
+            <EditText
+                android:id="@+id/registerTown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="22dp"
+                android:hint="Town"
+                android:background="@color/white"
+                android:textColor="#787878"
+                android:inputType="text"
+                android:visibility="gone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/registerAdjustLocationBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Adjust location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddressInfoCP" />
+
+        <Button
+            android:id="@+id/registerChargePointNextBtn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Next"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerTownTextInputLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

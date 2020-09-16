@@ -33,7 +33,7 @@ public class AddressInfoHelperClass implements Serializable {
     }
 
     public void setAddress(String address) {
-        address = address;
+        this.address = address;
     }
 
     public String getStateOrProvince() {

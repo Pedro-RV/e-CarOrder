@@ -61,6 +61,8 @@ public class QueueItemAdapter extends RecyclerView.Adapter<QueueItemHolder> {
                 if(e == null){
                     if(documentSnapshot.exists()){
                         final String usernameQueueItem = documentSnapshot.getString("username");
+                        final String carModel = documentSnapshot.getString("carModel");
+                        final String description = documentSnapshot.getString("description");
 
                         holder.usernameQueueItem.setText(usernameQueueItem);
 
@@ -80,8 +82,10 @@ public class QueueItemAdapter extends RecyclerView.Adapter<QueueItemHolder> {
                             @Override
                             public void onClick(View v) {
                                 Intent i = new Intent(v.getContext(), UserInfoActivity.class);
-                                i.putExtra("userUsingConnectorId", queueItemUserId);
-                                i.putExtra("usernameUsingConnector", usernameQueueItem);
+                                i.putExtra("userId", queueItemUserId);
+                                i.putExtra("username", usernameQueueItem);
+                                i.putExtra("carModel", carModel);
+                                i.putExtra("description", description);
                                 context.startActivity(i);
                             }
                         });

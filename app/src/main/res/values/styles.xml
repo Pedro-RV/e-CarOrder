@@ -27,4 +27,10 @@
 
     </style>
 
+    <style name="ButtonEditConnectorTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorBlue2</item>
+
+    </style>
+
+
 </resources>

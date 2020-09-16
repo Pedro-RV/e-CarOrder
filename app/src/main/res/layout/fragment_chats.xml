@@ -27,16 +27,33 @@
             android:visibility="gone"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton4"
+            android:id="@+id/searchForUserBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="44dp"
             android:layout_marginBottom="44dp"
             android:clickable="true"
             android:src="@drawable/search"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@color/white"/>
+            app:tint="@color/white" />
+
+        <SearchView
+            android:id="@+id/searchForUserSV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:queryHint="Search for a user"
+            android:textSize="20sp"
+            android:iconifiedByDefault="false"
+            android:elevation="5dp"
+            android:drawableStart="@drawable/ic_search"
+            android:background="@color/colorBlue3"
+            android:layout_marginEnd="44dp"
+            android:layout_marginBottom="44dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

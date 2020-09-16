@@ -7,7 +7,7 @@ public class ConnectorHelperClass implements Serializable {
 
     private String checkInUserId, connectorType, powerKW;
     private Boolean alert;
-    private long alertDate;
+    private long alertDate, checkOutTime;
 
     private ArrayList<ReservationUserHelperClass> reservations;
 
@@ -16,12 +16,14 @@ public class ConnectorHelperClass implements Serializable {
     public ConnectorHelperClass(){
     }
 
-    public ConnectorHelperClass(String checkInUserId, String connectorType, String powerKW, Boolean alert, long alertDate, ArrayList<ReservationUserHelperClass> reservations, ArrayList<QueueItemHelperClass> queue) {
+    public ConnectorHelperClass(String checkInUserId, String connectorType, String powerKW, Boolean alert, long alertDate, long checkOutTime,
+                                ArrayList<ReservationUserHelperClass> reservations, ArrayList<QueueItemHelperClass> queue) {
         this.checkInUserId = checkInUserId;
         this.connectorType = connectorType;
         this.powerKW = powerKW;
         this.alert = alert;
         this.alertDate = alertDate;
+        this.checkOutTime = checkOutTime;
         this.reservations = reservations;
         this.queue = queue;
     }
@@ -80,5 +82,13 @@ public class ConnectorHelperClass implements Serializable {
 
     public void setQueue(ArrayList<QueueItemHelperClass> queue) {
         this.queue = queue;
+    }
+
+    public long getCheckOutTime() {
+        return checkOutTime;
+    }
+
+    public void setCheckOutTime(long checkOutTime) {
+        this.checkOutTime = checkOutTime;
     }
 }

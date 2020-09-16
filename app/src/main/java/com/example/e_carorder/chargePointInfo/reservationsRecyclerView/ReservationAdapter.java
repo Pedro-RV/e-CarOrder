@@ -79,6 +79,8 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationHolder> 
                 if(e == null){
                     if(documentSnapshot.exists()){
                         final String usernameReservation = documentSnapshot.getString("username");
+                        final String carModel = documentSnapshot.getString("carModel");
+                        final String description = documentSnapshot.getString("description");
 
                         holder.usernameReservation.setText(usernameReservation);
 
@@ -107,8 +109,10 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationHolder> 
                             @Override
                             public void onClick(View v) {
                                 Intent i = new Intent(v.getContext(), UserInfoActivity.class);
-                                i.putExtra("userUsingConnectorId", reservationUserId);
-                                i.putExtra("usernameUsingConnector", usernameReservation);
+                                i.putExtra("userId", reservationUserId);
+                                i.putExtra("username", usernameReservation);
+                                i.putExtra("carModel", carModel);
+                                i.putExtra("description", description);
                                 context.startActivity(i);
                             }
                         });
@@ -127,11 +131,10 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationHolder> 
             @Override
             public void onClick(View v) {
 
+                AlertDialog.Builder reservationConfirmationDialog = new AlertDialog.Builder(v.getContext());
+                reservationConfirmationDialog.setTitle("Are you sure you want to delete the reservation?");
 
-                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-                passwordResetDialog.setTitle("Are you sure you want to delete the reservation?");
-
-                passwordResetDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                reservationConfirmationDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -178,14 +181,14 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationHolder> 
                     }
                 });
 
-                passwordResetDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                reservationConfirmationDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // close the dialog
                     }
                 });
 
-                passwordResetDialog.create().show();
+                reservationConfirmationDialog.create().show();
 
             }
         });

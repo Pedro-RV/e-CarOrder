@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chargePointInfo.UpdateChargePointInfo1Activity">
+
+    <LinearLayout
+        android:id='@+id/layoutToolBar'
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/backCPUpdate1Btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            app:borderWidth="0dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/back"
+            app:fabCustomSize="50dp"
+            app:fabSize="auto"
+            app:elevation="0dp"
+            app:tint="@color/white"/>
+
+        <TextView
+            android:id="@+id/chargePointInfoTittle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="Charge Point Update"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvAddressInfoCPUpdateLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="30dp"
+        android:text="Update location:"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutToolBar" />
+
+    <TextView
+        android:id="@+id/tvAddressInfoCPUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="40dp"
+        android:text="Address Info:"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddressInfoCPUpdateLocation" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/updateTitleTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddressInfoCPUpdate"
+        android:textColorHint="@color/colorPrimaryText" >
+
+        <EditText
+            android:id="@+id/updateTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:hint="Title"
+            android:background="@color/white"
+            android:textColor="#787878"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/updateAddressTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateTitleTextInputLayout"
+        android:textColorHint="@color/colorPrimaryText" >
+
+        <EditText
+            android:id="@+id/updateAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:hint="Charge Point Address"
+            android:background="@color/white"
+            android:textColor="#787878"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/updatePostCodeTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateAddressTextInputLayout"
+        android:textColorHint="@color/colorPrimaryText" >
+
+        <EditText
+            android:id="@+id/updatePostCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:hint="Post Code"
+            android:background="@color/white"
+            android:textColor="#787878"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/updateStateOrProvinceTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updatePostCodeTextInputLayout"
+        android:textColorHint="@color/colorPrimaryText" >
+
+        <EditText
+            android:id="@+id/updateStateOrProvince"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:hint="State Or Province"
+            android:background="@color/white"
+            android:textColor="#787878"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/updateTownTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateStateOrProvinceTextInputLayout"
+        android:textColorHint="@color/colorPrimaryText" >
+
+        <EditText
+            android:id="@+id/updateTown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="22dp"
+            android:hint="Town"
+            android:background="@color/white"
+            android:textColor="#787878"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/updateAdjustLocationBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:text="Adjust location"
+        android:maxWidth="110dp"
+        app:layout_constraintStart_toEndOf="@id/tvAddressInfoCPUpdateLocation"
+        app:layout_constraintTop_toBottomOf="@id/layoutToolBar" />
+
+    <Button
+        android:id="@+id/updateChargePointNextBtn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateTownTextInputLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

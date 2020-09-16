@@ -1,6 +1,8 @@
 package com.example.e_carorder.helpers;
 
-public class QueueItemHelperClass {
+import java.io.Serializable;
+
+public class QueueItemHelperClass implements Serializable {
 
     private String queueItemUserId;
 

@@ -5,15 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.e_carorder.R;
 import com.example.e_carorder.addChargePoint.connectorsRecyclerView.ConnectorAdapter;
 import com.example.e_carorder.addChargePoint.connectorsRecyclerView.ConnectorModel;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.e_carorder.helpers.AddressInfoHelperClass;
+import com.example.e_carorder.helpers.ConnectorHelperClass;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +30,7 @@ public class ChargePointInfoActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     private TextView titleInfo, address, postCode, stateOrProvince, town, status;
+    private FloatingActionButton editCPfloatingActionButton, backCPInfoBtn;
 
     private ArrayList<ConnectorModel> connectors = new ArrayList<>();
 
@@ -41,7 +44,7 @@ public class ChargePointInfoActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("ChargePoints");
 
-        final String chargePointId = getIntent().getStringExtra("chargePointId").substring(4);;
+        final String chargePointId = getIntent().getStringExtra("chargePointId").substring(4);
 
         recyclerView = findViewById(R.id.recyclerViewConnectorsCPInfo);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,6 +55,8 @@ public class ChargePointInfoActivity extends AppCompatActivity {
         stateOrProvince = findViewById(R.id.stateOrProvince);
         town = findViewById(R.id.town);
         status = findViewById(R.id.status);
+        editCPfloatingActionButton = findViewById(R.id.editCPfloatingActionButton);
+        backCPInfoBtn = findViewById(R.id.backCPInfoBtn);
 
         Query checkChargePoint = mDatabase.orderByChild("id").equalTo(chargePointId);
 
@@ -82,7 +87,11 @@ public class ChargePointInfoActivity extends AppCompatActivity {
                                     latitude,
                                     longitude,
                                     (Boolean) dsConnector.child("alert").getValue(),
-                                    (long) dsConnector.child("alertDate").getValue());
+                                    (long) dsConnector.child("alertDate").getValue(),
+                                    false,
+                                    new AddressInfoHelperClass(),
+                                    new ArrayList<ConnectorHelperClass>(),
+                                    "");
 
                             connectors.add(m);
                         }
@@ -101,6 +110,23 @@ public class ChargePointInfoActivity extends AppCompatActivity {
 
             }
         });
+
+        editCPfloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), UpdateChargePointInfo1Activity.class);
+                i.putExtra("chargePointId", chargePointId);
+                startActivity(i);
+            }
+        });
+
+        backCPInfoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChargePointInfoActivity.super.onBackPressed();
+            }
+        });
+
     }
 
 }

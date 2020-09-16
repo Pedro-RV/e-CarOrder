@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,8 +19,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.e_carorder.chargePointInfo.ChargePointInfoActivity;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,6 +37,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,14 +49,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.net.ssl.SSLEngineResult;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap map;
     private MapView mapView;
-    private SearchView searchView;
+    private EditText searchLocationET;
     private DatabaseReference mDatabase;
     private int ACCES_LOCATION_REQUEST_CODE = 10001;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -73,40 +88,28 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState);
 
         mapView = view.findViewById(R.id.mapsView);
-        searchView = view.findViewById(R.id.sv_location);
+        searchLocationET = view.findViewById(R.id.searchLocationET);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        Places.initialize(getContext(), getString(R.string.google_maps_key));
+
+        searchLocationET.setFocusable(false);
+
+        searchLocationET.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                String location = searchView.getQuery().toString();
-                List<Address> addressList = null;
+            public void onClick(View v) {
+                //Initialize place field list
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
 
-                if (location != null || !location.equals("")){
+                //Create intent
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList).build(getContext());
 
-                    Geocoder geocoder = new Geocoder(getContext());
-                    try {
-                        addressList = geocoder.getFromLocationName(location, 1);
-                        if(addressList.size() != 0){
-                            Address address = addressList.get(0);
-                            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                        }
+                //Start activity result
+                startActivityForResult(intent, 100);
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
             }
         });
 
@@ -114,6 +117,32 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             mapView.onCreate(null);
             mapView.onResume();
             mapView.getMapAsync(this);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 100 && resultCode == RESULT_OK){
+            //When success
+            //Initialize place
+            Place place = Autocomplete.getPlaceFromIntent(data);
+
+            //Set address on EditText
+            searchLocationET.setText(place.getAddress());
+
+            //Show location in map
+            LatLng latLng = place.getLatLng();
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+
+        }else if(resultCode == AutocompleteActivity.RESULT_ERROR){
+            //When error, initialize status
+            Status status = Autocomplete.getStatusFromIntent(data);
+
+            //Display toast
+            Toast.makeText(getContext(), status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+
         }
     }
 

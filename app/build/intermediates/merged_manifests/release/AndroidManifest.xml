@@ -36,6 +36,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.example.e_carorder.chargePointInfo.UpdateChargePointInfo3Activity" />
+        <activity android:name="com.example.e_carorder.chargePointInfo.UpdateChargePointInfo2Activity" />
+        <activity android:name="com.example.e_carorder.chargePointInfo.UpdateChargePointInfo1Activity" />
         <activity android:name="com.example.e_carorder.chargePointInfo.ConnectorQueueActivity" />
         <activity android:name="com.example.e_carorder.chargePointInfo.ConnectorReservationActivity" />
         <activity android:name="com.example.e_carorder.chargePointInfo.UserInfoActivity" />

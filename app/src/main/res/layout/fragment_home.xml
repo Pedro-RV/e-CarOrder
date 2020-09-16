@@ -12,14 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/sv_location"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/searchLocationET"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/bg_round"
-        android:elevation="5dp"
-        app:iconifiedByDefault="false"
-        app:queryHint="Search..." />
+        android:hint="Search..."
+        android:layout_margin="12dp"
+        android:inputType="text"
+        android:padding="13dp"
+        android:drawablePadding="13dp"
+        android:drawableStart="@drawable/ic_search"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_round" />
 
 </FrameLayout>

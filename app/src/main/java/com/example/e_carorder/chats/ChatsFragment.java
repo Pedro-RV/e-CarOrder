@@ -1,5 +1,6 @@
 package com.example.e_carorder.chats;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,14 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.e_carorder.R;
+import com.example.e_carorder.chargePointInfo.UserInfoActivity;
 import com.example.e_carorder.chats.messagesRecyclerView.ChatModel;
 import com.example.e_carorder.chats.messagesRecyclerView.MessageAdapter;
 import com.example.e_carorder.chats.usersRecyclerView.UserAdapter;
 import com.example.e_carorder.chats.usersRecyclerView.UserModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +49,8 @@ import java.util.Map;
 public class ChatsFragment extends Fragment {
 
     private Button allUsersBtn;
+    private FloatingActionButton searchForUserBtn;
+    private SearchView searchForUserSV;
 
     private UserAdapter userAdapter;
     private ArrayList<UserModel> mUsers;
@@ -70,6 +79,8 @@ public class ChatsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
         allUsersBtn = view.findViewById(R.id.allUsersBtn);
+        searchForUserBtn = view.findViewById(R.id.searchForUserBtn);
+        searchForUserSV = view.findViewById(R.id.searchForUserSV);
 
         recyclerViewUserLastChats = view.findViewById(R.id.rvUserLastChats);
 
@@ -109,6 +120,71 @@ public class ChatsFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        searchForUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchForUserBtn.setVisibility(View.INVISIBLE);
+                searchForUserSV.setVisibility(View.VISIBLE);
+
+                //Focus when searchForUserBtn is clicked
+                searchForUserSV.requestFocus();
+
+                //Show keyboard
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(searchForUserSV, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+
+        searchForUserSV.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+                searchForUserBtn.setVisibility(View.VISIBLE);
+                searchForUserSV.setVisibility(View.INVISIBLE);
+
+                CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("users");
+
+                collectionReference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        boolean found = false;
+
+                        for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                            if(documentSnapshot.getString("username").equals(query)){
+                                found = true;
+
+                                String userId = documentSnapshot.getId();
+                                String username = documentSnapshot.getString("username");
+                                String carModel = documentSnapshot.getString("carModel");
+                                String description = documentSnapshot.getString("description");
+
+                                Intent i = new Intent(getContext(), UserInfoActivity.class);
+                                i.putExtra("userId", userId);
+                                i.putExtra("username", username);
+                                i.putExtra("carModel", carModel);
+                                i.putExtra("description", description);
+                                startActivity(i);
+
+                            }
+
+                        }
+
+                        if(!found){
+                            Toast.makeText(getContext(), "User not found.", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                });
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
 

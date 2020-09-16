@@ -1,26 +1,37 @@
 package com.example.e_carorder.addChargePoint.connectorsRecyclerView;
 
 import android.Manifest;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.PointerIcon;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.e_carorder.R;
+import com.example.e_carorder.addChargePoint.EditConnectorActivity;
 import com.example.e_carorder.chargePointInfo.ConnectorQueueActivity;
 import com.example.e_carorder.chargePointInfo.ConnectorReservationActivity;
+import com.example.e_carorder.chargePointInfo.UpdateChargePointInfo3Activity;
 import com.example.e_carorder.chargePointInfo.UserInfoActivity;
+import com.example.e_carorder.helpers.ChargePointHelperClass;
 import com.example.e_carorder.helpers.ConnectorHelperClass;
 import com.example.e_carorder.helpers.QueueItemHelperClass;
 import com.example.e_carorder.helpers.ReservationUserHelperClass;
@@ -43,6 +54,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -57,6 +70,10 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
     public ConnectorAdapter(Context c, ArrayList<ConnectorModel> connectorModels) {
         this.c = c;
         this.connectorModels = connectorModels;
+    }
+
+    public ArrayList<ConnectorModel> getConnectorModels(){
+        return connectorModels;
     }
 
     @NonNull
@@ -80,232 +97,239 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
         final String connectorId = connectorModels.get(position).getConnectorId();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ChargePoints");
 
-        if(!connectorModels.get(position).getChargePointId().isEmpty()){
-            holder.reserveBtn.setVisibility(View.VISIBLE);
-            holder.reserveNumber.setVisibility(View.VISIBLE);
+        if(connectorModels.get(position).getChargePointUpdateConnector() == true){
+            holder.editConnectorBtn.setVisibility(View.VISIBLE);
+            holder.deleteConnectorBtn.setVisibility(View.VISIBLE);
 
-            Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
-
-            checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()){
-                        for(DataSnapshot ds : dataSnapshot.getChildren()){
-
-                            ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
-
-                            ArrayList<QueueItemHelperClass> queue = connector.getQueue();
-
-                            if(queue != null){
-                                holder.queueNumber.setText(Integer.toString(queue.size()));
-                            } else{
-                                holder.queueNumber.setText("0");
-                            }
-
-                            ArrayList<ReservationUserHelperClass> reserves = connector.getReservations();
-
-                            if(reserves != null){
-                                holder.reserveNumber.setText(Integer.toString(reserves.size()));
-
-                            } else{
-                                holder.reserveNumber.setText("0");
-
-                            }
-
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-        }
-
-        if(connectorModels.get(position).getChargePointId().isEmpty()){
-
-
-        } else if(connectorModels.get(position).getCheckInUserId().isEmpty()){
-            holder.checkInBtn.setVisibility(View.VISIBLE);
-            holder.alertBtn.setVisibility(View.VISIBLE);
-
-            if(connectorModels.get(position).getAlert()){
-                Long currentDate = Calendar.getInstance().getTimeInMillis();
-
-                Long alertDate = connectorModels.get(position).getAlertDate();
-
-                Long difference = currentDate - alertDate;
-
-                long minutesDiff = TimeUnit.MILLISECONDS.toMinutes(difference);
-
-                if(minutesDiff >= 180){
-                    holder.alertTV.setVisibility(View.GONE);
-
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("alert", false);
-                    map.put("alertDate", -1);
-
-                    databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
-
-                } else{
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(alertDate);
-
-                    int hourAlert = calendar.get(Calendar.HOUR);
-                    int minuteAlert = calendar.get(Calendar.MINUTE);
-
-                    if(minuteAlert < 10){
-                        holder.alertTV.setText("Alert, invaded parking! Registered at: " + hourAlert + ":0" + minuteAlert);
-                    } else{
-                        holder.alertTV.setText("Alert, invaded parking! Registered at: " + hourAlert + ":" + minuteAlert);
-                    }
-
-                    holder.alertTV.setVisibility(View.VISIBLE);
-
-                }
-
-            }
-
-        } else if(!connectorModels.get(position).getCheckInUserId().equals(userId)) {
-            holder.inUseBtn.setVisibility(View.VISIBLE);
-            holder.queueBtn.setVisibility(View.VISIBLE);
-            holder.queueNumber.setVisibility(View.VISIBLE);
-
-            DocumentReference documentReference = FirebaseFirestore.getInstance()
-                    .collection("users").document(connectorModels.get(position).getCheckInUserId());
-
-            documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                @Override
-                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                    if(e == null){
-                        if(documentSnapshot.exists()){
-                            final String usernameUsingConnector = documentSnapshot.getString("username");
-
-                            holder.usernameUserUsingConnector.setText(usernameUsingConnector);
-                            holder.usernameUserUsingConnector.setVisibility(View.VISIBLE);
-
-                            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-
-                            StorageReference profileRef = storageReference.child("users/"+connectorModels.get(position).getCheckInUserId()+"/profile.jpg");
-                            profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Glide.with(c).load(uri).into(holder.imageUserUsingConnector);
-                                }
-                            });
-
-                            holder.imageUserUsingConnector.setVisibility(View.VISIBLE);
-
-                            holder.imageUserUsingConnector.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent i = new Intent(v.getContext(), UserInfoActivity.class);
-                                    i.putExtra("userUsingConnectorId", connectorModels.get(position).getCheckInUserId());
-                                    i.putExtra("usernameUsingConnector", usernameUsingConnector);
-                                    c.startActivity(i);
-                                }
-                            });
-
-
-                        }
-                    }
-                }
-            });
-
-            holder.queueBtn.setOnClickListener(new View.OnClickListener() {
+            holder.editConnectorBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(v.getContext(), ConnectorQueueActivity.class);
-                    i.putExtra("chargePointId", connectorModels.get(position).getChargePointId());
-                    i.putExtra("connectorId", connectorModels.get(position).getConnectorId());
+                    Intent i = new Intent(v.getContext(), EditConnectorActivity.class);
+                    i.putExtra("addressInfoHelperClass", connectorModels.get(position).getAddressInfoHelperClass());
+                    i.putExtra("connectors", connectorModels.get(position).getConnectors());
+                    i.putExtra("chargePointStatus", connectorModels.get(position).getChargePointStatus());
+                    i.putExtra("updateChargePoint", "Yes");
+                    i.putExtra("connectorId", Integer.toString(position));
                     c.startActivity(i);
 
                 }
             });
 
-        } else{
-            holder.checkOutBtn.setVisibility(View.VISIBLE);
+            holder.deleteConnectorBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder reservationConfirmationDialog = new AlertDialog.Builder(v.getContext());
+                    reservationConfirmationDialog.setTitle("Are you sure you want to delete the reservation?");
 
-        }
-
-        holder.checkInBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(c);
-
-                if(ContextCompat.checkSelfPermission(c, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                    Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
-                    locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
+                    reservationConfirmationDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onSuccess(Location location) {
-                            if(location != null){
-                                double userLatitude = location.getLatitude();
-                                double userLongitude = location.getLongitude();
+                        public void onClick(DialogInterface dialog, int which) {
 
-                                double chargePointLatitude = connectorModels.get(position).getChargePointLatitude();
-                                double chargePointLongitude = connectorModels.get(position).getChargePointLongitude();
+                            if(connectorModels.size() == 1){
+                                Toast.makeText(c, "there must be at least one connector", Toast.LENGTH_SHORT).show();
 
-                                double distance = calculationByDistance(userLatitude, userLongitude, chargePointLatitude, chargePointLongitude);
-
-                                if(distance <= 1){
-                                    Map<String, Object> map = new HashMap<>();
-                                    map.put("checkInUserId", userId);
-
-                                    databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
-
-                                    holder.checkInBtn.setVisibility(View.GONE);
-                                    holder.checkOutBtn.setVisibility(View.VISIBLE);
-                                    holder.alertBtn.setVisibility(View.GONE);
-
-                                    if(holder.alertTV.getVisibility() == View.VISIBLE){
-                                        holder.alertTV.setVisibility(View.GONE);
-
-                                        Map<String, Object> mapAlert = new HashMap<>();
-                                        mapAlert.put("alert", false);
-                                        mapAlert.put("alertDate", -1);
-
-                                        databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(mapAlert);
-                                    }
-
-                                }else{
-                                    Toast.makeText(c, "You have to be closer to the point.", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }else{
-                                Toast.makeText(c, "You can't check-in without location activated.", Toast.LENGTH_SHORT).show();
+                            } else{
+                                connectorModels.remove(position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position, connectorModels.size());
                             }
+
+                        }
+
+                    });
+
+                    reservationConfirmationDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // close the dialog
                         }
                     });
-                } else{
-                    Toast.makeText(c, "You must give location permits before trying to check-in.", Toast.LENGTH_SHORT).show();
+
+                    reservationConfirmationDialog.create().show();
+
                 }
+            });
+
+        } else{
+
+            if(!connectorModels.get(position).getChargePointId().isEmpty()){
+                holder.reserveBtn.setVisibility(View.VISIBLE);
+                holder.reserveNumber.setVisibility(View.VISIBLE);
+
+                Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
+
+                checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+
+                                ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
+
+                                if(connector.getCheckOutTime() != -1){
+                                    long checkOutTime = connector.getCheckOutTime();
+
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.setTimeInMillis(checkOutTime);
+
+                                    int hourCheckOut = calendar.get(Calendar.HOUR_OF_DAY);
+                                    int minuteCheckOut = calendar.get(Calendar.MINUTE);
+
+                                    if(minuteCheckOut < 10){
+                                        holder.checkOutBtn.setText("Check-out at " + hourCheckOut + ":0" + minuteCheckOut);
+                                        holder.inUseBtn.setText("In use until " + hourCheckOut + ":0" + minuteCheckOut);
+
+                                    }else{
+                                        holder.checkOutBtn.setText("Check-out at " + hourCheckOut + ":" + minuteCheckOut);
+                                        holder.inUseBtn.setText("In use until "  + hourCheckOut + ":" + minuteCheckOut);
+
+                                    }
+
+                                }
+
+                                ArrayList<QueueItemHelperClass> queue = connector.getQueue();
+
+                                if(queue != null){
+                                    holder.queueNumber.setText(Integer.toString(queue.size()));
+                                } else{
+                                    holder.queueNumber.setText("0");
+                                }
+
+                                ArrayList<ReservationUserHelperClass> reserves = connector.getReservations();
+
+                                if(reserves != null){
+                                    holder.reserveNumber.setText(Integer.toString(reserves.size()));
+
+                                } else{
+                                    holder.reserveNumber.setText("0");
+
+                                }
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
             }
-        });
 
-        holder.checkOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            if(connectorModels.get(position).getChargePointId().isEmpty()){
 
-                Map<String, Object> map = new HashMap<>();
-                map.put("checkInUserId", "");
 
-                databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
-
-                holder.checkOutBtn.setVisibility(View.GONE);
+            } else if(connectorModels.get(position).getCheckInUserId().isEmpty()){
                 holder.checkInBtn.setVisibility(View.VISIBLE);
                 holder.alertBtn.setVisibility(View.VISIBLE);
 
-            }
-        });
+                if(connectorModels.get(position).getAlert()){
+                    Long currentDate = Calendar.getInstance().getTimeInMillis();
 
-        holder.alertBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(holder.checkInBtn.getVisibility() == View.VISIBLE){
+                    Long alertDate = connectorModels.get(position).getAlertDate();
+
+                    Long difference = currentDate - alertDate;
+
+                    long minutesDiff = TimeUnit.MILLISECONDS.toMinutes(difference);
+
+                    if(minutesDiff >= 180){
+                        holder.alertTV.setVisibility(View.GONE);
+
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("alert", false);
+                        map.put("alertDate", -1);
+
+                        databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
+
+                    } else{
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(alertDate);
+
+                        int hourAlert = calendar.get(Calendar.HOUR_OF_DAY);
+                        int minuteAlert = calendar.get(Calendar.MINUTE);
+
+                        if(minuteAlert < 10){
+                            holder.alertTV.setText("Alert, invaded parking! Registered at: " + hourAlert + ":0" + minuteAlert);
+                        } else{
+                            holder.alertTV.setText("Alert, invaded parking! Registered at: " + hourAlert + ":" + minuteAlert);
+                        }
+
+                        holder.alertTV.setVisibility(View.VISIBLE);
+
+                    }
+
+                }
+
+            } else if(!connectorModels.get(position).getCheckInUserId().equals(userId)) {
+                holder.inUseBtn.setVisibility(View.VISIBLE);
+                holder.queueBtn.setVisibility(View.VISIBLE);
+                holder.queueNumber.setVisibility(View.VISIBLE);
+
+                DocumentReference documentReference = FirebaseFirestore.getInstance()
+                        .collection("users").document(connectorModels.get(position).getCheckInUserId());
+
+                documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        if(e == null){
+                            if(documentSnapshot.exists()){
+                                final String usernameUsingConnector = documentSnapshot.getString("username");
+                                final String carModel = documentSnapshot.getString("carModel");
+                                final String description = documentSnapshot.getString("description");
+
+                                holder.usernameUserUsingConnector.setText(usernameUsingConnector);
+                                holder.usernameUserUsingConnector.setVisibility(View.VISIBLE);
+
+                                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+                                StorageReference profileRef = storageReference.child("users/"+connectorModels.get(position).getCheckInUserId()+"/profile.jpg");
+                                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Glide.with(c).load(uri).into(holder.imageUserUsingConnector);
+                                    }
+                                });
+
+                                holder.imageUserUsingConnector.setVisibility(View.VISIBLE);
+
+                                holder.imageUserUsingConnector.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent i = new Intent(v.getContext(), UserInfoActivity.class);
+                                        i.putExtra("userId", connectorModels.get(position).getCheckInUserId());
+                                        i.putExtra("username", usernameUsingConnector);
+                                        i.putExtra("carModel", carModel);
+                                        i.putExtra("description", description);
+                                        c.startActivity(i);
+                                    }
+                                });
+
+
+                            }
+                        }
+                    }
+                });
+
+                holder.queueBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(v.getContext(), ConnectorQueueActivity.class);
+                        i.putExtra("chargePointId", connectorModels.get(position).getChargePointId());
+                        i.putExtra("connectorId", connectorModels.get(position).getConnectorId());
+                        c.startActivity(i);
+
+                    }
+                });
+
+            } else{
+                holder.checkOutBtn.setVisibility(View.VISIBLE);
+
+            }
+
+            holder.checkInBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
                     FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(c);
 
@@ -324,52 +348,160 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
                                     double distance = calculationByDistance(userLatitude, userLongitude, chargePointLatitude, chargePointLongitude);
 
                                     if(distance <= 1){
-                                        Calendar rightNow = Calendar.getInstance();
-                                        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
-                                        int currentMinute = rightNow.get(Calendar.MINUTE);
+                                        TimePickerDialog timePickerDialog;
 
-                                        if(currentMinute < 10){
-                                            holder.alertTV.setText("Alert, invaded parking! Registered at: " + currentHour + ":0" + currentMinute);
-                                        } else{
-                                            holder.alertTV.setText("Alert, invaded parking! Registered at: " + currentHour + ":" + currentMinute);
-                                        }
+                                        Calendar currentTime = Calendar.getInstance();
+                                        int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+                                        int minute = currentTime.get(Calendar.MINUTE);
 
-                                        holder.alertTV.setVisibility(View.VISIBLE);
+                                        timePickerDialog = new TimePickerDialog(c, new TimePickerDialog.OnTimeSetListener() {
+                                            @Override
+                                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                                Calendar time = Calendar.getInstance();
+                                                time.set(0, 0, 0, hourOfDay, minute);
 
-                                        Long currentDate = rightNow.getInstance().getTimeInMillis();
+                                                Map<String, Object> map = new HashMap<>();
+                                                map.put("checkInUserId", userId);
+                                                map.put("checkOutTime", time.getTimeInMillis());
 
-                                        Map<String, Object> map = new HashMap<>();
-                                        map.put("alert", true);
-                                        map.put("alertDate", currentDate);
+                                                databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
 
-                                        databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
+                                                if(minute < 10){
+                                                    holder.checkOutBtn.setText("Check-out at " + hourOfDay + ":0" + minute);
+
+                                                }else{
+                                                    holder.checkOutBtn.setText("Check-out at " + hourOfDay + ":" + minute);
+
+                                                }
+
+                                                holder.checkInBtn.setVisibility(View.GONE);
+                                                holder.checkOutBtn.setVisibility(View.VISIBLE);
+                                                holder.alertBtn.setVisibility(View.GONE);
+
+                                                if(holder.alertTV.getVisibility() == View.VISIBLE){
+                                                    holder.alertTV.setVisibility(View.GONE);
+
+                                                    Map<String, Object> mapAlert = new HashMap<>();
+                                                    mapAlert.put("alert", false);
+                                                    mapAlert.put("alertDate", -1);
+
+                                                    databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(mapAlert);
+                                                }
+
+                                            }
+                                        }, hour, minute, true);
+
+                                        TextView titleTV = new TextView(c);
+                                        titleTV.setText("Select Check-out Time");
+                                        titleTV.setTextSize(30);
+                                        titleTV.setTextColor(c.getResources().getColor(R.color.colorPrimary));
+                                        titleTV.setTypeface(Typeface.DEFAULT_BOLD);
+
+                                        timePickerDialog.setCustomTitle(titleTV);
+                                        timePickerDialog.show();
 
                                     }else{
                                         Toast.makeText(c, "You have to be closer to the point.", Toast.LENGTH_SHORT).show();
                                     }
 
                                 }else{
-                                    Toast.makeText(c, "You can't give an alert without location activated.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(c, "You can't check-in without location activated.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
                     } else{
-                        Toast.makeText(c, "You must give location permits before trying to give an alert.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(c, "You must give location permits before trying to check-in.", Toast.LENGTH_SHORT).show();
                     }
+
                 }
+            });
 
-            }
-        });
+            holder.checkOutBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        holder.reserveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ConnectorReservationActivity.class);
-                i.putExtra("chargePointId", connectorModels.get(position).getChargePointId());
-                i.putExtra("connectorId", connectorModels.get(position).getConnectorId());
-                c.startActivity(i);
-            }
-        });
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("checkInUserId", "");
+
+                    databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
+
+                    holder.checkOutBtn.setVisibility(View.GONE);
+                    holder.checkInBtn.setVisibility(View.VISIBLE);
+                    holder.alertBtn.setVisibility(View.VISIBLE);
+
+                }
+            });
+
+            holder.alertBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(holder.checkInBtn.getVisibility() == View.VISIBLE){
+
+                        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(c);
+
+                        if(ContextCompat.checkSelfPermission(c, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                            Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
+                            locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
+                                @Override
+                                public void onSuccess(Location location) {
+                                    if(location != null){
+                                        double userLatitude = location.getLatitude();
+                                        double userLongitude = location.getLongitude();
+
+                                        double chargePointLatitude = connectorModels.get(position).getChargePointLatitude();
+                                        double chargePointLongitude = connectorModels.get(position).getChargePointLongitude();
+
+                                        double distance = calculationByDistance(userLatitude, userLongitude, chargePointLatitude, chargePointLongitude);
+
+                                        if(distance <= 1){
+                                            Calendar rightNow = Calendar.getInstance();
+                                            int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
+                                            int currentMinute = rightNow.get(Calendar.MINUTE);
+
+                                            if(currentMinute < 10){
+                                                holder.alertTV.setText("Alert, invaded parking! Registered at: " + currentHour + ":0" + currentMinute);
+                                            } else{
+                                                holder.alertTV.setText("Alert, invaded parking! Registered at: " + currentHour + ":" + currentMinute);
+                                            }
+
+                                            holder.alertTV.setVisibility(View.VISIBLE);
+
+                                            Long currentDate = rightNow.getInstance().getTimeInMillis();
+
+                                            Map<String, Object> map = new HashMap<>();
+                                            map.put("alert", true);
+                                            map.put("alertDate", currentDate);
+
+                                            databaseReference.child(chargePointId).child("connectors").child(connectorId).updateChildren(map);
+
+                                        }else{
+                                            Toast.makeText(c, "You have to be closer to the point.", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }else{
+                                        Toast.makeText(c, "You can't give an alert without location activated.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        } else{
+                            Toast.makeText(c, "You must give location permits before trying to give an alert.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }
+            });
+
+            holder.reserveBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(v.getContext(), ConnectorReservationActivity.class);
+                    i.putExtra("chargePointId", connectorModels.get(position).getChargePointId());
+                    i.putExtra("connectorId", connectorModels.get(position).getConnectorId());
+                    c.startActivity(i);
+                }
+            });
+
+        }
 
     }
 

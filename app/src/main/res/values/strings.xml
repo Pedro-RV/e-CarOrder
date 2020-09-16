@@ -6,7 +6,6 @@
     <string name="chats">Chats</string>
     <string name="add">Add Charge Point</string>
     <string name="notifications">Notifications</string>
-    <string name="inbox">Inbox</string>
     <string name="others">Others</string>
     <string name="settings">Settings</string>
     <string name="user_guide">User Guide</string>
@@ -16,9 +15,11 @@
 
     <string-array name="connectorsType">
         <item>Schuko</item>
-        <item>SAE_J1772</item>
-        <item>Mennekes</item>
-        <item>CHAdeMo</item>
+        <item>Tipo 1 (SAE J1772)</item>
+        <item>Tipo 2 (Mennekes)</item>
+        <item>CHAdeMO</item>
+        <item>CSS</item>
+        <item>Tipo 3 (Scame)</item>
     </string-array>
 
     <string-array name="statusType">
@@ -26,7 +27,5 @@
         <item>Damaged</item>
         <item>Unkown</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

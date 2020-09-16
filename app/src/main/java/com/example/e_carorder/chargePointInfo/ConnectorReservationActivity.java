@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,10 +20,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.e_carorder.R;
-import com.example.e_carorder.addChargePoint.connectorsRecyclerView.ConnectorModel;
 import com.example.e_carorder.chargePointInfo.reservationsRecyclerView.ReservationAdapter;
 import com.example.e_carorder.chargePointInfo.reservationsRecyclerView.ReservationModel;
 import com.example.e_carorder.chats.AllUsersChatsActivity;
@@ -33,6 +35,7 @@ import com.example.e_carorder.helpers.ReservationUserHelperClass;
 import com.example.e_carorder.signInSignUp.SignInSignUpActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +60,7 @@ import java.util.Map;
 public class ConnectorReservationActivity extends AppCompatActivity {
 
     private Button reservationBtn;
+    private FloatingActionButton backReservationsBtn;
     private DatabaseReference databaseReference;
 
     private ArrayList<ConnectorHelperClass> connectors = new ArrayList<>();
@@ -76,6 +80,7 @@ public class ConnectorReservationActivity extends AppCompatActivity {
 
         reservationBtn = findViewById(R.id.reservationBtn);
         recyclerViewAllReservations = findViewById(R.id.rvAllReservations);
+        backReservationsBtn = findViewById(R.id.backReservationsBtn);
 
         recyclerViewAllReservations.setLayoutManager(new LinearLayoutManager(this));
 
@@ -128,7 +133,7 @@ public class ConnectorReservationActivity extends AppCompatActivity {
         reservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Calendar calendar;
+                final Calendar calendar;
                 DatePickerDialog datePickerDialog;
 
                 calendar = Calendar.getInstance();
@@ -139,6 +144,16 @@ public class ConnectorReservationActivity extends AppCompatActivity {
                 datePickerDialog = new DatePickerDialog(ConnectorReservationActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
+                        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                        int minute = calendar.get(Calendar.MINUTE);
+
+                        new TimePickerDialog(ConnectorReservationActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                            }
+                        }, hour, minute, true);
+
 
                         Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
 
@@ -211,6 +226,13 @@ public class ConnectorReservationActivity extends AppCompatActivity {
 
                 datePickerDialog.show();
 
+            }
+        });
+
+        backReservationsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectorReservationActivity.super.onBackPressed();
             }
         });
 

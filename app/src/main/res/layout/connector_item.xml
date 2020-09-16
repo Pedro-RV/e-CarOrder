@@ -60,6 +60,7 @@
             android:id="@+id/checkOutBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="80dp"
             android:text="Check-out"
             android:theme="@style/ButtonCheckOutTheme"
             android:visibility="gone"
@@ -71,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="80dp"
-            android:text="In use until 13:30"
+            android:text="In use"
             android:theme="@style/ButtonInUseTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageUserUsingConnector"
@@ -81,7 +82,7 @@
             android:id="@+id/alertBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="20dp"
             android:text="Alert!"
             android:theme="@style/ButtonInUseTheme"
             android:visibility="gone"
@@ -145,6 +146,7 @@
             android:id="@+id/queueBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:text="Join queue"
             android:theme="@style/ButtonQueueTheme"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -155,6 +157,7 @@
             android:id="@+id/queueNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="3dp"
             android:background="@drawable/really_small_circle"
             android:gravity="center"
@@ -163,6 +166,27 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/queueBtn" />
+
+        <Button
+            android:id="@+id/editConnectorBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:theme="@style/ButtonEditConnectorTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/deleteConnectorBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Delete"
+            android:theme="@style/ButtonInUseTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editConnectorBtn"
+            android:visibility="gone"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

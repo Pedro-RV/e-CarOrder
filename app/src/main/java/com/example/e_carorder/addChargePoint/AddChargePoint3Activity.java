@@ -1,39 +1,35 @@
 package com.example.e_carorder.addChargePoint;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.e_carorder.Navigation_temporal;
 import com.example.e_carorder.R;
-import com.example.e_carorder.addChargePoint.connectorsRecyclerView.ConnectorModel;
-import com.example.e_carorder.addChargePoint.connectorsRecyclerView.ConnectorAdapter;
 import com.example.e_carorder.helpers.AddressInfoHelperClass;
+import com.example.e_carorder.helpers.ChargePointHelperClass;
 import com.example.e_carorder.helpers.ConnectorHelperClass;
-import com.sucho.placepicker.AddressData;
-import com.sucho.placepicker.Constants;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class AddChargePoint3Activity extends AppCompatActivity  {
+public class AddChargePoint3Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Button addBtn, registerChargePointNextBtn2;
+    private Spinner spinnerStatus;
+    private String spinnerSelection;
+    private Button registerChargePointFinishBtn;
+    private FloatingActionButton backCPRegistration4Btn;
 
-    private ArrayList<ConnectorHelperClass> connectors;
-
-    private RecyclerView recyclerView;
-    private ConnectorAdapter connectorAdapter;
-
-
-    private final int PLACE_PICKER_REQUEST = 9999;
-
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,68 +37,69 @@ public class AddChargePoint3Activity extends AppCompatActivity  {
         setContentView(R.layout.activity_add_charge_point3);
 
         final AddressInfoHelperClass addressInfoHelperClass = (AddressInfoHelperClass) getIntent().getSerializableExtra("addressInfoHelperClass");
-        connectors = (ArrayList<ConnectorHelperClass>) getIntent().getSerializableExtra("connectors");
+        final ArrayList<ConnectorHelperClass> connectors = (ArrayList<ConnectorHelperClass>) getIntent().getSerializableExtra("connectors");
 
-        if(connectors == null){
-            connectors = new ArrayList<>();
-        }
+        spinnerStatus = findViewById(R.id.spinnerStatus);
+        registerChargePointFinishBtn = findViewById(R.id.registerChargePointFinishBtn);
+        backCPRegistration4Btn = findViewById(R.id.backCPRegistration4Btn);
 
-        addBtn = findViewById(R.id.addBtn);
-        registerChargePointNextBtn2 = findViewById(R.id.registerChargePointNextBtn2);
+        mDatabase = FirebaseDatabase.getInstance().getReference("ChargePoints");
 
-        recyclerView = findViewById(R.id.recyclerViewConnectorsCPRegistration);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.statusType, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerStatus.setAdapter(adapter);
 
-        connectorAdapter = new ConnectorAdapter(this, createConnectorsList());
-        recyclerView.setAdapter(connectorAdapter);
+        spinnerStatus.setOnItemSelectedListener(this);
 
-        addBtn.setOnClickListener(new View.OnClickListener() {
+        registerChargePointFinishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), AddConnectorActivity.class);
-                i.putExtra("addressInfoHelperClass", addressInfoHelperClass);
-                i.putExtra("connectors", connectors);
+
+
+                String latitude = Double.toString(addressInfoHelperClass.getLatitude());
+                String longitude = Double.toString(addressInfoHelperClass.getLongitude());
+
+                latitude = latitude.replace(".", "");
+                latitude = latitude.replace("-", "");
+                longitude = longitude.replace(".", "");
+                longitude = longitude.replace("-", "");
+
+                if(latitude.length() < 5){
+                    latitude = latitude + "0000";
+                }
+
+                if(longitude.length() < 5){
+                    longitude = longitude + "0000";
+                }
+
+                String id = latitude.substring(0,5) + longitude.substring(0,5);
+
+                ChargePointHelperClass chargePointHelperClass = new ChargePointHelperClass(id, spinnerSelection, addressInfoHelperClass, connectors);
+
+                mDatabase.child(id).setValue(chargePointHelperClass);
+
+                Toast.makeText(AddChargePoint3Activity.this, "Charge point created correctly.", Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(v.getContext(), Navigation_temporal.class);
                 startActivity(i);
             }
         });
 
-        registerChargePointNextBtn2.setOnClickListener(new View.OnClickListener() {
+        backCPRegistration4Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(connectors.size() == 0){
-                    Toast.makeText(AddChargePoint3Activity.this, "You have to add minimum 1 connector before continuing.", Toast.LENGTH_SHORT).show();
-                }else{
-                    Intent i = new Intent(v.getContext(), AddChargePoint4Activity.class);
-                    i.putExtra("addressInfoHelperClass", addressInfoHelperClass);
-                    i.putExtra("connectors", connectors);
-                    startActivity(i);
-                }
+                AddChargePoint3Activity.super.onBackPressed();
             }
         });
-
-    }
-
-    private ArrayList<ConnectorModel> createConnectorsList(){
-
-        ArrayList<ConnectorModel> connectorModels = new ArrayList<>();
-
-        for(int i=0; i < connectors.size(); i++){
-            ConnectorModel m = new ConnectorModel("", "", "", connectors.get(i).getConnectorType(), connectors.get(i).getPowerKW(), R.drawable.electrical, 0, 0, false, -1);
-            connectorModels.add(m);
-        }
-
-        return connectorModels;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                AddressData addressData = data.getParcelableExtra(Constants.ADDRESS_INTENT);
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        spinnerSelection = parent.getItemAtPosition(position).toString();
     }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

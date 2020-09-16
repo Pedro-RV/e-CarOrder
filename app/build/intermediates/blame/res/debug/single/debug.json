@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_update_charge_point_info3.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_update_charge_point_info3.xml"
+    },
+    {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
     },
@@ -26,6 +30,10 @@
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_all_users_chats.xml.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_all_users_chats.xml"
+    },
+    {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_j_s_o_n_charge_points.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_j_s_o_n_charge_points.xml"
     },
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_layout_signup.xml.flat",
@@ -66,6 +74,10 @@
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_sign_in_sign_up.xml.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_sign_in_sign_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_search.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\ic_search.xml"
     },
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_home.xml.flat",
@@ -192,6 +204,10 @@
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_foreground.png"
     },
     {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_edit_connector.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_edit_connector.xml"
+    },
+    {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_foreground.png"
     },
@@ -202,6 +218,10 @@
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_send_layout.xml.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\send_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_update_charge_point_info1.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_update_charge_point_info1.xml"
     },
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
@@ -272,6 +292,10 @@
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\edit.png"
     },
     {
+        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_update_charge_point_info2.xml.flat",
+        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_update_charge_point_info2.xml"
+    },
+    {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_ic_launcher_foreground.xml.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable-v24\\ic_launcher_foreground.xml"
     },
@@ -282,10 +306,6 @@
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\drawable_notification.png.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\drawable\\notification.png"
-    },
-    {
-        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_add_charge_point4.xml.flat",
-        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\activity_add_charge_point4.xml"
     },
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\navigation_main.xml.flat",
@@ -306,10 +326,6 @@
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
         "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
-    },
-    {
-        "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_settings.xml.flat",
-        "source": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\src\\main\\res\\layout\\fragment_settings.xml"
     },
     {
         "merged": "C:\\Users\\pedri\\AndroidStudioProjects\\eCarOrder\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_message.xml.flat",

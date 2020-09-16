@@ -26,6 +26,7 @@ import com.example.e_carorder.chats.usersRecyclerView.UserAdapter;
 import com.example.e_carorder.chats.usersRecyclerView.UserModel;
 import com.example.e_carorder.profile.EditProfileActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,7 +58,8 @@ public class MessageActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private ArrayList<ChatModel> mChats;
     private EditText etMessage;
-    private ImageView sendMessageBtn, backChatBtn;
+    private ImageView sendMessageBtn;
+    private FloatingActionButton backChatBtn;
 
     private FirebaseUser fUser;
     private DocumentReference documentReference;

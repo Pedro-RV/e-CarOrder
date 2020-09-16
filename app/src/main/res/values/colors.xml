@@ -9,7 +9,8 @@
     <color name="colorLightPurple">#BA55D3</color>
     <color name="colorRed">#FF3333</color>
     <color name="colorBlue">#00BFFF</color>
-
+    <color name="colorBlue2">#06D7E1</color>
+    <color name="colorBlue3">#CEF9FA</color>
 
     <color name="colorPrimaryTrans">#a0673AB7</color>
     <color name="colorAccentTrans">#a0009688</color>

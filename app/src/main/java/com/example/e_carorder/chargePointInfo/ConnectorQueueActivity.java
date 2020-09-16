@@ -17,6 +17,7 @@ import com.example.e_carorder.chargePointInfo.reservationsRecyclerView.Reservati
 import com.example.e_carorder.chargePointInfo.reservationsRecyclerView.ReservationModel;
 import com.example.e_carorder.helpers.ConnectorHelperClass;
 import com.example.e_carorder.helpers.QueueItemHelperClass;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 public class ConnectorQueueActivity extends AppCompatActivity {
 
     private Button joinQueueBtn, leaveQueueBtn;
+    private FloatingActionButton backQueueListBtn;
     private DatabaseReference databaseReference;
 
     private QueueItemAdapter queueItemAdapter;
@@ -50,6 +52,7 @@ public class ConnectorQueueActivity extends AppCompatActivity {
         joinQueueBtn = findViewById(R.id.joinQueueBtn);
         leaveQueueBtn = findViewById(R.id.leaveQueueBtn);
         recyclerViewQueue = findViewById(R.id.rvQueue);
+        backQueueListBtn = findViewById(R.id.backQueueListBtn);
 
         recyclerViewQueue.setLayoutManager(new LinearLayoutManager(this));
 
@@ -84,13 +87,13 @@ public class ConnectorQueueActivity extends AppCompatActivity {
 
                             }
 
-                            if(leaveQueueBtn.getVisibility() == View.GONE){
-                                joinQueueBtn.setVisibility(View.VISIBLE);
-                            }
-
                             queueItemAdapter = new QueueItemAdapter(ConnectorQueueActivity.this, mQueueItems);
                             recyclerViewQueue.setAdapter(queueItemAdapter);
 
+                        }
+
+                        if(leaveQueueBtn.getVisibility() == View.GONE){
+                            joinQueueBtn.setVisibility(View.VISIBLE);
                         }
 
                     }
@@ -219,6 +222,13 @@ public class ConnectorQueueActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        backQueueListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectorQueueActivity.super.onBackPressed();
             }
         });
 

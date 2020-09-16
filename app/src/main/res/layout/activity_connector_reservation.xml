@@ -16,6 +16,19 @@
         android:paddingEnd="15dp"
         app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/backReservationsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            app:borderWidth="0dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/back"
+            app:fabCustomSize="50dp"
+            app:fabSize="auto"
+            app:elevation="0dp"
+            app:tint="@color/white"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

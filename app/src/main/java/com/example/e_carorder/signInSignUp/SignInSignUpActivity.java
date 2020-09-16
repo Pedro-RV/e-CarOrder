@@ -323,6 +323,8 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
                                         user.put("username", username);
                                         user.put("email", email);
                                         user.put("status", "offline");
+                                        user.put("carModel", "");
+                                        user.put("description", "");
                                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {

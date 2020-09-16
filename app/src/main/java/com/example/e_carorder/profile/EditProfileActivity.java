@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.e_carorder.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,13 +36,15 @@ import java.util.Map;
 public class EditProfileActivity extends AppCompatActivity {
 
     public static final String TAG = "TAG";
-    EditText changeName, changeEmail;
+    EditText profileChangeName, profileChangeEmail, profileChangeCarModel, profileChangeDescription;
     ImageView changeImage;
     Button saveBtn;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     FirebaseUser user;
     StorageReference storageReference;
+
+    private FloatingActionButton backEditProfileBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +54,26 @@ public class EditProfileActivity extends AppCompatActivity {
         Intent data = getIntent();
         String username = data.getStringExtra("username");
         String email = data.getStringExtra("email");
+        final String carModel = data.getStringExtra("carModel");
+        String description = data.getStringExtra("description");
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         user = fAuth.getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        changeName = findViewById(R.id.profileChangeName);
-        changeEmail = findViewById(R.id.profileChangeEmail);
+        profileChangeName = findViewById(R.id.profileChangeName);
+        profileChangeEmail = findViewById(R.id.profileChangeEmail);
+        profileChangeCarModel = findViewById(R.id.profileChangeCarModel);
+        profileChangeDescription = findViewById(R.id.profileChangeDescription);
         changeImage = findViewById(R.id.profileChangeImage);
         saveBtn = findViewById(R.id.save_btn);
+        backEditProfileBtn = findViewById(R.id.backEditProfileBtn);
+
+        profileChangeName.setText(username);
+        profileChangeEmail.setText(email);
+        profileChangeCarModel.setText(carModel);
+        profileChangeDescription.setText(description);
 
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -81,19 +95,28 @@ public class EditProfileActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(changeName.getText().toString().isEmpty() || changeEmail.getText().toString().isEmpty()){
-                    Toast.makeText(EditProfileActivity.this, "One or many fields are empty.", Toast.LENGTH_SHORT).show();
+                if(profileChangeName.getText().toString().isEmpty()){
+                    profileChangeName.setError("Compulsory field");
                     return;
                 }
 
-                final String email =  changeEmail.getText().toString();
+                if(profileChangeEmail.getText().toString().isEmpty()){
+                    profileChangeEmail.setError("Compulsory field");
+                    return;
+                }
+
+                final String email =  profileChangeEmail.getText().toString();
                 user.updateEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         DocumentReference docRef = fStore.collection("users").document(user.getUid());
+
                         Map<String, Object> edited = new HashMap<>();
                         edited.put("email", email);
-                        edited.put("fName", changeName.getText().toString());
+                        edited.put("username", profileChangeName.getText().toString());
+                        edited.put("carModel", profileChangeCarModel.getText().toString());
+                        edited.put("description", profileChangeDescription.getText().toString());
+
                         docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -104,7 +127,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 finish();
                             }
                         });
-                        Toast.makeText(EditProfileActivity.this, "Email is changed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, "Email changed.", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -117,10 +140,13 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        changeName.setText(username);
-        changeEmail.setText(email);
+        backEditProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditProfileActivity.super.onBackPressed();
+            }
+        });
 
-        Log.d(TAG, "onCreate: " + username + " " + email);
     }
 
     @Override

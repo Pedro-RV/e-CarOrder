@@ -251,6 +251,7 @@
     <color name="colorAccentTrans">#a0009688</color>
     <color name="colorBlackTrans">#a0000000</color>
     <color name="colorBlue">#00BFFF</color>
+    <color name="colorBlue2">#06D7E1</color>
     <color name="colorGreen">#32CD32</color>
     <color name="colorLightPurple">#BA55D3</color>
     <color name="colorPrimary">#673AB7</color>
@@ -1281,7 +1282,6 @@
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>
     <string name="home">Home</string>
     <string description="Content description for an icon that appears in the title area of a dialog" name="icon_content_description">Dialog Icon</string>
-    <string name="inbox">Inbox</string>
     <string name="john_doe">John Doe</string>
     <string name="library_roundedimageview_author">Vince Mi</string>
     <string name="library_roundedimageview_authorWebsite">https://github.com/vinc3m1</string>
@@ -3239,6 +3239,10 @@
     </style>
     <style name="ButtonCheckOutTheme" parent="AppTheme">
         <item name="colorPrimary">@color/colorGreen</item>
+
+    </style>
+    <style name="ButtonEditConnectorTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorBlue2</item>
 
     </style>
     <style name="ButtonInUseTheme" parent="AppTheme">
