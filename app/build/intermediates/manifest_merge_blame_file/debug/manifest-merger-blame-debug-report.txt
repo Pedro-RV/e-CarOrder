@@ -50,7 +50,7 @@
 29-->[com.google.firebase:firebase-iid:20.0.2] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\2871e420aea024633604a68f8f003ca0\jetified-firebase-iid-20.0.2\AndroidManifest.xml:26:22-79
 30
 31    <application
-31-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:14:5-61:19
+31-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:14:5-56:19
 32        android:allowBackup="true"
 32-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:15:9-35
 33        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -68,68 +68,68 @@
 40        android:theme="@style/AppTheme" >
 40-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:20:9-40
 41        <activity android:name="com.example.e_carorder.JSONChargePoints.JSONChargePointsActivity" >
-41-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:21:9-31:20
+41-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:21:9-22:20
 41-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:21:19-76
-42            <intent-filter>
-42-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:24:13-28:29
-43                <action android:name="android.intent.action.MAIN" />
-43-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:25:17-69
-43-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:25:25-66
-44
-45                <category android:name="android.intent.category.LAUNCHER" />
-45-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:27:17-77
-45-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:27:27-74
-46            </intent-filter>
-47        </activity>
-48        <activity android:name="com.example.e_carorder.addChargePoint.EditConnectorActivity" />
-48-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:32:9-74
-48-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:32:19-71
-49        <activity android:name="com.example.e_carorder.chargePointInfo.UpdateChargePointInfo3Activity" />
-49-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:33:9-84
-49-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:33:19-81
-50        <activity android:name="com.example.e_carorder.chargePointInfo.UpdateChargePointInfo2Activity" />
-50-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:34:9-84
-50-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:34:19-81
-51        <activity android:name="com.example.e_carorder.chargePointInfo.UpdateChargePointInfo1Activity" />
-51-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:35:9-84
-51-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:35:19-81
-52        <activity android:name="com.example.e_carorder.chargePointInfo.ConnectorQueueActivity" />
-52-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:36:9-76
-52-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:36:19-73
-53        <activity android:name="com.example.e_carorder.chargePointInfo.ConnectorReservationActivity" />
-53-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:37:9-82
-53-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:37:19-79
-54        <activity android:name="com.example.e_carorder.chargePointInfo.UserInfoActivity" />
-54-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:38:9-70
-54-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:38:19-67
-55        <activity android:name="com.example.e_carorder.chats.MessageActivity" />
-55-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:39:9-59
-55-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:39:19-56
-56        <activity android:name="com.example.e_carorder.chats.AllUsersChatsActivity" />
-56-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:40:9-65
-56-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:40:19-62
-57        <activity android:name="com.example.e_carorder.addChargePoint.AddChargePoint2Activity" />
-57-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:41:9-76
-57-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:41:19-73
-58        <activity android:name="com.example.e_carorder.signInSignUp.SignInSignUpActivity" >
-58-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:42:9-44:20
-58-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:42:19-68
+42        </activity>
+43        <activity android:name="com.example.e_carorder.addChargePoint.EditConnectorActivity" />
+43-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:23:9-74
+43-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:23:19-71
+44        <activity android:name="com.example.e_carorder.chargePointInfo.UpdateChargePointInfo3Activity" />
+44-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:24:9-84
+44-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:24:19-81
+45        <activity android:name="com.example.e_carorder.chargePointInfo.UpdateChargePointInfo2Activity" />
+45-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:25:9-84
+45-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:25:19-81
+46        <activity android:name="com.example.e_carorder.chargePointInfo.UpdateChargePointInfo1Activity" />
+46-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:26:9-84
+46-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:26:19-81
+47        <activity android:name="com.example.e_carorder.chargePointInfo.ConnectorQueueActivity" />
+47-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:27:9-76
+47-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:27:19-73
+48        <activity android:name="com.example.e_carorder.chargePointInfo.ConnectorReservationActivity" />
+48-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:28:9-82
+48-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:28:19-79
+49        <activity android:name="com.example.e_carorder.chargePointInfo.UserInfoActivity" />
+49-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:29:9-70
+49-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:29:19-67
+50        <activity android:name="com.example.e_carorder.chats.MessageActivity" />
+50-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:30:9-59
+50-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:30:19-56
+51        <activity android:name="com.example.e_carorder.chats.AllUsersChatsActivity" />
+51-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:31:9-65
+51-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:31:19-62
+52        <activity android:name="com.example.e_carorder.addChargePoint.AddChargePoint2Activity" />
+52-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:32:9-76
+52-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:32:19-73
+53        <activity android:name="com.example.e_carorder.signInSignUp.SignInSignUpActivity" >
+53-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:33:9-39:20
+53-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:33:19-68
+54            <intent-filter>
+54-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:34:13-38:29
+55                <action android:name="android.intent.action.MAIN" />
+55-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:35:17-69
+55-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:35:25-66
+56
+57                <category android:name="android.intent.category.LAUNCHER" />
+57-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:37:17-77
+57-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:37:27-74
+58            </intent-filter>
 59        </activity>
 60        <activity android:name="com.example.e_carorder.addChargePoint.AddChargePoint3Activity" />
-60-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:45:9-76
-60-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:45:19-73
+60-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:40:9-76
+60-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:40:19-73
 61        <activity android:name="com.example.e_carorder.addChargePoint.AddConnectorActivity" />
-61-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:46:9-73
-61-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:46:19-70
+61-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:41:9-73
+61-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:41:19-70
 62        <activity android:name="com.example.e_carorder.chargePointInfo.ChargePointInfoActivity" />
-62-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:47:9-77
-62-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:47:19-74
+62-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:42:9-77
+62-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:42:19-74
 63        <activity android:name="com.example.e_carorder.profile.EditProfileActivity" />
-63-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:48:9-65
-63-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:48:19-62
+63-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:43:9-65
+63-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:43:19-62
 64        <activity android:name="com.example.e_carorder.Navigation_temporal" />
-64-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:49:9-57
-64-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:49:19-54
+64-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:44:9-57
+64-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:44:19-54
 65        <!--
 66             The API key for Google Maps-based APIs is defined as a string resource.
 67             (See the file "res/values/google_maps_api.xml").
@@ -139,11 +139,11 @@
 71             You can define the keys for the debug and release targets in src/debug/ and src/release/.
 72        -->
 73        <meta-data
-73-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:58:9-60:55
+73-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:53:9-55:55
 74            android:name="com.google.android.geo.API_KEY"
-74-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:59:13-58
+74-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:54:13-58
 75            android:value="@string/google_maps_key" />
-75-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:60:13-52
+75-->C:\Users\pedri\AndroidStudioProjects\eCarOrder\app\src\main\AndroidManifest.xml:55:13-52
 76
 77        <activity
 77-->[com.google.android.libraries.places:places:2.2.0] C:\Users\pedri\.gradle\caches\transforms-2\files-2.1\fff83acf5a8d79b2696f29f9be76dda4\jetified-places-2.2.0\AndroidManifest.xml:14:9-20:20

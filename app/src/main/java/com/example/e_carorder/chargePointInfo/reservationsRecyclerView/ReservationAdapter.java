@@ -3,10 +3,12 @@ package com.example.e_carorder.chargePointInfo.reservationsRecyclerView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -86,14 +88,67 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationHolder> 
 
                         long date = mReservations.get(position).getDate();
 
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTimeInMillis(date);
+                        Calendar calendarDate = Calendar.getInstance();
+                        calendarDate.setTimeInMillis(date);
 
-                        int day = calendar.get(Calendar.DAY_OF_MONTH);
-                        int month = calendar.get(Calendar.MONTH);
-                        int year = calendar.get(Calendar.YEAR);
+                        int day = calendarDate.get(Calendar.DAY_OF_MONTH);
+                        int month = calendarDate.get(Calendar.MONTH);
+                        int year = calendarDate.get(Calendar.YEAR);
 
-                        holder.dateReservation.setText("Reservation date: " + day + "/" + month + "/" + year);
+                        long timeFrom = mReservations.get(position).getTimeFrom();
+
+                        Calendar calendarTimeFrom = Calendar.getInstance();
+                        calendarTimeFrom.setTimeInMillis(timeFrom);
+
+                        int hourTimeFrom = calendarTimeFrom.get(Calendar.HOUR_OF_DAY);
+                        int minuteTimeFrom = calendarTimeFrom.get(Calendar.MINUTE);
+
+                        long timeTo = mReservations.get(position).getTimeTo();
+
+                        Calendar calendarTimeTo = Calendar.getInstance();
+                        calendarTimeTo.setTimeInMillis(timeTo);
+
+                        int hourTimeTo = calendarTimeTo.get(Calendar.HOUR_OF_DAY);
+                        int minuteTimeTo = calendarTimeTo.get(Calendar.MINUTE);
+
+                        String monthString = Integer.toString(month);
+                        String hourTimeFromString = Integer.toString(hourTimeFrom);
+                        String minuteTimeFromString = Integer.toString(minuteTimeFrom);
+                        String hourTimeToString = Integer.toString(hourTimeTo);
+                        String minuteTimeToString = Integer.toString(minuteTimeTo);
+
+                        if(month < 10){
+                            monthString = "0" + month;
+                        }else{
+                            monthString = Integer.toString(month);
+                        }
+
+                        if(hourTimeFrom < 10){
+                            hourTimeFromString = "0" + hourTimeFrom;
+                        }else{
+                            hourTimeFromString = Integer.toString(hourTimeFrom);
+                        }
+
+                        if(minuteTimeFrom < 10){
+                            minuteTimeFromString = "0" + minuteTimeFrom;
+                        }else{
+                            minuteTimeFromString = Integer.toString(minuteTimeFrom);
+                        }
+
+                        if(hourTimeTo < 10){
+                            hourTimeToString = "0" + hourTimeTo;
+                        }else{
+                            hourTimeToString = Integer.toString(hourTimeTo);
+                        }
+
+                        if(minuteTimeTo < 10){
+                            minuteTimeToString = "0" + minuteTimeTo;
+                        }else{
+                            minuteTimeToString = Integer.toString(minuteTimeTo);
+                        }
+
+                        holder.dateReservation.setText(day + "/" + monthString + "/" + year + " " +
+                                hourTimeFromString + ":" + minuteTimeFromString + " - " + hourTimeToString + ":" + minuteTimeToString);
 
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 

@@ -16,7 +16,7 @@
         android:id="@+id/searchLocationET"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:hint="Search..."
+        android:hint="@string/search"
         android:layout_margin="12dp"
         android:inputType="text"
         android:padding="13dp"

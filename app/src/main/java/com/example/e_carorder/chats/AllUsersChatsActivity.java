@@ -76,7 +76,7 @@ public class AllUsersChatsActivity extends AppCompatActivity {
                             if(!userId.equals(currentUser)){
 
 
-                                mUsers.add(new UserModel(userId, name));
+                                mUsers.add(new UserModel(userId, name, false));
                             }
 
                             userAdapter = new UserAdapter(AllUsersChatsActivity.this, mUsers);

@@ -13,4 +13,6 @@
     <string name="john_doe">John Doe</string>
     <string name="verified">Verificado</string>
     <string name="home">Inicio</string>
+    <string name="signOut">Cerrar sesión</string>
+    <string name="search">Buscar...</string>
 </resources>

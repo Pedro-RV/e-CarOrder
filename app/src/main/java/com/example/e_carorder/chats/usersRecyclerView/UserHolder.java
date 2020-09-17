@@ -11,7 +11,7 @@ import com.example.e_carorder.R;
 
 public class UserHolder extends RecyclerView.ViewHolder {
 
-    TextView name;
+    TextView name, newMessageTV;
     ImageView imageUser;
 
     public UserHolder(@NonNull View itemView) {
@@ -19,5 +19,7 @@ public class UserHolder extends RecyclerView.ViewHolder {
 
         this.name = itemView.findViewById(R.id.tvUser);
         this.imageUser = itemView.findViewById(R.id.ivUser);
+        this.newMessageTV = itemView.findViewById(R.id.newMessageTV);
+
     }
 }

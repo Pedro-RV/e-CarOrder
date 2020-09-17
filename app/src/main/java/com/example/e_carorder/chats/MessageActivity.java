@@ -19,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.e_carorder.Navigation_temporal;
 import com.example.e_carorder.R;
+import com.example.e_carorder.chargePointInfo.UserInfoActivity;
 import com.example.e_carorder.chats.messagesRecyclerView.ChatModel;
 import com.example.e_carorder.chats.messagesRecyclerView.MessageAdapter;
 import com.example.e_carorder.chats.usersRecyclerView.UserAdapter;
@@ -33,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -109,7 +112,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if(e == null){
                     if(documentSnapshot.exists()){
-                        UserModel user = new UserModel(userToSend, documentSnapshot.getString("username"));
+                        UserModel user = new UserModel(userToSend, documentSnapshot.getString("username"), false);
                         nameUserMessage.setText(user.getName());
 
                         // Update user image to see in layout
@@ -125,6 +128,24 @@ public class MessageActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        // Delete purple circle which informs of new messages
+        final DatabaseReference databaseReferenceNewMessageFalse = FirebaseDatabase.getInstance().getReference("ChatList");
+        Query checkNewMessageFalse = databaseReferenceNewMessageFalse.orderByChild("id").equalTo(userToSend);
+
+        checkNewMessageFalse.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                databaseReferenceNewMessageFalse.child(fUser.getUid()).child(userToSend).child("newMessage").setValue(false);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //
 
 
         sendMessageBtn.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +168,8 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MessageActivity.super.onBackPressed();
+                //Intent i = new Intent(getApplicationContext(), Navigation_temporal.class);
+                //startActivity(i);
             }
         });
     }
@@ -175,6 +198,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
                     databaseReferenceSender.child("id").setValue(userToSend);
+                    databaseReferenceSender.child("newMessage").setValue(false);
                 }
             }
 
@@ -194,8 +218,24 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
                     databaseReferenceReceiver.child("id").setValue(fUser.getUid());
+                    databaseReferenceReceiver.child("newMessage").setValue(true);
 
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference databaseReferenceNewMessageTrue = FirebaseDatabase.getInstance().getReference("ChatList");
+        Query checkNewMessageTrue = databaseReferenceNewMessageTrue.orderByChild("id").equalTo(fUser.getUid());
+
+        checkNewMessageTrue.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                databaseReferenceNewMessageTrue.child(userToSend).child(fUser.getUid()).child("newMessage").setValue(true);
             }
 
             @Override
