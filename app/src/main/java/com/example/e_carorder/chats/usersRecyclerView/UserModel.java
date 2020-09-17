@@ -3,12 +3,10 @@ package com.example.e_carorder.chats.usersRecyclerView;
 public class UserModel {
 
     private String id, name;
-    private Boolean newMessage;
 
-    public UserModel(String id, String name, Boolean newMessage) {
+    public UserModel(String id, String name) {
         this.id = id;
         this.name = name;
-        this.newMessage = newMessage;
     }
 
     public String getId() {
@@ -27,11 +25,4 @@ public class UserModel {
         this.name = name;
     }
 
-    public Boolean getNewMessage() {
-        return newMessage;
-    }
-
-    public void setNewMessage(Boolean newMessage) {
-        this.newMessage = newMessage;
-    }
 }

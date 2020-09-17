@@ -19,6 +19,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".JSONChargePoints.JSONChargePointsActivity">
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
         </activity>
         <activity android:name=".addChargePoint.EditConnectorActivity" />
         <activity android:name=".chargePointInfo.UpdateChargePointInfo3Activity" />
@@ -31,11 +40,7 @@
         <activity android:name=".chats.AllUsersChatsActivity" />
         <activity android:name=".addChargePoint.AddChargePoint2Activity" />
         <activity android:name=".signInSignUp.SignInSignUpActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".addChargePoint.AddChargePoint3Activity" />
         <activity android:name=".addChargePoint.AddConnectorActivity" />

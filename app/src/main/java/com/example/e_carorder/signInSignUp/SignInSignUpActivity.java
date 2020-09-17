@@ -31,7 +31,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -63,9 +62,6 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
     private LinearLayout llSignin;
     private Button btnSignup;
     private Button btnSignin;
-
-
-    private SignInButton google_sign;
 
 
     // From here, implementation of sign in functionalities
@@ -106,8 +102,6 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
         tvSignupInvoker = findViewById(R.id.tvSignupInvoker);
         tvSigninInvoker = findViewById(R.id.tvSigninInvoker);
 
-        google_sign = findViewById(R.id.google_sign);
-
         btnSignup= findViewById(R.id.btnSignup);
         btnSignin= findViewById(R.id.btnSignin);
 
@@ -118,7 +112,6 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 isSigninScreen = false;
-                google_sign.setVisibility(View.GONE);
                 showSignupForm();
             }
         });
@@ -127,7 +120,6 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 isSigninScreen = true;
-                google_sign.setVisibility(View.VISIBLE);
                 showSigninForm();
             }
         });
@@ -292,7 +284,7 @@ public class SignInSignUpActivity extends AppCompatActivity implements View.OnCl
                             for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                                 if (documentSnapshot.exists()) {
                                     if(documentSnapshot.getString("username").equals(username)){
-                                        //register_name.setError("This username is already in use. Choose another.");
+                                        register_name.setError("This username is already in use. Choose another.");
                                         return;
                                     }
                                 }

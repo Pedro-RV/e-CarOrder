@@ -59,7 +59,6 @@ public class ChatsFragment extends Fragment {
     private DatabaseReference databaseReference;
 
     private ArrayList<String> usersIdList;
-    private ArrayList<Boolean> usersNewMessageList;
 
     private RecyclerView recyclerViewUserLastChats;
 
@@ -98,7 +97,6 @@ public class ChatsFragment extends Fragment {
         fUser = FirebaseAuth.getInstance().getCurrentUser();
 
         usersIdList = new ArrayList<>();
-        usersNewMessageList = new ArrayList<>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("ChatList")
                 .child(fUser.getUid());
@@ -107,15 +105,12 @@ public class ChatsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersIdList.clear();
-                usersNewMessageList.clear();
 
                 if(dataSnapshot.exists()){
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                         String userId = snapshot.child("id").getValue().toString();
-                        Boolean newMessage = (Boolean) snapshot.child("newMessage").getValue();
 
                         usersIdList.add(userId);
-                        usersNewMessageList.add(newMessage);
                     }
 
                     chatList();
@@ -211,13 +206,11 @@ public class ChatsFragment extends Fragment {
                     for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
                         if(documentSnapshot.exists()){
                             String userId = documentSnapshot.getId();
-                            String username = documentSnapshot.getString("username");
 
-                            for(int i = 0; i < usersIdList.size(); i++){
-                                Boolean newMessage = usersNewMessageList.get(i);
+                            UserModel user = new UserModel(documentSnapshot.getId(), documentSnapshot.getString("username"));
 
-                                if(userId.equals(usersIdList.get(i))){
-                                    UserModel user = new UserModel(userId, username, newMessage);
+                            for(String id: usersIdList){
+                                if(userId.equals(id)){
                                     mUsers.add(user);
                                 }
                             }
@@ -248,42 +241,10 @@ public class ChatsFragment extends Fragment {
 
     }
 
-
-
     @Override
     public void onResume() {
         super.onResume();
         CheckStatus("online");
-
-
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("ChatList")
-                .child(fUser.getUid());
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                usersIdList.clear();
-                usersNewMessageList.clear();
-
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        String userId = snapshot.child("id").getValue().toString();
-                        Boolean newMessage = (Boolean) snapshot.child("newMessage").getValue();
-                        usersIdList.add(userId);
-                        usersNewMessageList.add(newMessage);
-                    }
-
-                    chatList();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
     }
 
     @Override
@@ -291,6 +252,4 @@ public class ChatsFragment extends Fragment {
         super.onPause();
         CheckStatus("offline");
     }
-
-
 }

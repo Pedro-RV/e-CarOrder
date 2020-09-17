@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,12 +54,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserHolder> {
                 Glide.with(context).load(uri).into(holder.imageUser);
             }
         });
-
-        if(mUsers.get(position).getNewMessage() == true){
-            holder.newMessageTV.setVisibility(View.VISIBLE);
-        }else{
-            holder.newMessageTV.setVisibility(View.GONE);
-        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

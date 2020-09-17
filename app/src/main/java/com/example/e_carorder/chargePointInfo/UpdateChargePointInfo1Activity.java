@@ -222,7 +222,7 @@ public class UpdateChargePointInfo1Activity extends AppCompatActivity {
                 .setPlaceSearchBar(false, "AIzaSyCugS8Y3DarYsGZmAeQAeeujSTiL7LmGF8") //Activate GooglePlace Search Bar. Default is false/not activated. SearchBar is a chargeable feature by Google
                 .onlyCoordinates(false)  //Get only Coordinates from Place Picker
                 .hideLocationButton(false)   //Hide Location Button (Default: false)
-                .disableMarkerAnimation(true)   //Disable Marker Animation (Default: false)
+                .disableMarkerAnimation(false)   //Disable Marker Animation (Default: false)
                 .build(UpdateChargePointInfo1Activity.this);
         startActivityForResult(intent, PLACE_PICKER_REQUEST);
     }

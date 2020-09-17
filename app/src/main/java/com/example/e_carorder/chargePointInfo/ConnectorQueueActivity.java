@@ -1,13 +1,10 @@
 package com.example.e_carorder.chargePointInfo;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -171,77 +168,59 @@ public class ConnectorQueueActivity extends AppCompatActivity {
         leaveQueueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder queueConfirmationDialog = new AlertDialog.Builder(v.getContext());
-                queueConfirmationDialog.setTitle("Are you sure you want to leave the queue?");
 
-                queueConfirmationDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
+
+                checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                        Query checkChargePoint = databaseReference.orderByChild("id").equalTo(chargePointId);
+                                ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
 
-                        checkChargePoint.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()) {
-                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                ArrayList<QueueItemHelperClass> queueItems = connector.getQueue();
 
-                                        ConnectorHelperClass connector = ds.child("connectors").child(connectorId).getValue(ConnectorHelperClass.class);
+                                boolean stop = false;
 
-                                        ArrayList<QueueItemHelperClass> queueItems = connector.getQueue();
-
-                                        boolean stop = false;
-
-                                        for(int i = 0; i < queueItems.size() && !stop; i++){
-                                            if(queueItems.get(i).getQueueUserId().equals(currentUserId)){
-                                                queueItems.remove(queueItems.get(i));
-                                                stop = true;
-                                            }
-                                        }
-
-                                        connector.setQueue(queueItems);
-
-                                        databaseReference.child(chargePointId).child("connectors").child(connectorId).setValue(connector);
-
-                                        ArrayList<QueueItemModel> mQueueItems = new ArrayList<>();
-
-                                        for(int i = 0; i < queueItems.size(); i++){
-
-                                            String queueItemUserId = queueItems.get(i).getQueueUserId();
-
-                                            QueueItemModel addQueueItemModel = new QueueItemModel(queueItemUserId);
-
-                                            mQueueItems.add(addQueueItemModel);
-
-                                        }
-
-                                        joinQueueBtn.setVisibility(View.VISIBLE);
-                                        leaveQueueBtn.setVisibility(View.GONE);
-
-                                        queueItemAdapter = new QueueItemAdapter(ConnectorQueueActivity.this, mQueueItems);
-                                        recyclerViewQueue.setAdapter(queueItemAdapter);
-
+                                for(int i = 0; i < queueItems.size() && !stop; i++){
+                                    if(queueItems.get(i).getQueueUserId().equals(currentUserId)){
+                                        queueItems.remove(queueItems.get(i));
+                                        stop = true;
                                     }
                                 }
+
+                                connector.setQueue(queueItems);
+
+                                databaseReference.child(chargePointId).child("connectors").child(connectorId).setValue(connector);
+
+                                ArrayList<QueueItemModel> mQueueItems = new ArrayList<>();
+
+                                for(int i = 0; i < queueItems.size(); i++){
+
+                                    String queueItemUserId = queueItems.get(i).getQueueUserId();
+
+                                    QueueItemModel addQueueItemModel = new QueueItemModel(queueItemUserId);
+
+                                    mQueueItems.add(addQueueItemModel);
+
+                                }
+
+                                joinQueueBtn.setVisibility(View.VISIBLE);
+                                leaveQueueBtn.setVisibility(View.GONE);
+
+                                queueItemAdapter = new QueueItemAdapter(ConnectorQueueActivity.this, mQueueItems);
+                                recyclerViewQueue.setAdapter(queueItemAdapter);
+
                             }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
+                        }
                     }
-                });
 
-                queueConfirmationDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // close the dialog
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
-
-                queueConfirmationDialog.create().show();
 
             }
         });
@@ -249,11 +228,7 @@ public class ConnectorQueueActivity extends AppCompatActivity {
         backQueueListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String CPId = "Id: " + chargePointId;
-
-                Intent i = new Intent(getApplicationContext(), ChargePointInfoActivity.class);
-                i.putExtra("chargePointId", CPId);
-                startActivity(i);
+                ConnectorQueueActivity.super.onBackPressed();
             }
         });
 

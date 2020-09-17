@@ -189,7 +189,7 @@ public class AddChargePoint1Fragment extends Fragment {
                 .setPlaceSearchBar(true, getString(R.string.google_maps_key)) //Activate GooglePlace Search Bar. Default is false/not activated. SearchBar is a chargeable feature by Google
                 .onlyCoordinates(false)  //Get only Coordinates from Place Picker
                 .hideLocationButton(false)   //Hide Location Button (Default: false)
-                .disableMarkerAnimation(true)   //Disable Marker Animation (Default: false)
+                .disableMarkerAnimation(false)   //Disable Marker Animation (Default: false)
                 .build(getActivity());
         startActivityForResult(intent, PLACE_PICKER_REQUEST);
     }

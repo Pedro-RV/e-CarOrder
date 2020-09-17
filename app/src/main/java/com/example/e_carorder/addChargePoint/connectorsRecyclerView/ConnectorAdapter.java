@@ -175,23 +175,15 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
                                     int hourCheckOut = calendar.get(Calendar.HOUR_OF_DAY);
                                     int minuteCheckOut = calendar.get(Calendar.MINUTE);
 
-                                    String hourCheckOutString = Integer.toString(hourCheckOut);
-                                    String minuteCheckOutString = Integer.toString(minuteCheckOut);
-
-                                    if(hourCheckOut < 10){
-                                        hourCheckOutString = "0" + hourCheckOut;
-                                    }else{
-                                        hourCheckOutString = Integer.toString(hourCheckOut);
-                                    }
-
                                     if(minuteCheckOut < 10){
-                                        minuteCheckOutString = "0" + minuteCheckOut;
-                                    }else{
-                                        minuteCheckOutString = Integer.toString(minuteCheckOut);
-                                    }
+                                        holder.checkOutBtn.setText("Check-out at " + hourCheckOut + ":0" + minuteCheckOut);
+                                        holder.inUseBtn.setText("In use until " + hourCheckOut + ":0" + minuteCheckOut);
 
-                                    holder.checkOutBtn.setText("Check-out at " + hourCheckOutString + ":" + minuteCheckOutString);
-                                    holder.inUseBtn.setText("In use until " + hourCheckOutString + ":" + minuteCheckOutString);
+                                    }else{
+                                        holder.checkOutBtn.setText("Check-out at " + hourCheckOut + ":" + minuteCheckOut);
+                                        holder.inUseBtn.setText("In use until "  + hourCheckOut + ":" + minuteCheckOut);
+
+                                    }
 
                                 }
 
@@ -400,7 +392,7 @@ public class ConnectorAdapter extends RecyclerView.Adapter<ConnectorHolder> {
                                         }, hour, minute, true);
 
                                         TextView titleTV = new TextView(c);
-                                        titleTV.setText("Select Check-out Time:");
+                                        titleTV.setText("Select Check-out Time");
                                         titleTV.setTextSize(30);
                                         titleTV.setTextColor(c.getResources().getColor(R.color.colorPrimary));
                                         titleTV.setTypeface(Typeface.DEFAULT_BOLD);
