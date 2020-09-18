@@ -219,7 +219,7 @@ public class UpdateChargePointInfo1Activity extends AppCompatActivity {
                 //.setBottomViewColor(R.color.bottomViewColor) // Change Address View Background Color (Default: White)
                 //.setMapRawResourceStyle(R.raw.map_style)  //Set Map Style (https://mapstyle.withgoogle.com/)
                 .setMapType(MapType.SATELLITE)
-                .setPlaceSearchBar(false, "AIzaSyCugS8Y3DarYsGZmAeQAeeujSTiL7LmGF8") //Activate GooglePlace Search Bar. Default is false/not activated. SearchBar is a chargeable feature by Google
+                .setPlaceSearchBar(false, getString(R.string.google_maps_key)) //Activate GooglePlace Search Bar. Default is false/not activated. SearchBar is a chargeable feature by Google
                 .onlyCoordinates(false)  //Get only Coordinates from Place Picker
                 .hideLocationButton(false)   //Hide Location Button (Default: false)
                 .disableMarkerAnimation(false)   //Disable Marker Animation (Default: false)
